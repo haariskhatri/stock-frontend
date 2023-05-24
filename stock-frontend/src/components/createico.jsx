@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Loader from "./loader";
 
 const CreateICO = () => {
 
@@ -10,6 +11,8 @@ const CreateICO = () => {
         companyPrice: '',
         companyUnits: ''
     })
+
+    const [showloader, setshowloader] = useState(false);
 
     const handlechange = (event) => {
 
@@ -32,7 +35,17 @@ const CreateICO = () => {
 
 
         if (!isValueNull) {
-            toast.success('Working')
+
+            setshowloader(true);
+
+            try {
+
+            } catch (error) {
+
+            }
+            finally {
+                setshowloader(false)
+            }
         }
         else if (isZero) {
             toast.error('Value cannot be Zero')
@@ -86,8 +99,10 @@ const CreateICO = () => {
                         </button>
                     </form>
                     <ToastContainer />
+
                 </div>
             </div>
+            {showloader && <Loader />}
         </>
     )
 }
