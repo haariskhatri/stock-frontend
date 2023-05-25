@@ -1,13 +1,10 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 
 
+import CreateICO from '../components/createico'
 
-import CreateICO from './components/createico'
 
-import './App.css'
-
-function App() {
+const IpoRegister = () => {
 
 
     return (
@@ -16,6 +13,7 @@ function App() {
 
                 <div className="row">
                     <div className="col-md-3">
+
                     </div>
                     <div className="col-md-9">
                         <CreateICO />
@@ -27,4 +25,4 @@ function App() {
     )
 }
 
-export default App
+export default IpoRegister;
