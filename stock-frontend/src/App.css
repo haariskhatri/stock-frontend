@@ -1,5 +1,12 @@
 body {
   overflow-x: hidden;
+  background-color: black;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .ico-form {
@@ -372,4 +379,225 @@ body {
   100% {
     transform: scale(1, 1);
   }
+}
+
+
+/* Market-Order */
+
+.market-order {
+  margin-top: 77px;
+
+}
+
+.card {
+  border: 1px solid #2D2D2D;
+}
+
+.card-body {
+  background-color: black;
+
+}
+
+.card-main-body {
+  background-color: black;
+  color: #D3CECE;
+}
+
+.card-title,
+.card-text {
+  color: #D3CECE;
+  padding: 2px 16px;
+}
+
+.buy-sell-toggle {
+  display: flex;
+  flex-direction: row;
+}
+
+.card-main-body nav {
+  padding: 8px 16px;
+}
+
+.card-main-body ul li {
+  padding: 10px auto;
+}
+
+.buy-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 12px 16px 16px;
+  margin-bottom: 100px;
+
+}
+
+.buy-menu label input {
+  padding: 8px 16px;
+  margin: 10px 6px;
+
+}
+
+.buy-menu label,
+.order-execute-line,
+.buy-footer {
+  color: #D3CECE;
+}
+
+.buy-menu input {
+  border: 1px solid #D3CECE;
+  border-radius: 10px;
+  background-color: #0e231e;
+  color: #0abb92;
+  width: 126px;
+}
+
+.stock-quantity,
+.stock-price-limit {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 16px 16px;
+}
+
+.stock-quantity input,
+.stock-price-limit input {
+  padding: 5px 10px;
+  border: 0px;
+  outline: 0px;
+  text-align: right;
+}
+
+.order-execute-line p {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  border-bottom: 1px solid #D3CECE;
+  margin-bottom: 0px;
+  font-size: small;
+  text-align: center;
+}
+
+.buy-footer,
+.sell-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buy-footer p,
+.sell-footer p {
+  padding: 10px 16px;
+}
+
+.buy-button,
+.sell-button {
+  display: flex;
+  justify-content: center;
+}
+
+.buy-button button,
+.sell-button button {
+  width: 100%;
+  margin: 10px 20px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: #0abb92;
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.price-market input {
+  color: white;
+  background-color: #1d1d1d;
+}
+
+/* Nav Link  */
+.card-main-body .nav-tabs {
+  border: 0;
+}
+
+.card-main-body .nav-tabs .nav-link {
+
+  background-color: transparent;
+  border: 0;
+  border-bottom: 5px solid transparent;
+  outline: 0;
+  color: #D3CECE;
+}
+
+.nav-tabs .nav-link.active {
+  color: #0abb92;
+  border-color: #0abb92;
+}
+
+/* NavBar */
+
+.stock-nav {
+  padding: 20px 0;
+}
+
+.stock-nav nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search-bar {
+  flex-grow: 1;
+  position: relative;
+  margin-left: 20px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding-left: 40px;
+  border-radius: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 50%;
+  background-color: black;
+  border: 0;
+  border: 1px solid #2a2a2a;
+  color: #D3CECE;
+  outline: 0;
+}
+
+.search-bar svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10px;
+
+}
+
+.stock-nav ul {
+  display: flex;
+  color: #fff;
+  column-gap: 20px;
+  font-size: 20px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.stock-nav ul li:hover,
+.active {
+  color: #0abb92;
+}
+
+.logo img {
+  width: 50px;
+}
+
+.logo-title h4 {
+  margin-bottom: 0;
+  padding-left: 10px;
+  padding-right: 20px;
+  font-size: 30px;
+  color: white;
+  font-weight: bold;
+}
+
+/* Sell */
+
+.sell-footer {
+  color: white;
 }
