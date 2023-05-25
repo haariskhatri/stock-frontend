@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from "./loader";
+import axios from "axios";
+import io from "socket.io-client";
 
 const CreateICO = () => {
 
@@ -12,21 +14,46 @@ const CreateICO = () => {
         companyUnits: ''
     })
 
+    const socket = io('http://localhost:4000', {
+        autoConnect: false
+    });
+
+    useEffect(() => {
+        socket.connect();
+
+        socket.on('message', (data) => {
+            console.log(data.message);
+        })
+
+        return () => {
+            socket.off('message');
+        }
+    }, [socket])
+
     const [showloader, setshowloader] = useState(false);
 
     const handlechange = (event) => {
 
         const { name, value } = event.target;
 
-        setipo((prev) => {
-            return { ...prev, [name]: value }
-        })
+        if (name == 'companySymbol') {
+            const symbol = value.toUpperCase();
+            setipo((prev) => {
+                return { ...prev, [name]: symbol }
+            })
+        }
+        else {
+
+            setipo((prev) => {
+                return { ...prev, [name]: value }
+            })
+        }
 
 
     }
 
 
-    const createico = (e) => {
+    const createico = async (e) => {
 
         e.preventDefault();
         const isValueNull = Object.values(ipo).some(value => value == '' || value == null);
@@ -36,16 +63,22 @@ const CreateICO = () => {
 
         if (!isValueNull) {
 
-            setshowloader(true);
+
 
             try {
+                setshowloader(true);
+
+                const register = await axios.post('http://localhost:4000/addipo', { ipo });
 
             } catch (error) {
-
+                console.log(error);
             }
             finally {
-                setshowloader(false)
+                console.log("here");
+                setshowloader(false);
+
             }
+
         }
         else if (isZero) {
             toast.error('Value cannot be Zero')
