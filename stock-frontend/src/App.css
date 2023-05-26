@@ -1,6 +1,6 @@
 body {
   overflow-x: hidden;
-  background-color: black;
+  background-color: black
 }
 
 input::-webkit-outer-spin-button,
@@ -600,4 +600,123 @@ input::-webkit-inner-spin-button {
 
 .sell-footer {
   color: white;
+}
+
+/* Footer */
+.container {
+  max-width: 1200px;
+}
+
+.market-page {
+  padding-bottom: 60px;
+}
+
+.footer {
+  background-color: #1e2232;
+  color: white;
+  padding: 30px;
+}
+
+.footer-section {
+  border-bottom: 1px solid rgba(211, 206, 206, 0.3);
+  padding-top: 20px;
+  padding-bottom: 30px;
+  margin-bottom: 20px;
+}
+
+.footer .container .row img {
+  width: 45px;
+}
+
+.footer-logo {
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+
+}
+
+.footer-logo-title {
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.footer-address {
+  padding-top: 20px;
+  font-weight: 500;
+}
+
+.footer-icons {
+  display: flex;
+  column-gap: 20px;
+  padding-top: 10px;
+}
+
+.footer-icons i {
+  color: white;
+  font-size: 25px;
+
+}
+
+/* CopyRight Section */
+
+/*Company Logo*/
+
+.company-info img {
+  width: 55px;
+  height: 55px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.company-info {
+  padding-top: 50px;
+}
+
+.company-detail {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  align-items: center;
+
+}
+
+
+
+.company-name {
+  font-size: 25px;
+}
+
+.company-category {
+  color: rgba(249, 247, 247, 0.673);
+  border: 1px solid #d3cece4d;
+  border-radius: 10px;
+  padding: 2px 10px;
+  font-size: 12px;
+}
+
+.buy-sell-card .card {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+stock-chart {
+  padding-bottom: 30px;
+}
+
+/* Company Profile */
+
+.company-profile nav .nav {
+  border: 0;
+}
+
+.company-profile .nav-link {
+  color: white;
+}
+
+.company-profile .nav-link.active {
+  color: #0abb92;
+  background-color: black;
+  border: 0;
+  border-bottom: 3px solid #0abb92;
 }
