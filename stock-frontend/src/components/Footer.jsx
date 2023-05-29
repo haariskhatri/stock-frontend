@@ -26,9 +26,9 @@ const Footer = () => {
                                     Sola, Ahmedabad, Gujarat - 380060 <br />
                                 </div>
                                 <div className="footer-icons">
-                                    <i class="fa-brands fa-facebook"></i>
-                                    <i class="fa-brands fa-twitter"></i>
-                                    <i class="fa-brands fa-linkedin"></i>
+                                    <i className="fa-brands fa-facebook"></i>
+                                    <i className="fa-brands fa-twitter"></i>
+                                    <i className="fa-brands fa-linkedin"></i>
                                 </div>
                             </div>
                             <div className="col-md-3">
@@ -43,7 +43,7 @@ const Footer = () => {
                     <div className="copyright-section">
 
                         &copy;
-                        2023-2026 TradeTrek. All rights reserved , Built with <i class="fa-solid fa-heart" style={{ color: "red" }} /> in India
+                        2023-2026 TradeTrek. All rights reserved , Built with <i className="fa-solid fa-heart" style={{ color: "red" }} /> in India
 
                     </div>
 
