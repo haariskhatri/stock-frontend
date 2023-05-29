@@ -101,7 +101,7 @@ const BuySellCard = () => {
 								</form>
 							</div>
 
-							<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+							<div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabIndex="0">
 								<form >
 									<div className="row">
 										<div className="col-lg-12">
