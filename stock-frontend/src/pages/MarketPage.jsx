@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MarketOrder from "../components/BuySellCard";
 import NavBar from "../components/navbar";
 import Footer from "../components/Footer";
 import RelianceLogo from '../assets/reliance-logo.png'
 import StockChart from "../components/StockChart";
 import CompanyProfile from "../components/CompanyProfile";
+import PerformanceComponent from "../components/PerformanceComponent";
+import FundamentalsComponent from "../components/FundamentalsComponent";
+
 
 
 
 const MarketPage = () => {
 
+    useEffect(() => {
+        document.title = `Reliance Power Share Price Today`
+    }, [])
 
 
     return (
@@ -37,6 +43,12 @@ const MarketPage = () => {
 
                             </div>
                             <StockChart />
+                            <PerformanceComponent />
+                            <FundamentalsComponent />
+                            <div style={{ color: '#b0b2ba' }}>
+                                Understanding Fundamentals <i className="fa-solid fa-circle-info"></i>
+                            </div>
+
                             <CompanyProfile />
 
 
