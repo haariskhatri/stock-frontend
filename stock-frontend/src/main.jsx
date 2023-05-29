@@ -9,6 +9,7 @@ import IpoRegister from "./pages/IpoRegister";
 import './App.css'
 import BuySellCard from "./components/BuySellCard";
 import MarketPage from "./pages/MarketPage";
+import ReadMore from "./components/ReadMore";
 
 const router = createBrowserRouter([
   {
