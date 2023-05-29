@@ -1,23 +1,26 @@
 import React from 'react'
+import ReadMoreReact from 'read-more-react/dist/components/ReadMoreReact';
+import ReadMore from './ReadMore';
 
 const CompanyProfile = ({ details }) => {
+
+    const text = "Reliance Power is an Indian power generation and utility company. It is a subsidiary of Reliance Group, a conglomerate led by Indian business tycoon Mukesh Ambani. Reliance Power was incorporated in 2007 and is headquartered in Mumbai, Maharashtra."
+
+        + "The company focuses on the development, construction, and operation of power projects across India. It has a diverse portfolio that includes thermal, gas, and renewable energy projects. Reliance Power has undertaken several ambitious projects, including the Sasan Ultra Mega Power Project in Madhya Pradesh, which is one of the largest integrated power plants in the world."
+
+        + "Reliance Power has also ventured into renewable energy sources such as solar and wind power. It has developed and operates solar power projects in Rajasthan and Maharashtra and has plans for further expansion in the renewable energy sector."
+
+        + "The company has actively pursued partnerships and collaborations with international companies to leverage expertise and technology. Reliance Power has formed strategic alliances with companies like GE Energy, Shanghai Electric Group, and Toshiba Corporation, among others."
+
+        + "Despite its ambitious projects and potential, Reliance Power faced challenges in recent years. It encountered delays and cost overruns in some of its projects, leading to financial strain. However, the company has been working on resolving these issues and exploring opportunities to enhance its operational efficiency and financial stability."
     return (
         <>
             <div className="company-profile">
-                <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">About</button>
-                        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</button>
-                        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</button>
-                    </div>
-                </nav>
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-
-                    </div>
-                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
-                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+                <div className="company-title titles">
+                    About Reliance Power
                 </div>
+
+                <ReadMore text={text} />
             </div>
         </>
     )
