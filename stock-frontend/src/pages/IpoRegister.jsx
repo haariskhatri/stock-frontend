@@ -1,24 +1,35 @@
 import { useState } from 'react'
 
 
-import CreateICO from '../components/createico'
+import NavBar from '../components/navbar';
+import CreateIPO from '../components/CreateIPO';
+import SideMenu from '../components/sidemenu';
+import Footer from '../components/Footer';
+import { useEffect } from 'react';
 
 
 const IpoRegister = () => {
 
+    useEffect(() => {
+        document.title = 'Admin Page'
+    }, [])
+
 
     return (
         <>
-            <div className="container">
-
-                <div className="row">
-                    <div className="col-md-3">
-
-                    </div>
-                    <div className="col-md-9">
-                        <CreateICO />
+            <div className="ipo-register">
+                <div className="container">
+                    <NavBar />
+                    <div className="row">
+                        <div className="col-md-3">
+                            <SideMenu />
+                        </div>
+                        <div className="col-md-9">
+                            <CreateIPO />
+                        </div>
                     </div>
                 </div>
+                <Footer />
             </div>
 
         </>
