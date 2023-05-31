@@ -5,17 +5,40 @@ import axios from 'axios';
 
 const CreateIPO = () => {
 
-    const addIpo = (e) => {
+    const addIpo = async (e) => {
         e.preventDefault();
+
+        const saved = await axios.post('http://localhost:4000/addipo', company)
+        console.log(saved);
+
+        setCompany({
+            companyId: '',
+            companyName: '',
+            companyLogo: '',
+            companySymbol: '',
+            companyShares: '',
+            companyValuepershare: '',
+            companyMinimumSlotSize: '',
+            companyMaximumSlotSize: '',
+            companyMaximumSlotsAllowed: '',
+            companyValuation: '',
+            companyStartdate: '',
+            companyEnddate: '',
+            companyDescription: ''
+        })
 
     }
 
     const [company, setCompany] = useState({
         companyId: '',
         companyName: '',
+        companyLogo: '',
         companySymbol: '',
         companyShares: '',
         companyValuepershare: '',
+        companyMinimumSlotSize: '',
+        companyMaximumSlotSize: '',
+        companyMaximumSlotsAllowed: '',
         companyValuation: '',
         companyStartdate: '',
         companyEnddate: '',
@@ -25,12 +48,28 @@ const CreateIPO = () => {
     const handleChange = (event) => {
         const { name, value } = event.target;
 
+        console.log(name + " " + value);
+
         setCompany((prev) => {
             return { ...prev, [name]: value }
         })
     }
 
+    useEffect(() => {
 
+        const func = async () => {
+
+            const id = await axios.get('http://localhost:4000/getid');
+            const finalid = id.data.id;
+
+
+
+            setCompany((prev) => {
+                return { ...prev, ['companyId']: finalid }
+            })
+        }
+        func()
+    }, [company])
 
     return (
         <>
@@ -42,14 +81,14 @@ const CreateIPO = () => {
                     <div className="col-lg-6">
                         <div className="form-floating mb-3">
                             <input type="text" className="form-control" id="floatingInput" placeholder=" " readOnly
-                                value='1'
+                                value={company.companyId}
                             />
                             <label for="floatingInput">IPO ID</label>
                         </div>
                     </div>
 
                     <div className="form-floating mb-3">
-                        <input type="text" className="form-control" id="floatingInput" placeholder=" "
+                        <input type="text" className="form-control" id="floatingInput" placeholder=" " required
                             name='companyName'
                             onChange={handleChange}
                             value={company.companyName}
@@ -58,7 +97,7 @@ const CreateIPO = () => {
                     </div>
 
                     <div className="form-floating mb-3">
-                        <input type="text" className="form-control" id="floatingInput" placeholder=" "
+                        <input type="text" className="form-control" id="floatingInput" placeholder=" " required
                             name='companySymbol'
                             onChange={handleChange}
                             value={company.companySymbol}
@@ -66,14 +105,24 @@ const CreateIPO = () => {
                         <label for="floatingInput">Company Symbol</label>
                     </div>
 
+                    <div className="form-floating mb-3">
+                        <label for="formFile" class="form-label">Logo</label>
+                        <input class="form-control" type="file" id="formFile"
+                            name='companyLogo'
+                            value={company.companyLogo}
+                            onChange={handleChange}
+                        />
+                    </div>
+
 
                     <div className="col-lg-12">
                         <div className="form-floating mb-3">
-                            <input type="text" className="form-control" id="floatingInput" placeholder=" "
+                            <input type="text" className="form-control" id="floatingInput" placeholder=" " required
 
                                 name='companyValuation'
                                 onChange={handleChange}
-                                value={new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(company.companyShares * company.companyValuepershare)}
+                                value={(new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format((company.companyShares * company.companyValuepershare) / 10000000) + ' Cr')}
+
                             />
                             <label for="floatingInput">Valuation</label>
                         </div>
@@ -85,7 +134,7 @@ const CreateIPO = () => {
 
                         <div className="col-lg-6">
                             <div className="form-floating mb-3">
-                                <input type="text" className="form-control" id="floatingInput" placeholder=" "
+                                <input type="text" className="form-control" id="floatingInput" placeholder=" " required
                                     name='companyShares'
                                     onChange={handleChange}
                                     value={company.companyShares}
@@ -97,7 +146,7 @@ const CreateIPO = () => {
                         <div className="col-lg-6">
 
                             <div className="form-floating mb-3">
-                                <input type="text" className="form-control" id="floatingInput" placeholder=" "
+                                <input type="text" className="form-control" id="floatingInput" placeholder=" " required
                                     name='companyValuepershare'
                                     onChange={handleChange}
                                     value={company.companyValuepershare}
@@ -108,36 +157,80 @@ const CreateIPO = () => {
 
                         </div>
 
-                        <div className="col-lg-12">
+                        {/* <div className="col-lg-12">
                             <div className="form-floating mb-3">
                                 <input type="text" className="form-control" id="floatingInput" placeholder=" " readOnly
 
-                                    value={new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(company.companyShares * company.companyValuepershare)}
+                                    value={(new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format((company.companyShares * company.companyValuepershare) / 10000000) + 'Cr')}
+
                                 />
                                 <label for="floatingInput">Valuation</label>
                             </div>
-                        </div>
+                        </div> */}
 
                         <div className="col-lg-6">
                             <div className="form-floating mb-3">
-                                <input type="text" className="form-control" id="floatingInput" placeholder=" " readOnly
-                                    value={(company.companyShares * company.companyValuepershare) / 14000}
+                                <input type="text" className="form-control" id="floatingInput" placeholder=" " required
+                                    name='companyMinimumSlotSize'
+                                    onChange={handleChange}
+                                    value={company.companyMinimumSlotSize}
                                 />
-                                <label for="floatingInput">Slots</label>
+                                <label for="floatingInput">Minimum Slot Size</label>
                             </div>
                         </div>
                         <div className="col-lg-6">
                             <div className="form-floating mb-3">
-                                <input type="text" className="form-control" id="floatingInput" placeholder=" " readOnly defaultValue={new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(14000)} />
-                                <label for="floatingInput">Value per Slot</label>
+                                <input type="text" className="form-control" id="floatingInput" placeholder=" " required
+                                    name='companyMaximumSlotSize'
+                                    onChange={handleChange}
+                                    value={company.companyMaximumSlotSize}
+                                />
+                                <label for="floatingInput">Maximum Slot Size</label>
                             </div>
 
+                        </div>
+
+                        <div className="col-lg-6">
+                            <div className="form-floating mb-3">
+                                <input type="text" className="form-control" id="floatingInput" placeholder=" "
+                                    name='companyMinimumSlotSize'
+                                    onChange={handleChange}
+
+                                    value={new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(company.companyMinimumSlotSize * company.companyValuepershare)}
+                                />
+                                <label for="floatingInput">Minimum Slot Size</label>
+                            </div>
+                        </div>
+                        <div className="col-lg-6">
+                            <div className="form-floating mb-3">
+                                <input type="text" className="form-control" id="floatingInput" placeholder=" " readOnly defaultValue='0'
+                                    name='companyMaximumSlotSize'
+                                    onChange={handleChange}
+                                    value={new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(company.companyMaximumSlotSize * company.companyValuepershare)}
+                                />
+                                <label for="floatingInput">Maximum Slot Size Value</label>
+                            </div>
+
+                        </div>
+
+                        <div className="col-lg-12">
+                            <div className="form-floating mb-3">
+                                <input type="text" className="form-control" id="floatingInput" placeholder=" " required
+                                    name='companyMaximumSlotsAllowed'
+
+                                    onChange={handleChange}
+
+                                    value={company.companyMaximumSlotsAllowed}
+
+                                />
+                                <label for="floatingInput">Maximum Slot Amount Allowed Per User</label>
+                            </div>
                         </div>
 
 
                         <div className="col-lg-6">
                             <div className="form-floating mb-3">
-                                <input type="date" className="form-control" id="floatingInput" placeholder=" "
+                                <input type="date" className="form-control" id="floatingInput" placeholder=" " required
                                     name='companyStartdate'
                                     onChange={handleChange}
                                     value={company.companyStartdate}
@@ -147,7 +240,7 @@ const CreateIPO = () => {
                         </div>
                         <div className="col-lg-6">
                             <div className="form-floating mb-3">
-                                <input type="date" className="form-control" id="floatingInput" placeholder=" "
+                                <input type="date" className="form-control" id="floatingInput" placeholder=" " required
                                     name='companyEnddate'
                                     onChange={handleChange}
                                     value={company.companyEnddate}
@@ -158,7 +251,7 @@ const CreateIPO = () => {
 
                         <div className="col-lg-12">
                             <div className="form-floating mb-3">
-                                <textarea className="form-control" id="floatingInput" placeholder=" " style={{ height: '200px' }}
+                                <textarea className="form-control" id="floatingInput" placeholder=" " style={{ height: '200px' }} required
                                     name='companyDescription'
                                     onChange={handleChange}
                                     value={company.companyDescription}
