@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 const IpoRegister = () => {
 
     useEffect(() => {
-        document.title = 'Admin Page'
+        document.title = 'IPO Register'
     }, [])
 
 
