@@ -10,11 +10,16 @@ import './App.css'
 import BuySellCard from "./components/BuySellCard";
 import MarketPage from "./pages/MarketPage";
 import ReadMore from "./components/ReadMore";
+import HomePage from "./pages/HomePage";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <IpoRegister />,
+    path: "/home",
+    element: <HomePage />
+  },
+  {
+    path: '/register',
+    element: <IpoRegister />
   },
   {
     path: '/buy',
