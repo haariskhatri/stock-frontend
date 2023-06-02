@@ -8,7 +8,7 @@ const CreateIPO = () => {
     const addIpo = async (e) => {
         e.preventDefault();
 
-        const saved = await axios.post('http://localhost:4000/addipo', company)
+        const saved = await axios.post('http://localhost:4000/ipo/addipo', company)
         console.log(saved);
 
         setCompany({
@@ -48,24 +48,35 @@ const CreateIPO = () => {
     const handleChange = (event) => {
         const { name, value } = event.target;
 
-        console.log(name + " " + value);
 
-        setCompany((prev) => {
-            return { ...prev, [name]: value }
-        })
+
+        if (name == 'companyStartdate' || name == 'companyEnddate') {
+            const date = new Date(value).toISOString().split('T')[0];
+            console.log(value + " " + date);
+            setCompany((prev) => {
+                return { ...prev, [name]: date }
+            })
+        }
+
+        else {
+
+            setCompany((prev) => {
+                return { ...prev, [name]: value }
+            })
+        }
     }
 
     useEffect(() => {
 
         const func = async () => {
 
-            const id = await axios.get('http://localhost:4000/getid');
-            const finalid = id.data.id;
+            const id = await axios.get('http://localhost:4000/ipo/getid');
+
 
 
 
             setCompany((prev) => {
-                return { ...prev, ['companyId']: finalid }
+                return { ...prev, ['companyId']: id.data }
             })
         }
         func()
@@ -83,7 +94,7 @@ const CreateIPO = () => {
                             <input type="text" className="form-control" id="floatingInput" placeholder=" " readOnly
                                 value={company.companyId}
                             />
-                            <label for="floatingInput">IPO ID</label>
+                            <label htmlFor="floatingInput">IPO ID</label>
                         </div>
                     </div>
 
@@ -93,7 +104,7 @@ const CreateIPO = () => {
                             onChange={handleChange}
                             value={company.companyName}
                         />
-                        <label for="floatingInput">Company Name</label>
+                        <label htmlFor="floatingInput">Company Name</label>
                     </div>
 
                     <div className="form-floating mb-3">
@@ -102,12 +113,12 @@ const CreateIPO = () => {
                             onChange={handleChange}
                             value={company.companySymbol}
                         />
-                        <label for="floatingInput">Company Symbol</label>
+                        <label htmlFor="floatingInput">Company Symbol</label>
                     </div>
 
                     <div className="form-floating mb-3">
-                        <label for="formFile" class="form-label">Logo</label>
-                        <input class="form-control" type="file" id="formFile"
+                        <label htmlFor="formFile" className="form-label">Logo</label>
+                        <input className="form-control" type="file" id="formFile"
                             name='companyLogo'
                             value={company.companyLogo}
                             onChange={handleChange}
@@ -124,7 +135,7 @@ const CreateIPO = () => {
                                 value={(new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format((company.companyShares * company.companyValuepershare) / 10000000) + ' Cr')}
 
                             />
-                            <label for="floatingInput">Valuation</label>
+                            <label htmlFor="floatingInput">Valuation</label>
                         </div>
                     </div>
 
@@ -139,7 +150,7 @@ const CreateIPO = () => {
                                     onChange={handleChange}
                                     value={company.companyShares}
                                 />
-                                <label for="floatingInput">Shares</label>
+                                <label htmlFor="floatingInput">Shares</label>
                             </div>
 
                         </div>
@@ -152,7 +163,7 @@ const CreateIPO = () => {
                                     value={company.companyValuepershare}
                                 />
 
-                                <label for="floatingInput">Value Per Share</label>
+                                <label htmlFor="floatingInput">Value Per Share</label>
                             </div>
 
                         </div>
@@ -175,7 +186,7 @@ const CreateIPO = () => {
                                     onChange={handleChange}
                                     value={company.companyMinimumSlotSize}
                                 />
-                                <label for="floatingInput">Minimum Slot Size</label>
+                                <label htmlFor="floatingInput">Minimum Slot Size</label>
                             </div>
                         </div>
                         <div className="col-lg-6">
@@ -185,7 +196,7 @@ const CreateIPO = () => {
                                     onChange={handleChange}
                                     value={company.companyMaximumSlotSize}
                                 />
-                                <label for="floatingInput">Maximum Slot Size</label>
+                                <label htmlFor="floatingInput">Maximum Slot Size</label>
                             </div>
 
                         </div>
@@ -198,7 +209,7 @@ const CreateIPO = () => {
 
                                     value={new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(company.companyMinimumSlotSize * company.companyValuepershare)}
                                 />
-                                <label for="floatingInput">Minimum Slot Size</label>
+                                <label htmlFor="floatingInput">Minimum Slot Size</label>
                             </div>
                         </div>
                         <div className="col-lg-6">
@@ -208,7 +219,7 @@ const CreateIPO = () => {
                                     onChange={handleChange}
                                     value={new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(company.companyMaximumSlotSize * company.companyValuepershare)}
                                 />
-                                <label for="floatingInput">Maximum Slot Size Value</label>
+                                <label htmlFor="floatingInput">Maximum Slot Size Value</label>
                             </div>
 
                         </div>
@@ -223,7 +234,7 @@ const CreateIPO = () => {
                                     value={company.companyMaximumSlotsAllowed}
 
                                 />
-                                <label for="floatingInput">Maximum Slot Amount Allowed Per User</label>
+                                <label htmlFor="floatingInput">Maximum Slot Amount Allowed Per User</label>
                             </div>
                         </div>
 
@@ -235,7 +246,7 @@ const CreateIPO = () => {
                                     onChange={handleChange}
                                     value={company.companyStartdate}
                                 />
-                                <label for="floatingInput">Start Date</label>
+                                <label htmlFor="floatingInput">Start Date</label>
                             </div>
                         </div>
                         <div className="col-lg-6">
@@ -245,7 +256,7 @@ const CreateIPO = () => {
                                     onChange={handleChange}
                                     value={company.companyEnddate}
                                 />
-                                <label for="floatingInput">Deadline</label>
+                                <label htmlFor="floatingInput">Deadline</label>
                             </div>
                         </div>
 
@@ -256,7 +267,7 @@ const CreateIPO = () => {
                                     onChange={handleChange}
                                     value={company.companyDescription}
                                 />
-                                <label for="floatingInput">Description</label>
+                                <label htmlFor="floatingInput">Description</label>
                             </div>
                         </div>
 
