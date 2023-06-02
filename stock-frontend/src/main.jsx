@@ -11,6 +11,8 @@ import BuySellCard from "./components/BuySellCard";
 import MarketPage from "./pages/MarketPage";
 import ReadMore from "./components/ReadMore";
 import HomePage from "./pages/HomePage";
+import { AdminDetailsPage } from "./pages/AdminDetailsPage";
+import { SignUpPage } from "./pages/SignUpPage";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +26,16 @@ const router = createBrowserRouter([
   {
     path: '/buy',
     element: <MarketPage />
+  },
+  {
+    path: '/admindetail',
+    element: <AdminDetailsPage />
+  },
+  {
+    path: '/signup',
+    element: <SignUpPage />
   }
+
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
