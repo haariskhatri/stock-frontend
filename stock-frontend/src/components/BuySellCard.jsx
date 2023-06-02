@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 import io from 'socket.io-client'
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const BuySellCard = () => {
@@ -11,21 +13,93 @@ const BuySellCard = () => {
 	// 	autoConnect: false
 	// });
 
+	const socket = io("ws://localhost:4000");
+
+
 	const [atmarket, setatmarket] = useState('At Market');
 
-	const [stock, setstock] = useState({
+	const [buystock, setbuystock] = useState({
+		stockId: '',
+		stockQuantity: '',
+		stockPriceLimit: ''
+	})
+
+	const [sellstock, setsellstock] = useState({
+		stockId: '',
 		stockQuantity: '',
 		stockPriceLimit: ''
 	})
 
 	const [ismarket, setismarket] = useState(false);
 
-	const handlechange = (event) => {
+	const handlebuychange = (event) => {
 		const { name, value } = event.target;
 
-		setstock((prev) => {
+		setbuystock((prev) => {
 			return { ...prev, [name]: value }
 		})
+	}
+
+	const handlesellchange = (event) => {
+		const { name, value } = event.target;
+
+		setsellstock((prev) => {
+			return { ...prev, [name]: value }
+		})
+	}
+
+	const buyStock = (e) => {
+		e.preventDefault();
+
+		const data = {
+			socketId: socket.id,
+			stockId: buystock.stockId,
+			customerId: 10,
+			shares: buystock.stockQuantity,
+			priceLimit: buystock.stockPriceLimit
+		}
+		console.log(data);
+
+		socket.emit('buyOrder', data);
+
+	}
+
+	socket.on('buysuccess', () => {
+		toast.success('Buy Request succesful ')
+		console.log("Success");
+		setbuystock({
+
+			stockId: '',
+			shares: '',
+			priceLimit: ''
+		})
+	})
+	socket.on('sellsuccess', () => {
+		toast.success('Sell Request succesful ! ')
+
+		setsellstock({
+
+			stockId: '',
+			shares: '',
+			priceLimit: ''
+		})
+	})
+
+
+
+	const sellOrder = (e) => {
+		e.preventDefault();
+
+		const data = {
+			socketId: socket.id,
+			stockId: sellstock.stockId,
+			customerId: 10,
+			shares: sellstock.stockQuantity,
+			priceLimit: sellstock.stockPriceLimit
+		}
+
+		socket.emit('sellOrder', data);
+
 	}
 
 	// useEffect(() => {
@@ -57,14 +131,20 @@ const BuySellCard = () => {
 						</nav>
 						<div className="tab-content" id="nav-tabContent">
 							<div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabIndex="0">
-								<form >
+								<form onSubmit={buyStock}>
 									<div className="row">
 										<div className="col-lg-12">
 											<div className="buy-menu">
+
+												<div className="stock-quantity">
+													<label htmlFor="stockQuantity">StockID</label>
+													<input type="text" name="stockId" value={buystock.stockId} onChange={handlebuychange} autoFocus />
+												</div>
+
 												<div className="stock-quantity">
 
 													<label htmlFor="stockQuantity">Quantity NSE</label>
-													<input type="number" name="stockQuantity" value={stock.stockQuantity} onChange={handlechange} autoFocus />
+													<input type="number" name="stockQuantity" value={buystock.stockQuantity} onChange={handlebuychange} autoFocus />
 												</div>
 
 												{ismarket ?
@@ -75,22 +155,22 @@ const BuySellCard = () => {
 													:
 													<div className="stock-price-limit">
 														<label onClick={() => { setismarket(true) }} style={{ cursor: "pointer" }}>Price Limit <KeyboardArrowDownIcon /></label>
-														<input type="number" name="stockPriceLimit" value={stock.stockPriceLimit} onChange={handlechange} />
+														<input type="number" name="stockPriceLimit" value={buystock.stockPriceLimit} onChange={handlebuychange} />
 													</div>
 												}
 
 											</div>
 											<div className="order-execute-line">
-												<p>Order will be executed at {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(stock.stockPriceLimit ? stock.stockPriceLimit : 0)} or lower price</p>
+												<p>Order will be executed at {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(buystock.stockPriceLimit ? buystock.stockPriceLimit : 0)} or lower price</p>
 											</div>
 
 											<div className="buy-footer">
 												<p>Balance : {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(0)} </p>
-												<p>Required : {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(stock.stockQuantity * stock.stockPriceLimit)} </p>
+												<p>Required : {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(buystock.stockQuantity * buystock.stockPriceLimit)} </p>
 											</div>
 
 											<div className="buy-button">
-												<button>
+												<button type="submit">
 													BUY
 												</button>
 											</div>
@@ -102,14 +182,20 @@ const BuySellCard = () => {
 							</div>
 
 							<div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabIndex="0">
-								<form >
+								<form onSubmit={sellOrder}>
 									<div className="row">
 										<div className="col-lg-12">
 											<div className="buy-menu">
+
+												<div className="stock-quantity">
+													<label htmlFor="stockQuantity">StockID</label>
+													<input type="text" name="stockId" value={sellstock.stockId} onChange={handlesellchange} autoFocus />
+												</div>
+
 												<div className="stock-quantity">
 
 													<label htmlFor="stockQuantity">Quantity NSE</label>
-													<input type="number" name="stockQuantity" value={stock.stockQuantity} onChange={handlechange} autoFocus />
+													<input type="number" name="stockQuantity" value={sellstock.stockQuantity} onChange={handlesellchange} autoFocus />
 												</div>
 
 												{ismarket ?
@@ -120,7 +206,7 @@ const BuySellCard = () => {
 													:
 													<div className="stock-price-limit">
 														<label onClick={() => { setismarket(true) }} style={{ cursor: "pointer" }}>Price Limit <KeyboardArrowDownIcon /></label>
-														<input type="number" name="stockPriceLimit" value={stock.stockPriceLimit} onChange={handlechange} />
+														<input type="number" name="stockPriceLimit" value={sellstock.stockPriceLimit} onChange={handlesellchange} />
 													</div>
 												}
 
@@ -134,7 +220,7 @@ const BuySellCard = () => {
 											</div>
 
 											<div className="sell-button">
-												<button>
+												<button type="submit">
 													SELL
 												</button>
 											</div>
@@ -148,8 +234,9 @@ const BuySellCard = () => {
 						</div>
 					</div>
 				</div>
-			</div>
 
+			</div>
+			<ToastContainer />
 		</>
 	)
 }
