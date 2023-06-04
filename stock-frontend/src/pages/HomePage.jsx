@@ -1,8 +1,11 @@
 import React from 'react'
+import { Iposubscribe } from '../components/iposubscribe';
 
 const HomePage = () => {
     return (
-        <div>HomePage</div>
+        <div>
+            <Iposubscribe/>
+        </div>
     )
 }
 

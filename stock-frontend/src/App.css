@@ -943,3 +943,12 @@ stock-chart {
 .ipo-register {
   position: relative;
 }
+
+.text-white{
+  color:white
+}
+
+.ipoadmin{
+  background-color: black;
+  margin: 20px;
+}
