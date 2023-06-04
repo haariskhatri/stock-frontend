@@ -949,4 +949,10 @@ stock-chart {
 .ipoadmin {
   background-color: black;
   margin: 20px;
+  padding: 20px 5px;
+
+}
+
+.ipo-admin .card-body {
+  padding: 20px 5px;
 }
