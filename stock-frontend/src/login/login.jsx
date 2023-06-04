@@ -60,7 +60,7 @@ export const Login = () => {
 
   return (
     <>
-     
+
       <div className='body-login container-fluid'>
         <div className="main-login col-8">
           <input type="checkbox" id="chk" aria-hidden="true" />
@@ -84,6 +84,7 @@ export const Login = () => {
 
           </div>
         </div>
+        
       </div>
             {
               otppage && <OtpPage setotppage={setotppage}/>

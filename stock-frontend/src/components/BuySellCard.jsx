@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const BuySellCard = () => {
 
 
-	// const socket = io('http://localhost:4000', {
+	// const socket = io('/api', {
 	// 	autoConnect: false
 	// });
 
@@ -55,6 +55,7 @@ const BuySellCard = () => {
 			socketId: socket.id,
 			stockId: buystock.stockId,
 			userId: 3,
+			userEmail: 'yash.khatri1616@gmail.com',
 			shares: buystock.stockQuantity,
 			price: buystock.stockPriceLimit
 		}
@@ -71,8 +72,9 @@ const BuySellCard = () => {
 		setbuystock({
 
 			stockId: '',
-			shares: '',
-			priceLimit: ''
+			stockQuantity: '',
+			stockPriceLimit: ''
+
 		})
 	})
 	socket.on('sellsuccess', () => {
@@ -81,8 +83,8 @@ const BuySellCard = () => {
 		setsellstock({
 
 			stockId: '',
-			shares: '',
-			priceLimit: ''
+			stockQuantity: '',
+			stockPriceLimit: ''
 		})
 	})
 
@@ -95,6 +97,7 @@ const BuySellCard = () => {
 			socketId: socket.id,
 			stockId: sellstock.stockId,
 			userId: 4,
+			userEmail: 'haarishkkhatri@gmail.com',
 			shares: sellstock.stockQuantity,
 			price: sellstock.stockPriceLimit
 		}

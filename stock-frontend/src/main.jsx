@@ -14,9 +14,6 @@ import HomePage from "./pages/HomePage";
 import { IpoAdmin } from "./components/IpoAdmin";
 import { Getipolist } from "./components/getipolist";
 import { Getipodata } from "./pages/Getipodata";
-import {GetSharesList}  from "./pages/GetSharesList";
-import { AdminCompony } from "./pages/AdminCompony";
-import { UserRegistration } from "./pages/UserRegistration";
 
 
 const router = createBrowserRouter([
@@ -31,6 +28,10 @@ const router = createBrowserRouter([
   {
     path: '/buy',
     element: <MarketPage />
+  },
+  {
+    path: '/',
+    element: <HomePage />
   },
   {
     path: '/getipo',

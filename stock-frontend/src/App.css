@@ -907,12 +907,10 @@ stock-chart {
 
 
 .side-menu li a.active {
-  display: block;
   padding: 10px 10px;
   margin: 0 -10px;
   background-color: black;
   align-content: center;
-  justify-content: center;
   border-radius: 10px;
   color: #0abb92;
 }
@@ -944,11 +942,11 @@ stock-chart {
   position: relative;
 }
 
-.text-white{
-  color:white
+.text-white {
+  color: white
 }
 
-.ipoadmin{
+.ipoadmin {
   background-color: black;
   margin: 20px;
 }
