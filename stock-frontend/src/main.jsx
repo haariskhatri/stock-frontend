@@ -11,14 +11,19 @@ import BuySellCard from "./components/BuySellCard";
 import MarketPage from "./pages/MarketPage";
 import ReadMore from "./components/ReadMore";
 import HomePage from "./pages/HomePage";
-import { AdminDetailsPage } from "./pages/AdminDetailsPage";
 import { IpoAdmin } from "./components/IpoAdmin";
 import { Getipolist } from "./components/getipolist";
 import { Getipodata } from "./pages/Getipodata";
+import {GetSharesList}  from "./pages/GetSharesList";
+import { AdminCompony } from "./pages/AdminCompony";
+import { UserRegistration } from "./pages/UserRegistration";
 
 
 const router = createBrowserRouter([
-
+  {
+    path: "/home",
+    element: <HomePage />
+  },
   {
     path: '/register',
     element: <IpoRegister />
@@ -26,8 +31,23 @@ const router = createBrowserRouter([
   {
     path: '/buy',
     element: <MarketPage />
+  },
+  {
+    path: '/getipo',
+    element: <Getipodata />
+  },
+  {
+    path: '/getshares',
+    element: <GetSharesList />
+  },
+  {
+    path: '/admincompony',
+    element: <AdminCompony />
+  },
+  {
+    path: '/Userlogin',
+    element: <UserRegistration />
   }
-
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
