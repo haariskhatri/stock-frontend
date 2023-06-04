@@ -26,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: '/buy',
     element: <MarketPage />
+  },
+  {
+    path: '/',
+    element: <HomePage />
   }
 
 ]);

@@ -42,7 +42,7 @@ export const Login = () => {
   }
   return (
     <>
-      <NavBar />
+
 
       <div className='body-login container-fluid'>
         <div className="main-login col-8">
@@ -67,7 +67,7 @@ export const Login = () => {
 
           </div>
         </div>
-        
+
       </div>
       <Footer />
     </>

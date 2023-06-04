@@ -2,13 +2,24 @@ import React from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
+import fs from 'fs';
+import { useRef } from 'react';
 
 const CreateIPO = () => {
 
     const addIpo = async (e) => {
         e.preventDefault();
 
-        const saved = await axios.post('http://localhost:4000/ipo/addipo', company)
+        //const saved = await axios.post('/api/ipo/addipo', company)
+        const uploadimage = new FormData()
+        uploadimage.append('image', companyLogo.current.files[0]);
+        uploadimage.append('name', company.companySymbol)
+        // await axios.post('/api/ipo/uploadlogo', uploadimage, {
+        //     headers: {
+        //         'Content-Type': 'multipart/form-data'
+        //     }
+        // })
+        await axios.post('/api/ipo/uploadlogo', { 'haaris': 'awesome' })
         console.log(saved);
 
         setCompany({
@@ -28,6 +39,8 @@ const CreateIPO = () => {
         })
 
     }
+
+    const companyLogo = useRef();
 
     const [company, setCompany] = useState({
         companyId: '',
@@ -70,7 +83,7 @@ const CreateIPO = () => {
 
         const func = async () => {
 
-            const id = await axios.get('http://localhost:4000/ipo/getid');
+            const id = await axios.get('/api/ipo/getid');
 
 
 
@@ -118,10 +131,8 @@ const CreateIPO = () => {
 
                     <div className="form-floating mb-3">
                         <label htmlFor="formFile" className="form-label">Logo</label>
-                        <input className="form-control" type="file" id="formFile"
+                        <input className="form-control" type="file" id="formFile" ref={companyLogo}
                             name='companyLogo'
-                            value={company.companyLogo}
-                            onChange={handleChange}
                         />
                     </div>
 
