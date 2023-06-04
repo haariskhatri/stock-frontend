@@ -12,9 +12,16 @@ export const Getipolist = ({ setipodata }) => {
     }, [])
 
     const getipo = () => {
-        fetch("/api/getipo")
+        fetch("/api/ipo/getallipos")
             .then(response => response.json())
-            .then(data => setData(data))
+            .then(data => {
+                setData(data)
+                console.log(data);
+            }
+            )
+
+
+
     }
 
     const getsingleipo = () => {
@@ -29,31 +36,31 @@ export const Getipolist = ({ setipodata }) => {
         <div className='container'>
 
 
-            {data?.ipo?.length && (
-                data?.ipo?.map((ipo, key) => {
-                    console.log(ipo)
-                    return (
 
-                        <div className="card ipoadmin" key={key}>
-                            <h5 className="card-title">{ipo.companyName}</h5>
+            {data?.map((ipo, key) => {
+                console.log(ipo)
+                return (
 
-                            <div className="card-body">
-                                <h5 className="card-title">Bid Date :{ipo.companyStartdate} -{ipo.companyEnddate}</h5>
-                                <p className="card-text">Price Range :{ipo.companyMinimumSlotSize}-{ipo.companyMaximumSlotSize}</p>
-                                <p className="card-text">Min Shares </p>
+                    <div className="card ipoadmin" key={key}>
+                        <h5 className="card-title">{ipo.companyName}</h5>
 
-                                <div className='buy-button'>
+                        <div className="card-body">
+                            <h5 className="card-title">Bid Date :{ipo.companyStartdate} -{ipo.companyEnddate}</h5>
+                            <p className="card-text">Price Range :{ipo.companyMinimumSlotSize}-{ipo.companyMaximumSlotSize}</p>
+                            <p className="card-text">Min Shares </p>
 
-                                    <button className="btn btn-primary" onClick={() => { componyid = ipo.companyId; getsingleipo() }}>Apply</button>
+                            <div className='buy-button'>
 
-                                </div>
+                                <button className="btn btn-primary" onClick={() => { componyid = ipo.companyId; getsingleipo() }}>Apply</button>
 
                             </div>
-                        </div>
 
-                    )
-                })
-            )
+                        </div>
+                    </div>
+
+                )
+            })
+
             }
 
         </div>
