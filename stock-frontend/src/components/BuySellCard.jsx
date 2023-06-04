@@ -64,6 +64,7 @@ const BuySellCard = () => {
 
 	}
 
+	
 	socket.on('buysuccess', () => {
 		toast.success('Buy Request succesful ')
 		console.log("Success");
