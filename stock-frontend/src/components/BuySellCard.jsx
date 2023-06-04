@@ -54,11 +54,11 @@ const BuySellCard = () => {
 		const data = {
 			socketId: socket.id,
 			stockId: buystock.stockId,
-			customerId: 10,
+			userId: 3,
 			shares: buystock.stockQuantity,
-			priceLimit: buystock.stockPriceLimit
+			price: buystock.stockPriceLimit
 		}
-		console.log(data);
+
 
 		socket.emit('buyOrder', data);
 
@@ -93,9 +93,9 @@ const BuySellCard = () => {
 		const data = {
 			socketId: socket.id,
 			stockId: sellstock.stockId,
-			customerId: 10,
+			userId: 4,
 			shares: sellstock.stockQuantity,
-			priceLimit: sellstock.stockPriceLimit
+			price: sellstock.stockPriceLimit
 		}
 
 		socket.emit('sellOrder', data);

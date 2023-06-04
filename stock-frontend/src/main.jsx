@@ -12,13 +12,9 @@ import MarketPage from "./pages/MarketPage";
 import ReadMore from "./components/ReadMore";
 import HomePage from "./pages/HomePage";
 import { AdminDetailsPage } from "./pages/AdminDetailsPage";
-import { SignUpPage } from "./pages/SignUpPage";
 
 const router = createBrowserRouter([
-  {
-    path: "/home",
-    element: <HomePage />
-  },
+
   {
     path: '/register',
     element: <IpoRegister />
@@ -30,10 +26,6 @@ const router = createBrowserRouter([
   {
     path: '/admindetail',
     element: <AdminDetailsPage />
-  },
-  {
-    path: '/signup',
-    element: <SignUpPage />
   }
 
 ]);
