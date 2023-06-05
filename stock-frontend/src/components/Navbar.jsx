@@ -3,6 +3,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import logo from '../assets/Logo.png'
 import WalletIcon from '@mui/icons-material/Wallet';
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
     const navigate=useNavigate()
@@ -27,7 +28,7 @@ const NavBar = () => {
                 <div className="container">
                     <nav>
                         <div className="logo">
-                            <img src={logo} alt="" />
+                            <Link to='/'><img src={logo} alt="" /></Link>
                         </div>
                         <div className="logo-title">
                             <h4>TradeTrek</h4>

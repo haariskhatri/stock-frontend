@@ -949,6 +949,7 @@ stock-chart {
 .ipoadmin {
   background-color: black;
   margin: 20px;
+<<<<<<< HEAD
 }
 .body-login {
   margin: 0;
@@ -1145,4 +1146,12 @@ stock-chart {
 .btn2-otp:active {
   box-shadow: inset 3px 3px 6px #b5b5b5,
             inset -3px -3px 6px #ffffff;
+=======
+  padding: 20px 5px;
+
+}
+
+.ipo-admin .card-body {
+  padding: 20px 5px;
+>>>>>>> 238caf7929628a5769046706f4b1dd8262f08dda
 }

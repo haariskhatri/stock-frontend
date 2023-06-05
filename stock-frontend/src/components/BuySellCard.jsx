@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const BuySellCard = () => {
+const BuySellCard = ({ company }) => {
 
 
 	// const socket = io('/api', {
@@ -53,7 +53,7 @@ const BuySellCard = () => {
 
 		const data = {
 			socketId: socket.id,
-			stockId: buystock.stockId,
+			stockId: company.companySymbol,
 			userId: 3,
 			userEmail: 'yash.khatri1616@gmail.com',
 			shares: buystock.stockQuantity,
@@ -95,7 +95,7 @@ const BuySellCard = () => {
 
 		const data = {
 			socketId: socket.id,
-			stockId: sellstock.stockId,
+			stockId: company.companySymbol,
 			userId: 4,
 			userEmail: 'haarishkkhatri@gmail.com',
 			shares: sellstock.stockQuantity,
@@ -122,8 +122,8 @@ const BuySellCard = () => {
 			<div className="buy-sell-card">
 				<div className="card">
 					<div className="card-body">
-						<h5 className="card-title">Adani Power</h5>
-						<p className="card-text">Rs 291 </p>
+						<h5 className="card-title">{company.companyName} ({company.companySymbol})</h5>
+						<p className="card-text">{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(company.companyValuepershare)} </p>
 					</div>
 
 					<div className="card-main-body">
@@ -139,11 +139,6 @@ const BuySellCard = () => {
 									<div className="row">
 										<div className="col-lg-12">
 											<div className="buy-menu">
-
-												<div className="stock-quantity">
-													<label htmlFor="stockQuantity">StockID</label>
-													<input type="text" name="stockId" value={buystock.stockId} onChange={handlebuychange} autoFocus />
-												</div>
 
 												<div className="stock-quantity">
 

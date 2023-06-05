@@ -7,62 +7,83 @@ import StockChart from "../components/StockChart";
 import CompanyProfile from "../components/CompanyProfile";
 import PerformanceComponent from "../components/PerformanceComponent";
 import FundamentalsComponent from "../components/FundamentalsComponent";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
+import { PreLoader } from "../components/PreLoader";
 
 
 
 
 const MarketPage = () => {
 
+    const { companyId } = useParams();
+    console.log(companyId)
+    const [company, setcompany] = useState()
+    const [showloader, setloader] = useState(true);
+
     useEffect(() => {
-        document.title = `Reliance Power Share Price Today`
+
+        axios.post('/api/ipo/getipo', { 'companyId': companyId }).then((data) => {
+            console.log(data.data);
+            setcompany(data.data);
+            setloader(false);
+            // document.title = `${company.companyName} Share Price Today`
+        })
     }, [])
 
 
     return (
         <>
-            <div className="market-page">
-                <div className="container">
-                    <div className="row">
-                        <NavBar />
-                    </div>
-                    <div className="row">
-                        <div className="col-md-8">
-
-                            <div className="company-info">
-                                <img src={RelianceLogo} />
-                            </div>
-
-                            <div className="company-detail">
-                                <div className="company-name">
-                                    Reliance Power
-                                </div>
-                                <div className="company-category">
-                                    Energy
-                                </div>
-
-
-                            </div>
-                            <StockChart />
-                            <PerformanceComponent />
-                            <FundamentalsComponent />
-                            <div style={{ color: '#b0b2ba' }}>
-                                Understanding Fundamentals <i className="fa-solid fa-circle-info"></i>
-                            </div>
-
-                            <CompanyProfile />
-
-
-
+            {company ?
+                <div className="market-page">
+                    <div className="container">
+                        <div className="row">
+                            <NavBar />
                         </div>
-                        <div className="col-md-4">
-                            <div className="market-order">
-                                <MarketOrder />
+                        <div className="row">
+                            <div className="col-md-8">
+
+                                <div className="company-info">
+                                    <img src={`/public/${company.companySymbol}.jpg`} />
+                                </div>
+
+                                <div className="company-detail">
+                                    <div className="company-name">
+                                        {company.companyName}
+                                    </div>
+                                    <div className="company-category">
+                                        Energy
+                                    </div>
+
+
+                                </div>
+                                <StockChart />
+                                <PerformanceComponent />
+                                <FundamentalsComponent />
+                                <div style={{ color: '#b0b2ba' }}>
+                                    Understanding Fundamentals <i className="fa-solid fa-circle-info"></i>
+                                </div>
+
+                                <CompanyProfile description={company.companyDescription} name={company.companyName} />
+
+
+
+                            </div>
+                            <div className="col-md-4">
+                                <div className="market-order">
+                                    <MarketOrder company={company} />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                :
+                <>Company Not Found</>
+            }
+            {showloader && <PreLoader />}
             <Footer />
+
         </>
     )
 }
