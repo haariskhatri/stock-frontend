@@ -45,6 +45,10 @@ const router = createBrowserRouter([
     element: <GetSharesList />
   },
   {
+    path: '/detail/:companyId',
+    element: <MarketPage />
+  },
+  {
     path: '/admincompony',
     element: <AdminCompony />
   },
