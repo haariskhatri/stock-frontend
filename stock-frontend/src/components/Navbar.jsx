@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import logo from '../assets/Logo.png'
 import WalletIcon from '@mui/icons-material/Wallet';
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
 
@@ -15,7 +16,7 @@ const NavBar = () => {
                 <div className="container">
                     <nav>
                         <div className="logo">
-                            <img src={logo} alt="" />
+                            <Link to='/'><img src={logo} alt="" /></Link>
                         </div>
                         <div className="logo-title">
                             <h4>TradeTrek</h4>
