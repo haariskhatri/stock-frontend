@@ -1,16 +1,22 @@
 import React, { useState } from 'react'
 import '../App.css'
-import NavBar from '../components/navbar'
-import Footer from '../components/Footer'
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import io from 'socket.io-client'
+import { OtpPage } from '../components/OtpPage';
+import { useNavigate } from 'react-router-dom';
 
+// const socket = io("ws://localhost:4000");
 export const Login = () => {
   const [data, setdata] = useState('')
-
+  const [otppage, setotppage] = useState(false)
+  const navigate=useNavigate()
   const login = () => {
+    
     const email = document.getElementById('email').value
     const pass = document.getElementById('pass').value
 
-    const response = fetch('http://localhost:3000/login', {
+    const response = fetch('/api/login/login', {
       method: 'post',
       body: JSON.stringify({
         email: email,
@@ -19,30 +25,47 @@ export const Login = () => {
       headers: {
         'Content-type': 'application/json'
       }
-    }).then(response => response.json()).then(data => setdata(data))
-    alert("Login Successfully")
+    }).then(res => res.json())
+    .then((data) => {
+      if(data.success) {
+        alert(data.message)
+        navigate('/getipo')
+      } else {
+        alert(data.message)
+      }
+    })
   }
 
-  const signup = () => {
+  const signup = async () => {
+    const userName = document.getElementById('userName').value
+    const email = document.getElementById('email-signup').value
+    const password = document.getElementById('pass-signup').value
 
-    const email = document.getElementById('email').value
-    const pass = document.getElementById('pass').value
-
-    const response = fetch('http://localhost:3000/signup', {
+    const response = await fetch('api/signup/signup', {
       method: 'post',
       body: JSON.stringify({
+        userName: userName,
         email: email,
-        password: pass
+        password: password
       }),
       headers: {
         'Content-type': 'application/json'
       }
-    }).then(response => response.json()).then(data => setdata(data))
-    alert("Sign Up Successfully, Please Confirm Your Mail")
+    }).then(res => res.json())
+    .then((data) => {
+      if(data.success) {
+        alert(data.message)
+        setotppage(true)
+      } else {
+        alert(data.message)
+      }
+    })
+
   }
+
+
   return (
     <>
-
 
       <div className='body-login container-fluid'>
         <div className="main-login col-8">
@@ -51,9 +74,9 @@ export const Login = () => {
           <div className="signup-login">
 
             <label className='label-login' htmlFor="chk" aria-hidden="true">Sign up</label>
-            <input type="text" className='input-login' name="txt" placeholder="User name" required="" />
-            <input type="email" className='input-login' name="email" id="email" placeholder="Email" required="" />
-            <input type="password" className='input-login' name="pswd" id="pass" placeholder="Password" required="" />
+            <input type="text" className='input-login' id='userName' name="txt" placeholder="User name" required="" />
+            <input type="email" className='input-login' name="email" id="email-signup" placeholder="Email" required="" />
+            <input type="password" className='input-login' name="pswd" id="pass-signup" placeholder="Password" required="" />
             <button className='button-login' onClick={signup}>Sign up</button>
 
           </div>
@@ -67,9 +90,11 @@ export const Login = () => {
 
           </div>
         </div>
-
       </div>
-      <Footer />
+      {
+        otppage && <OtpPage setotppage={setotppage} />
+      }
+
     </>
   )
 }

@@ -2,12 +2,24 @@ import React, { useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import logo from '../assets/Logo.png'
 import WalletIcon from '@mui/icons-material/Wallet';
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const NavBar = () => {
-
+    const navigate=useNavigate()
     const [active, setactive] = useState(null)
-
+    const logout=()=>{
+        fetch("/api/login/logout")
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    alert(data.message)
+                    navigate('/Userlogin')
+                } else{
+                    alert("Logout Failed")
+                }
+            })
+    }
 
 
     return (
@@ -29,6 +41,9 @@ const NavBar = () => {
                         <div className="search-bar">
                             <input type="text" placeholder="What are you searching for ?" />
                             <SearchIcon />
+                        </div>
+                        <div className="buy-button">
+                        <button onClick={logout}>LogOut</button>
                         </div>
                         <WalletIcon style={{ color: "white" }} />
                     </nav>

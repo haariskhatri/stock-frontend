@@ -1,13 +1,22 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 export const IpoAdmin = () => {
     const [data, setData] = useState("");
     const ipo_id = 100;
+    const navigate=useNavigate()
 
     const allocate_slot = () => {
-        fetch("/api/getiposub/" + ipo_id)
-            .then(response => response.json())
-            .then(data => setData(data))
+        fetch("/api/ipo/getiposub/" + ipo_id)
+        .then(response => response.json())
+        .then(data => {
+            if(!data.success) {
+                alert(data.message)
+                navigate('/Userlogin')
+            } else{
+                setData(data)
+            }
+        })
 
     }
 
