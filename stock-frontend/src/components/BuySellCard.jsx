@@ -58,6 +58,7 @@ const BuySellCard = ({ company }) => {
 			setuserid(data.data.id)
 			setuseremail(data.data.email)
 		})
+		console.log(company);
 	}, [])
 
 	const buyStock = (e) => {
@@ -65,7 +66,7 @@ const BuySellCard = ({ company }) => {
 
 		const data = {
 			socketId: socket.id,
-			stockId: company.companySymbol,
+			stockId: company.shareSymbol,
 			userId: userid,
 			userEmail: useremail,
 			shares: buystock.stockQuantity,
@@ -76,30 +77,35 @@ const BuySellCard = ({ company }) => {
 		socket.emit('buyOrder', data);
 
 	}
+	useEffect(() => {
 
 
-	socket.on('buysuccess', () => {
-		toast.success('Buy Request succesful ')
-		console.log("Success");
-		setbuystock({
+		socket.on('buysuccess', () => {
+			toast.success('Buy Request succesful ')
+			console.log("Success");
+			setbuystock({
 
-			stockId: '',
-			stockQuantity: '',
-			stockPriceLimit: ''
+				stockId: '',
+				stockQuantity: '',
+				stockPriceLimit: ''
 
+			})
 		})
-	})
-	socket.on('sellsuccess', () => {
-		toast.success('Sell Request succesful ! ')
+		socket.on('sellsuccess', () => {
+			toast.success('Sell Request succesful ! ')
 
-		setsellstock({
+			setsellstock({
 
-			stockId: '',
-			stockQuantity: '',
-			stockPriceLimit: ''
+				stockId: '',
+				stockQuantity: '',
+				stockPriceLimit: ''
+			})
 		})
-	})
-
+		return () => {
+			socket.off('buysuccess');
+			socket.off('sellsuccess');
+		}
+	}, [socket])
 
 
 	const sellOrder = (e) => {
@@ -107,7 +113,7 @@ const BuySellCard = ({ company }) => {
 
 		const data = {
 			socketId: socket.id,
-			stockId: company.companySymbol,
+			stockId: company.shareSymbol,
 			userId: userid,
 			userEmail: useremail,
 			shares: sellstock.stockQuantity,
@@ -134,8 +140,8 @@ const BuySellCard = ({ company }) => {
 			<div className="buy-sell-card">
 				<div className="card">
 					<div className="card-body">
-						<h5 className="card-title">{company.companyName} ({company.companySymbol})</h5>
-						<p className="card-text">{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(company.companyValuepershare)} </p>
+						<h5 className="card-title">{company.shareName} ({company.shareSymbol})</h5>
+						<p className="card-text">{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(company.sharePrice)} </p>
 					</div>
 
 					<div className="card-main-body">
