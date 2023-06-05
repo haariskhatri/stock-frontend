@@ -2,7 +2,7 @@ import React from 'react'
 import ReadMoreReact from 'read-more-react/dist/components/ReadMoreReact';
 import ReadMore from './ReadMore';
 
-const CompanyProfile = ({ details }) => {
+const CompanyProfile = ({ description, name }) => {
 
     const text = "Reliance Power is an Indian power generation and utility company. It is a subsidiary of Reliance Group, a conglomerate led by Indian business tycoon Mukesh Ambani. Reliance Power was incorporated in 2007 and is headquartered in Mumbai, Maharashtra."
 
@@ -17,10 +17,10 @@ const CompanyProfile = ({ details }) => {
         <>
             <div className="company-profile">
                 <div className="company-title titles">
-                    About Reliance Power
+                    {name}
                 </div>
 
-                <ReadMore text={text} />
+                <ReadMore text={description} />
             </div>
         </>
     )
