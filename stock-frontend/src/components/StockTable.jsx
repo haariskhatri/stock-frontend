@@ -22,7 +22,7 @@ export const StockTable = ({ topshares }) => {
                                 <tr key={index}>
 
 
-                                    <td><Link to='/detail/'></Link></td>
+                                    <td><Link to='/'>{ele.shareName}</Link></td>
                                     <td className='text-end' style={{ color: '#0abb92' }}>
                                         {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(ele.sharePrice)}
                                     </td>

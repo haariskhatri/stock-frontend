@@ -44,15 +44,17 @@ const HomePage = () => {
 
     useEffect(() => {
 
-        axios.get('api/ipo/getallipos').then((data) => {
+        axios.get('/api/ipo/getallipos').then((data) => {
 
             setipos((data.data).slice(0, 4))
+            console.log(data.data);
             setloader(false)
         })
 
-        axios.get('api/share/gettopshares').then((data) => {
-            const set = settopshares(data.data.slice(0, 10));
-            console.log(data.data);
+        axios.get('/api/share/gettopshares').then((data) => {
+            const set = data.data;
+            settopshares(set);
+            console.log(set);
             setloader(false)
         })
     }, [])
