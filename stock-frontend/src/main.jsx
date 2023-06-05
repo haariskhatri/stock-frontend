@@ -24,16 +24,16 @@ const router = createBrowserRouter([
     element: <IpoRegister />
   },
   {
-    path: '/buy',
-    element: <MarketPage />
-  },
-  {
     path: '/',
     element: <HomePage />
   },
   {
     path: '/getipo',
     element: <Getipodata />
+  },
+  {
+    path: '/detail/:companyId',
+    element: <MarketPage />
   }
 
 ]);
