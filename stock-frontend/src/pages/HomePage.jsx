@@ -106,6 +106,10 @@ const HomePage = () => {
                                 ))}
                             </ul>
 
+                            <div className="stock-title">
+                                Top Shares
+                            </div>
+
                             <StockTable topshares={topshares} />
 
 
