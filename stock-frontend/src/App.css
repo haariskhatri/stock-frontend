@@ -950,6 +950,7 @@ stock-chart {
   background-color: black;
   margin: 20px;
 }
+
 .body-login {
   margin: 0;
   padding: 0;
@@ -958,26 +959,29 @@ stock-chart {
   align-items: center;
   min-height: 100vh;
   font-family: "Jost", sans-serif;
-  
+
 }
+
 .main-login {
   width: 350px;
   height: 500px;
   background: red;
   overflow: hidden;
-  background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38")
-    no-repeat center/ cover;
+  background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/ cover;
   border-radius: 10px;
   box-shadow: 5px 20px 50px #fff;
 }
+
 #chk {
   display: none;
 }
+
 .signup-login {
   position: relative;
   width: 100%;
   height: 100%;
 }
+
 .label-login {
   color: #fff;
   font-size: 2.3em;
@@ -988,9 +992,10 @@ stock-chart {
   cursor: pointer;
   transition: 0.5s ease-in-out;
 }
+
 .input-login {
   width: 60%;
- 
+
   background: #e0dede;
   justify-content: center;
   display: flex;
@@ -1000,6 +1005,7 @@ stock-chart {
   outline: none;
   border-radius: 5px;
 }
+
 .button-login {
   width: 60%;
   height: 40px;
@@ -1017,9 +1023,11 @@ stock-chart {
   transition: 0.2s ease-in;
   cursor: pointer;
 }
+
 .button-login:hover {
   background: #6d44b8;
 }
+
 .login {
   height: 460px;
   background: #eee;
@@ -1027,18 +1035,21 @@ stock-chart {
   transform: translateY(-180px);
   transition: 0.8s ease-in-out;
 }
+
 .login label {
   color: #573b8a;
   transform: scale(0.6);
 }
 
-#chk:checked ~ .login {
+#chk:checked~.login {
   transform: translateY(-500px);
 }
-#chk:checked ~ .login label {
+
+#chk:checked~.login label {
   transform: scale(1);
 }
-#chk:checked ~ .signup label {
+
+#chk:checked~.signup label {
   transform: scale(0.6);
 }
 
@@ -1098,20 +1109,20 @@ stock-chart {
   outline: none;
   background-color: rgb(235, 235, 235);
   box-shadow: inset 3px 3px 6px #d1d1d1,
-            inset -3px -3px 6px #ffffff;
+    inset -3px -3px 6px #ffffff;
   padding-left: 15px;
   transition: .4s ease-in-out;
 }
 
 .input-otp:hover {
   box-shadow: inset 0px 0px 0px #d1d1d1,
-            inset 0px 0px 0px #ffffff;
+    inset 0px 0px 0px #ffffff;
   background-color: lightgrey;
 }
 
 .input-otp:focus {
   box-shadow: inset 0px 0px 0px #d1d1d1,
-            inset 0px 0px 0px #ffffff;
+    inset 0px 0px 0px #ffffff;
   background-color: lightgrey;
 }
 
@@ -1123,12 +1134,12 @@ stock-chart {
   outline: none;
   transition: .4s ease-in-out;
   box-shadow: 1px 1px 3px #b5b5b5,
-             -1px -1px 3px #ffffff;
+    -1px -1px 3px #ffffff;
 }
 
 .btn1-otp:active {
   box-shadow: inset 3px 3px 6px #b5b5b5,
-            inset -3px -3px 6px #ffffff;
+    inset -3px -3px 6px #ffffff;
 }
 
 .btn2-otp {
@@ -1139,10 +1150,14 @@ stock-chart {
   outline: none;
   transition: .4s ease-in-out;
   box-shadow: 1px 1px 3px #b5b5b5,
-             -1px -1px 3px #ffffff;
+    -1px -1px 3px #ffffff;
 }
 
 .btn2-otp:active {
   box-shadow: inset 3px 3px 6px #b5b5b5,
-            inset -3px -3px 6px #ffffff;
+    inset -3px -3px 6px #ffffff;
+}
+
+.company-info img {
+  background-color: white;
 }
