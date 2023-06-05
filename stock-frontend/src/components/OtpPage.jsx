@@ -1,9 +1,12 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export const OtpPage = ({ setotppage }) => {
-    const verifyotp = async() => {
+    const navigate=useNavigate()
+    const verifyotp = async(e) => {
+        e.preventDefault()
         const otp=document.getElementById('otp').value
-        const response =await fetch('http://localhost:4000/verifyotp', {
+        const response =await fetch('/api/signup/verifyotp', {
             method: 'post',
             body: JSON.stringify({
               otp:otp
@@ -11,8 +14,19 @@ export const OtpPage = ({ setotppage }) => {
             headers: {
               'Content-type': 'application/json'
             }
+          }).then(res => res.json())
+          .then((data) => {
+            if(data.success) {
+              alert(data.message)
+              setotppage(false)
+              navigate('/getipo')
+
+
+            } else {
+              alert(data.message)
+              navigate('/Userlogin')
+            }
           })
-        setotppage(false)
     }
     const handleClose = () => {
         setotppage(false)

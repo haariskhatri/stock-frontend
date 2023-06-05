@@ -5,7 +5,7 @@ export const Iposubscribe = ({ ipodata }) => {
     var ipo_id;
     var userid = 5;
     const iposub = () => {
-        const response = fetch('/api/iposub', {
+        const response = fetch('/api/ipo/iposub', {
             method: 'post',
             body: JSON.stringify({
                 ipo_id: ipo_id,

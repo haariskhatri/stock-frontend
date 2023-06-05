@@ -1,10 +1,11 @@
 import React,{useState,useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 
 export const GetShares = ({setsharesdata}) => {
 
     var shareId;
     const [data, setData] = useState([]);
-   
+   const navigate=useNavigate()
     
     useEffect(() => {
         getshares()
@@ -12,15 +13,29 @@ export const GetShares = ({setsharesdata}) => {
     }, [])
 
     const getshares=()=>{
-        fetch("http://localhost:4000/getshares")
-            .then(response => response.json())
-            .then(data => setData(data))
+        fetch("api/shares/getshares")
+        .then(response => response.json())
+        .then(data => {
+            if(!data.success) {
+                alert(data.message)
+                navigate('/Userlogin')
+            } else{
+                setData(data)
+            }
+        })
     }
 
     const getsingleshares=()=>{
-        fetch("http://localhost:4000/singleshares/" + shareId)
+        fetch("api/shares/singleshares/" + shareId)
         .then(response => response.json())
-        .then(data => setsharesdata(data))
+            .then(data => {
+                if(!data.success) {
+                    alert(data.message)
+                    navigate('/Userlogin')
+                } else{
+                    setsharesdata(data)
+                }
+            })
         
     }
   return (

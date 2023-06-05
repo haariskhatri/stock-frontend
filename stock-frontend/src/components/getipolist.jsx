@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 
 export const Getipolist = ({ setipodata }) => {
     var componyid;
+    const navigate=useNavigate();
+
     const [data, setData] = useState([]);
-    const [data1, setData1] = useState([]);
+   
 
     useEffect(() => {
         getipo()
@@ -12,15 +15,30 @@ export const Getipolist = ({ setipodata }) => {
     }, [])
 
     const getipo = () => {
-        fetch("/api/getipo")
+        fetch("/api/ipo/getipo")
             .then(response => response.json())
-            .then(data => setData(data))
+            .then(data => {
+                console.log(data)
+                if(!data.success) {
+                    alert(data.message)
+                    navigate('/Userlogin')
+                } else{
+                    setData(data)
+                }
+            })
     }
 
     const getsingleipo = () => {
-        fetch("/api/singleipo/" + componyid)
-            .then(response => response.json())
-            .then(data => setipodata(data))
+        fetch("/api/ipo/singleipo/" + componyid)
+        .then(response => response.json())
+        .then(data => {
+            if(!data.success) {
+                alert(data.message)
+                navigate('/Userlogin')
+            } else{
+                setipodata(data)
+            }
+        })
 
     }
 
