@@ -12,31 +12,11 @@ import { useState } from 'react';
 import { PreLoader } from '../components/PreLoader';
 import { useEffect } from 'react';
 import { StockTable } from '../components/StockTable';
-import { ContentPasteGoOutlined } from '@mui/icons-material';
+import { ContentPasteGoOutlined, ContentPasteOffSharp } from '@mui/icons-material';
 
 const HomePage = () => {
 
-    const company = [{
-        companyName: 'TATA',
-        companyLogo: '/public/TATA.png',
-        companyPrice: '70'
-    },
-    {
-        companyName: 'ADANI',
-        companyLogo: '/public/ADANI.png',
-        companyPrice: '70'
-    },
-    {
-        companyName: 'RELIANCE',
-        companyLogo: '/public/REL.png',
-        companyPrice: '70'
-    },
-    {
-        companyName: 'MARUTI SUZUKI',
-        companyLogo: '/public/MARUTI.png',
-        companyPrice: '70'
-    },
-    ]
+    const [company, setcompany] = useState();
 
     const [loader, setloader] = useState(true);
     const [ipos, setipos] = useState();
@@ -44,10 +24,9 @@ const HomePage = () => {
 
     useEffect(() => {
 
-        axios.get('/api/ipo/getallipos').then((data) => {
-
-            setipos((data.data).slice(0, 4))
+        axios.get('/api/share/getshares').then((data) => {
             console.log(data.data);
+            setcompany(data.data);
             setloader(false)
         })
 
@@ -55,10 +34,9 @@ const HomePage = () => {
             const set = data.data;
             settopshares(set);
             console.log(set);
-            setloader(false)
-        })
-    }, [])
 
+        })
+    }, []);
 
 
     const openloader = () => {
@@ -79,13 +57,14 @@ const HomePage = () => {
                                 </div>
                             </div>
                             <ul className="stock-tiles list-unstyled">
+
                                 {
-                                    company.map((ele, index) => (
+                                    company?.map((ele, index) => (
                                         <li key={index}>
-                                            <img src={ele.companyLogo} />
-                                            {ele.companyName}
+                                            <img src={`/public/${ele.shareSymbol}.png`} />
+                                            <Link to={`/detail/${ele.shareId}`}>{ele.shareName}</Link>
                                             <div className="stock-price">
-                                                {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(ele.companyPrice)}
+                                                {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(ele.sharePrice)}
                                             </div>
                                         </li>
                                     ))
@@ -98,12 +77,12 @@ const HomePage = () => {
                                 </div>
                             </div>
                             <ul className="stock-tiles list-unstyled">
-                                {ipos?.map((ele, index) => (
+                                {/* {ipos?.map((ele, index) => (
                                     <li key={index}>
 
-                                        <Link to={`detail/${ele.companyId}`}>{ele.companyName}</Link>
+                                        <Link to='/getipo'>{ele.companyName}</Link>
                                     </li>
-                                ))}
+                                ))} */}
                             </ul>
 
                             <div className="stock-title">

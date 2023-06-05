@@ -24,7 +24,7 @@ const MarketPage = () => {
 
     useEffect(() => {
 
-        axios.post('/api/ipo/getipo', { 'companyId': companyId }).then((data) => {
+        axios.post('/api/share/getshare', { 'shareId': companyId }).then((data) => {
             console.log(data.data);
             setcompany(data.data);
             setloader(false);
@@ -45,15 +45,15 @@ const MarketPage = () => {
                             <div className="col-md-8">
 
                                 <div className="company-info">
-                                    <img src={`/public/${company.companySymbol}.jpg`} />
+                                    <img src={`/public/${company.shareSymbol}.png`} />
                                 </div>
 
                                 <div className="company-detail">
                                     <div className="company-name">
-                                        {company.companyName}
+                                        {company.shareName}
                                     </div>
                                     <div className="company-category">
-                                        Energy
+                                        {company.category}
                                     </div>
 
 
@@ -65,7 +65,7 @@ const MarketPage = () => {
                                     Understanding Fundamentals <i className="fa-solid fa-circle-info"></i>
                                 </div>
 
-                                <CompanyProfile description={company.companyDescription} name={company.companyName} />
+                                <CompanyProfile description={company.description} name={company.shareName} />
 
 
 
