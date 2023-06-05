@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react'
-<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom';
-=======
-import axios from 'axios';
->>>>>>> 238caf7929628a5769046706f4b1dd8262f08dda
 
 
 export const Getipolist = ({ setipodata }) => {
@@ -19,7 +15,6 @@ export const Getipolist = ({ setipodata }) => {
     }, [])
 
     const getipo = () => {
-<<<<<<< HEAD
         fetch("/api/ipo/getipo")
             .then(response => response.json())
             .then(data => {
@@ -43,24 +38,6 @@ export const Getipolist = ({ setipodata }) => {
             } else{
                 setipodata(data)
             }
-=======
-        fetch("/api/ipo/getallipos")
-            .then(response => response.json())
-            .then(data => {
-                setData(data)
-            }
-            )
-
-
-
-    }
-
-    const getsingleipo = (id) => {
-        console.log(id);
-        axios.post('api/ipo/getipo', { 'companyId': id }).then((data) => {
-            console.log(data.data);
-            setipodata(data.data)
->>>>>>> 238caf7929628a5769046706f4b1dd8262f08dda
         })
 
     }
