@@ -48,6 +48,16 @@
     margin-bottom: 10px;
 }
 
+.stock-tiles a {
+    color: #0abb92;
+    text-decoration: none;
+}
+
+.stock-tiles a:hover {
+    cursor: pointer;
+    color: white;
+}
+
 .stock-price {
     padding: 10px 0px;
 }
