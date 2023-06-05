@@ -26,7 +26,7 @@ const HomePage = () => {
     },
     {
         companyName: 'RELIANCE',
-        companyLogo: '/public/RELIANCE.png',
+        companyLogo: '/public/REL.png',
         companyPrice: '70'
     },
     {
@@ -89,7 +89,8 @@ const HomePage = () => {
                             <ul className="stock-tiles list-unstyled">
                                 {ipos?.map((ele, index) => (
                                     <li key={index}>
-                                        {ele.companyName}
+
+                                        <Link to={`detail/${ele.companyId}`}>{ele.companyName}</Link>
                                     </li>
                                 ))}
                             </ul>
