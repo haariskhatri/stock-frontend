@@ -11,6 +11,8 @@ import Footer from '../components/Footer';
 import { useState } from 'react';
 import { PreLoader } from '../components/PreLoader';
 import { useEffect } from 'react';
+import { StockTable } from '../components/StockTable';
+import { ContentPasteGoOutlined } from '@mui/icons-material';
 
 const HomePage = () => {
 
@@ -38,12 +40,19 @@ const HomePage = () => {
 
     const [loader, setloader] = useState(true);
     const [ipos, setipos] = useState();
+    const [topshares, settopshares] = useState();
 
     useEffect(() => {
 
         axios.get('api/ipo/getallipos').then((data) => {
-            console.log(data.data);
+
             setipos((data.data).slice(0, 4))
+            setloader(false)
+        })
+
+        axios.get('api/share/gettopshares').then((data) => {
+            const set = settopshares(data.data.slice(0, 10));
+            console.log(data.data);
             setloader(false)
         })
     }, [])
@@ -94,6 +103,10 @@ const HomePage = () => {
                                     </li>
                                 ))}
                             </ul>
+
+                            <StockTable topshares={topshares} />
+
+
                         </div>
                         <div className="col-md-4">
                             <div className="your-investments">
