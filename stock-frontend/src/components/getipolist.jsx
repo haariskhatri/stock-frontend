@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios';
 
 
 export const Getipolist = ({ setipodata }) => {
@@ -16,7 +17,6 @@ export const Getipolist = ({ setipodata }) => {
             .then(response => response.json())
             .then(data => {
                 setData(data)
-                console.log(data);
             }
             )
 
@@ -24,10 +24,12 @@ export const Getipolist = ({ setipodata }) => {
 
     }
 
-    const getsingleipo = () => {
-        fetch("/api/singleipo/" + componyid)
-            .then(response => response.json())
-            .then(data => setipodata(data))
+    const getsingleipo = (id) => {
+        console.log(id);
+        axios.post('api/ipo/getipo', { 'companyId': id }).then((data) => {
+            console.log(data.data);
+            setipodata(data.data)
+        })
 
     }
 
@@ -38,7 +40,7 @@ export const Getipolist = ({ setipodata }) => {
 
 
             {data?.map((ipo, key) => {
-                console.log(ipo)
+                console.log(ipo.companyId);
                 return (
 
                     <div className="card ipoadmin" key={key}>
@@ -51,7 +53,7 @@ export const Getipolist = ({ setipodata }) => {
 
                             <div className='buy-button'>
 
-                                <button className="btn btn-primary" onClick={() => { componyid = ipo.companyId; getsingleipo() }}>Apply</button>
+                                <button className="btn btn-primary" onClick={async () => { getsingleipo(ipo.companyId) }}>Apply</button>
 
                             </div>
 
