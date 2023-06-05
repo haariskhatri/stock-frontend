@@ -29,7 +29,7 @@ export const Login = () => {
     .then((data) => {
       if(data.success) {
         alert(data.message)
-        navigate('/getipo')
+        navigate('/')
       } else {
         alert(data.message)
       }
