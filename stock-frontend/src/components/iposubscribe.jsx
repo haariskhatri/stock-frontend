@@ -31,7 +31,7 @@ export const Iposubscribe = ({ ipodata }) => {
                 <div className="buy-sell-card">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">{ipodata?.companyName}</h5>
+                            <h5 className="card-title">{ipodata?.singleipo?.companyName}</h5>
 
                         </div>
 
@@ -51,28 +51,28 @@ export const Iposubscribe = ({ ipodata }) => {
                                                     <div className="stock-quantity">
 
                                                         <label htmlFor="stockQuantity">Shares</label>
-                                                        <input type="number" name="stockQuantity" value={ipodata?.companyMinimumSlotSize} readOnly />
+                                                        <input type="number" name="stockQuantity" value={ipodata?.singleipo?.companyMinimumSlotSize} readOnly />
                                                     </div>
 
 
                                                     <div className="stock-price-limit price-market">
                                                         <label>Bid Price</label>
-                                                        <input type="text" name="stockPriceLimit" value={ipodata?.companyValuepershare} readOnly />
+                                                        <input type="text" name="stockPriceLimit" value={ipodata?.singleipo?.companyValuepershare} readOnly />
                                                     </div>
 
 
                                                 </div>
                                                 <div className="order-execute-line">
-                                                    <p>Order will be executed for {ipodata?.companyMinimumSlotSize} Shares</p>
+                                                    <p>Order will be executed for {ipodata?.singleipo?.companyMinimumSlotSize} Shares</p>
                                                 </div>
 
                                                 <div className="buy-footer">
                                                     <p>Balance : {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(0)} </p>
-                                                    <p>Required : {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(ipodata?.companyValuepershare * ipodata?.companyMinimumSlotSize)} </p>
+                                                    <p>Required : {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(ipodata?.singleipo?.companyValuepershare * ipodata?.singleipo?.companyMinimumSlotSize)} </p>
                                                 </div>
 
                                                 <div className="buy-button">
-                                                    <button onClick={() => { ipo_id = ipodata?.companyId; iposub() }}>
+                                                    <button onClick={() => { ipo_id = ipodata?.singleipo?.companyId; iposub() }}>
                                                         Subscribe
                                                     </button>
                                                 </div>
