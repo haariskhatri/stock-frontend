@@ -33,3 +33,14 @@
     padding: 16px 16px;
     border-bottom: 1px solid #2a2a2a;
 }
+
+td a {
+    color: white;
+    text-decoration: none;
+
+}
+
+td a:hover {
+    cursor: pointer;
+    color: #0abb92;
+}

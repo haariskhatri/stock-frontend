@@ -4,6 +4,8 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import io from 'socket.io-client'
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
+const socket = io("http://localhost:8000");
 
 
 const BuySellCard = ({ company }) => {
@@ -13,10 +15,12 @@ const BuySellCard = ({ company }) => {
 	// 	autoConnect: false
 	// });
 
-	const socket = io("ws://localhost:4000");
+
 
 
 	const [atmarket, setatmarket] = useState('At Market');
+	const [userid, setuserid] = useState();
+	const [useremail, setuseremail] = useState();
 
 	const [buystock, setbuystock] = useState({
 		stockId: '',
@@ -48,14 +52,22 @@ const BuySellCard = ({ company }) => {
 		})
 	}
 
+	useEffect(() => {
+		const user = axios.get('/api/login/usernow').then((data) => {
+			console.log(data);
+			setuserid(data.data.id)
+			setuseremail(data.data.email)
+		})
+	}, [])
+
 	const buyStock = (e) => {
 		e.preventDefault();
 
 		const data = {
 			socketId: socket.id,
 			stockId: company.companySymbol,
-			userId: 3,
-			userEmail: 'yash.khatri1616@gmail.com',
+			userId: userid,
+			userEmail: useremail,
 			shares: buystock.stockQuantity,
 			price: buystock.stockPriceLimit
 		}
@@ -65,7 +77,7 @@ const BuySellCard = ({ company }) => {
 
 	}
 
-	
+
 	socket.on('buysuccess', () => {
 		toast.success('Buy Request succesful ')
 		console.log("Success");
@@ -96,8 +108,8 @@ const BuySellCard = ({ company }) => {
 		const data = {
 			socketId: socket.id,
 			stockId: company.companySymbol,
-			userId: 4,
-			userEmail: 'haarishkkhatri@gmail.com',
+			userId: userid,
+			userEmail: useremail,
 			shares: sellstock.stockQuantity,
 			price: sellstock.stockPriceLimit
 		}
