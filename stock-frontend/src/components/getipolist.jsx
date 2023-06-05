@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 export const Getipolist = ({ setipodata }) => {
-    var componyid;
+   
     const navigate=useNavigate();
 
     const [data, setData] = useState([]);
