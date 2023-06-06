@@ -6,6 +6,7 @@ import io from 'socket.io-client'
 import { OtpPage } from '../components/OtpPage';
 import { useNavigate } from 'react-router-dom';
 
+
 const circuit = 15;
 // const socket = io("ws://localhost:4000");
 export const Login = () => {
@@ -29,10 +30,9 @@ export const Login = () => {
     }).then(res => res.json())
       .then((data) => {
         if (data.success) {
-          alert(data.message)
           navigate('/home')
         } else {
-          alert(data.message)
+          toast.error('Invalid Credentials')
         }
       })
   }
@@ -92,6 +92,7 @@ export const Login = () => {
 
           </div>
         </div>
+        <ToastContainer />
       </div>
       {
         otppage && <OtpPage setotppage={setotppage} />
