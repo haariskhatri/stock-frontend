@@ -50,7 +50,8 @@ const MarketPage = () => {
 
                                 <div className="company-detail">
                                     <div className="company-name">
-                                        {company.shareName}
+                                        {company.shareName} ({company.shareSymbol}) <br />
+                                        {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(company.sharePrice)}
                                     </div>
                                     <div className="company-category">
                                         {company.category}
