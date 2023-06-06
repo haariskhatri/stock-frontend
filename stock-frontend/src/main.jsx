@@ -18,7 +18,6 @@ import { GetSharesList } from "./pages/GetSharesList";
 import { UserRegistration } from "./pages/UserRegistration";
 import { AdminCompony } from "./pages/AdminCompony";
 import { Getinvestment } from "./components/getinvestment";
-import { Ipolist } from "./pages/Ipolist";
 
 
 const router = createBrowserRouter([

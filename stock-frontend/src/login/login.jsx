@@ -1,17 +1,35 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../App.css'
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import io from 'socket.io-client'
 import { OtpPage } from '../components/OtpPage';
 import { useNavigate } from 'react-router-dom';
+import { PreLoader } from '../components/PreLoader';
+
 
 const circuit = 15;
 // const socket = io("ws://localhost:4000");
 export const Login = () => {
   const [data, setdata] = useState('')
+  const [loader,setloader]=useState(false);
   const [otppage, setotppage] = useState(false)
   const navigate = useNavigate()
+
+
+  useEffect(()=>{
+    setloader(true)
+    
+    fetch('/api/login/checksession').
+    then(response => response.json())
+    .then(data => {
+        if (data.success) {
+          setloader(false)
+          navigate('/home')
+        }
+      })
+  },[])
+
   const login = () => {
 
     const email = document.getElementById('email').value
@@ -29,7 +47,7 @@ export const Login = () => {
     }).then(res => res.json())
       .then((data) => {
         if (data.success) {
-          alert(data.message)
+          
           navigate('/home')
         } else {
           alert(data.message)
@@ -96,8 +114,11 @@ export const Login = () => {
       {
         otppage && <OtpPage setotppage={setotppage} />
       }
-
+      {
+        loader && <PreLoader/>
+      }
 
     </>
+    
   )
 }
