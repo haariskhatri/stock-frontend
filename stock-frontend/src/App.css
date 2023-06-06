@@ -537,6 +537,32 @@ input::-webkit-inner-spin-button {
   padding: 20px 0;
 }
 
+.logout-button button {
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #0abb92;
+  color: white;
+  margin-left: 15px;
+  border: 0;
+  padding: 3px 10px;
+}
+
+.logout-button button i {
+  padding-right: 8px;
+}
+
+.logout-text {
+  font-size: 20px;
+  padding: 10px 10px;
+  border: 0;
+}
+
+.logout-button button:hover {
+  background-color: white;
+  color: #0abb92;
+  cursor: pointer;
+}
+
 .stock-nav nav {
   display: flex;
   align-items: center;
