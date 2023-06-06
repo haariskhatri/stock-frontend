@@ -12,7 +12,6 @@ import { useState } from 'react';
 import { PreLoader } from '../components/PreLoader';
 import { useEffect } from 'react';
 import { StockTable } from '../components/StockTable';
-import { ContentPasteGoOutlined, ContentPasteOffSharp } from '@mui/icons-material';
 
 import io from 'socket.io-client'
 const socket = io("http://localhost:8000", {
@@ -24,32 +23,49 @@ const HomePage = () => {
     const [company, setcompany] = useState();
     const [userid, setuserid] = useState();
     const [invested, setinvested] = useState();
+    const [userbalance, setuserbalance] = useState();
+
 
     const [loader, setloader] = useState(true);
     const [ipos, setipos] = useState();
     const [topshares, settopshares] = useState();
 
+
+
+
+
     useEffect(() => {
+
+
 
         axios.get('/api/share/getshares').then((data) => {
             console.log(data.data);
             setcompany((data.data.slice(0, 4)));
+
 
         })
 
         axios.get('/api/ipo/getallipos').then((data) => {
             console.log(data.data);
             setipos(data.data);
+
+
+
+
         })
+
 
         axios.get('/api/share/gettopshares').then((data) => {
             const set = data.data;
             settopshares(set);
             console.log(set);
-            setloader(false);
 
 
         })
+
+
+
+
     }, []);
 
     useEffect(() => {
@@ -57,8 +73,17 @@ const HomePage = () => {
         socket.connect();
         axios.get('/api/login/usernow').then((data) => {
             setuserid(data.data.id)
+
+            axios.get(`/api/user/getuserbalance`).then((data) => {
+                setuserbalance(data.data)
+                console.log(data.data);
+            })
+
             socket.emit('investment', data.data.id);
+
+
         })
+
 
         socket.on('investment', (data) => {
             setinvested(data);
@@ -66,8 +91,14 @@ const HomePage = () => {
             console.log(data);
         })
 
+        socket.on('detail', (data) => {
+            const result = data.data;
+            setcompany(result);
+        })
+
         return () => {
             socket.off('investment');
+            socket.off('detail');
         }
 
     }, [socket])
