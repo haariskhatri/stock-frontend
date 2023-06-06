@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 import { StockTable } from '../components/StockTable';
 
 import io from 'socket.io-client'
+import { Getinvestment } from '../components/getinvestment';
 const socket = io("http://localhost:8000", {
     autoConnect: false
 });
@@ -159,22 +160,7 @@ const HomePage = () => {
 
                         </div>
                         <div className="col-md-4">
-                            <div className="your-investments">
-                                Your Investments
-                            </div>
-                            <div className="user-balance">
-                                <div className="user-value">
-                                    <div className="value-left">
-                                        {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(0)}<br />
-                                        <div className="value-text">Invested Value</div>
-                                    </div>
-
-                                    <div className="value-right text-end">
-                                        {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(invested)} <br />
-                                        <div className="value-text">Current Value</div>
-                                    </div>
-                                </div>
-                            </div>
+                           <Getinvestment/>
 
                         </div>
                     </div>

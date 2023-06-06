@@ -15,7 +15,7 @@ import { Getipodata } from "./pages/Getipodata";
 import { GetSharesList } from "./pages/GetSharesList";
 import { UserRegistration } from "./pages/UserRegistration";
 import { AdminCompony } from "./pages/AdminCompony";
-
+import { Getinvestment } from "./components/getinvestment";
 
 
 const router = createBrowserRouter([
@@ -58,6 +58,10 @@ const router = createBrowserRouter([
   {
     path: '/Userlogin',
     element: <UserRegistration />
+  },
+  {
+    path: '/getinvest',
+    element: <Getinvestment />
   }
 ]);
 

@@ -1197,3 +1197,16 @@ stock-chart {
   justify-content: center;
   align-items: center;
 }
+.stock-list-item td{
+  border-bottom: 0;
+}
+.ipoadmin hr{
+  color: white;
+  opacity: 1;
+  margin-top: 10px;
+}
+
+.investment-card > h5{
+  padding-top: 20px;
+  color: #0abb92;
+}
