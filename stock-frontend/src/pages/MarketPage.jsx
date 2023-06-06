@@ -12,7 +12,10 @@ import axios from "axios";
 import { useState } from "react";
 import { PreLoader } from "../components/PreLoader";
 
-
+import io from 'socket.io-client'
+const socket = io("http://localhost:8000", {
+    autoConnect: false
+});
 
 
 const MarketPage = () => {
@@ -31,6 +34,19 @@ const MarketPage = () => {
             // document.title = `${company.companyName} Share Price Today`
         })
     }, [])
+
+    useEffect(() => {
+
+        socket.connect();
+        socket.on('updatestock', (data) => {
+            console.log("Dataa", data)
+            setcompany(data);
+        })
+
+        return () => {
+            socket.off('updatestock');
+        }
+    }, [socket])
 
 
     return (
