@@ -11,13 +11,11 @@ import BuySellCard from "./components/BuySellCard";
 import MarketPage from "./pages/MarketPage";
 import ReadMore from "./components/ReadMore";
 import HomePage from "./pages/HomePage";
-import { IpoAdmin } from "./components/IpoAdmin";
-import { Getipolist } from "./components/getipolist";
 import { Getipodata } from "./pages/Getipodata";
 import { GetSharesList } from "./pages/GetSharesList";
 import { UserRegistration } from "./pages/UserRegistration";
 import { AdminCompony } from "./pages/AdminCompony";
-import { Ipolist } from "./pages/Ipolist";
+
 
 
 const router = createBrowserRouter([
