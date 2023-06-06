@@ -3,26 +3,23 @@ import React, { useEffect, useState } from "react";
 
 export const Iposubscribe = ({ ipodata }) => {
     var ipo_id;
-    var userid = 5;
-    const iposub = () => {
-        const response = fetch('/api/ipo/iposub', {
+    
+    const iposubcall = (e) => {
+        e.preventDefault()
+         fetch('/api/ipo/iposub', {
             method: 'post',
             body: JSON.stringify({
-                ipo_id: ipo_id,
-                userid: userid
+              ipo_id:ipodata?.singleipo.companyId
             }),
             headers: {
-                'Content-type': 'application/json'
+              'Content-type': 'application/json'
             }
-        })
-            .then((response) => response.json())
-            .then(async () => {
-                setIsLoading(false)
-                document.getElementsByTagName('body')[0].style.overflow = 'visible';
-                alert("buy complete")
-                window.location.reload(true)
-
-            })
+          }).then(response => response.json())
+          .then(data => {
+              if(data.success) {
+                  alert(data.message)
+              }
+          })
     }
 
     return (
@@ -44,7 +41,7 @@ export const Iposubscribe = ({ ipodata }) => {
                             </nav>
                             <div className="tab-content" id="nav-tabContent">
                                 <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabIndex="0">
-                                    <form >
+                                    <form  onSubmit={iposubcall}>
                                         <div className="row">
                                             <div className="col-lg-12">
                                                 <div className="buy-menu">
@@ -72,7 +69,7 @@ export const Iposubscribe = ({ ipodata }) => {
                                                 </div>
 
                                                 <div className="buy-button">
-                                                    <button onClick={() => { ipo_id = ipodata?.singleipo?.companyId; iposub() }}>
+                                                    <button >
                                                         Subscribe
                                                     </button>
                                                 </div>
