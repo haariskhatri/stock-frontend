@@ -6,13 +6,14 @@ import io from 'socket.io-client'
 import { OtpPage } from '../components/OtpPage';
 import { useNavigate } from 'react-router-dom';
 
+const circuit = 15;
 // const socket = io("ws://localhost:4000");
 export const Login = () => {
   const [data, setdata] = useState('')
   const [otppage, setotppage] = useState(false)
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const login = () => {
-    
+
     const email = document.getElementById('email').value
     const pass = document.getElementById('pass').value
 
@@ -26,14 +27,14 @@ export const Login = () => {
         'Content-type': 'application/json'
       }
     }).then(res => res.json())
-    .then((data) => {
-      if(data.success) {
-        alert(data.message)
-        navigate('/')
-      } else {
-        alert(data.message)
-      }
-    })
+      .then((data) => {
+        if (data.success) {
+          alert(data.message)
+          navigate('/home')
+        } else {
+          alert(data.message)
+        }
+      })
   }
 
   const signup = async () => {
@@ -52,20 +53,21 @@ export const Login = () => {
         'Content-type': 'application/json'
       }
     }).then(res => res.json())
-    .then((data) => {
-      if(data.success) {
-        alert(data.message)
-        setotppage(true)
-      } else {
-        alert(data.message)
-      }
-    })
+      .then((data) => {
+        if (data.success) {
+          alert(data.message)
+          setotppage(true)
+        } else {
+          alert(data.message)
+        }
+      })
 
   }
 
 
   return (
     <>
+
 
       <div className='body-login container-fluid'>
         <div className="main-login col-8">
@@ -94,6 +96,7 @@ export const Login = () => {
       {
         otppage && <OtpPage setotppage={setotppage} />
       }
+
 
     </>
   )
