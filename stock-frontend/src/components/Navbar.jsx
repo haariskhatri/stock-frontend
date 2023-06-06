@@ -4,19 +4,21 @@ import logo from '../assets/Logo.png'
 import WalletIcon from '@mui/icons-material/Wallet';
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
 
 const NavBar = () => {
-    const navigate=useNavigate()
+    const navigate = useNavigate()
     const [active, setactive] = useState(null)
-    const logout=()=>{
+    const logout = () => {
         fetch("/api/login/logout")
             .then(response => response.json())
             .then(data => {
-                if(data.success) {
-                    alert(data.message)
+                if (data.success) {
                     navigate('/Userlogin')
-                } else{
-                    alert("Logout Failed")
+                } else {
+                    toast.error('Error !')
                 }
             })
     }
@@ -28,7 +30,7 @@ const NavBar = () => {
                 <div className="container">
                     <nav>
                         <div className="logo">
-                            <Link to='/'><img src={logo} alt="" /></Link>
+                            <Link to='/home'><img src={logo} alt="" /></Link>
                         </div>
                         <div className="logo-title">
                             <h4>TradeTrek</h4>
@@ -42,12 +44,13 @@ const NavBar = () => {
                             <input type="text" placeholder="What are you searching for ?" />
                             <SearchIcon />
                         </div>
-                        <div className="buy-button">
-                        <button onClick={logout}>LogOut</button>
-                        </div>
                         <WalletIcon style={{ color: "white" }} />
+                        <div className="buy-button">
+                            <button onClick={logout}>LogOut</button>
+                        </div>
                     </nav>
                 </div>
+                <ToastContainer />
             </div>
         </>
     )

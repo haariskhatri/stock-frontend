@@ -14,9 +14,16 @@ import { useEffect } from 'react';
 import { StockTable } from '../components/StockTable';
 import { ContentPasteGoOutlined, ContentPasteOffSharp } from '@mui/icons-material';
 
+import io from 'socket.io-client'
+const socket = io("http://localhost:8000", {
+    autoConnect: false
+});
+
 const HomePage = () => {
 
     const [company, setcompany] = useState();
+    const [userid, setuserid] = useState();
+    const [invested, setinvested] = useState();
 
     const [loader, setloader] = useState(true);
     const [ipos, setipos] = useState();
@@ -26,17 +33,44 @@ const HomePage = () => {
 
         axios.get('/api/share/getshares').then((data) => {
             console.log(data.data);
-            setcompany(data.data);
-            setloader(false)
+            setcompany((data.data.slice(0, 4)));
+
+        })
+
+        axios.get('/api/ipo/getallipos').then((data) => {
+            console.log(data.data);
+            setipos(data.data);
         })
 
         axios.get('/api/share/gettopshares').then((data) => {
             const set = data.data;
             settopshares(set);
             console.log(set);
+            setloader(false);
+
 
         })
     }, []);
+
+    useEffect(() => {
+
+        socket.connect();
+        axios.get('/api/login/usernow').then((data) => {
+            setuserid(data.data.id)
+            socket.emit('investment', data.data.id);
+        })
+
+        socket.on('investment', (data) => {
+            setinvested(data);
+            setloader(false);
+            console.log(data);
+        })
+
+        return () => {
+            socket.off('investment');
+        }
+
+    }, [socket])
 
 
     const openloader = () => {
@@ -77,12 +111,12 @@ const HomePage = () => {
                                 </div>
                             </div>
                             <ul className="stock-tiles list-unstyled">
-                                {/* {ipos?.map((ele, index) => (
+                                {ipos?.map((ele, index) => (
                                     <li key={index}>
 
                                         <Link to='/getipo'>{ele.companyName}</Link>
                                     </li>
-                                ))} */}
+                                ))}
                             </ul>
 
                             <div className="stock-title">
@@ -105,7 +139,7 @@ const HomePage = () => {
                                     </div>
 
                                     <div className="value-right text-end">
-                                        {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(0)} <br />
+                                        {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(invested)} <br />
                                         <div className="value-text">Current Value</div>
                                     </div>
                                 </div>

@@ -1161,3 +1161,13 @@ stock-chart {
 .company-info img {
   background-color: white;
 }
+
+.user-registration {
+  background-image: url('./assets/back.svg');
+}
+
+.trademark-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

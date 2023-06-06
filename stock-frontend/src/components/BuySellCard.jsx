@@ -5,7 +5,9 @@ import io from 'socket.io-client'
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
-const socket = io("http://localhost:8000");
+const socket = io("http://localhost:8000", {
+	autoConnect: false
+});
 
 
 const BuySellCard = ({ company }) => {
@@ -21,6 +23,8 @@ const BuySellCard = ({ company }) => {
 	const [atmarket, setatmarket] = useState('At Market');
 	const [userid, setuserid] = useState();
 	const [useremail, setuseremail] = useState();
+	const [detail, setdetail] = useState();
+	const [circuit, setcircuit] = useState();
 
 	const [buystock, setbuystock] = useState({
 		stockId: '',
@@ -53,6 +57,7 @@ const BuySellCard = ({ company }) => {
 	}
 
 	useEffect(() => {
+		setatmarket(company?.sharePrice)
 		const user = axios.get('/api/login/usernow').then((data) => {
 			console.log(data);
 			setuserid(data.data.id)
@@ -63,6 +68,8 @@ const BuySellCard = ({ company }) => {
 
 	const buyStock = (e) => {
 		e.preventDefault();
+
+
 
 		const data = {
 			socketId: socket.id,
@@ -79,6 +86,7 @@ const BuySellCard = ({ company }) => {
 	}
 	useEffect(() => {
 
+		socket.connect();
 
 		socket.on('buysuccess', () => {
 			toast.success('Buy Request succesful ')
@@ -101,9 +109,26 @@ const BuySellCard = ({ company }) => {
 				stockPriceLimit: ''
 			})
 		})
+
+		socket.emit('givedetail');
+
+		socket.on('detail', (data) => {
+			setdetail(data);
+			console.log(data);
+		})
+
+		socket.on('circuit', (data) => {
+			setcircuit(data);
+			console.log(data);
+		})
+
+
 		return () => {
 			socket.off('buysuccess');
 			socket.off('sellsuccess');
+			socket.off('circuit');
+			socket.off('detail')
+
 		}
 	}, [socket])
 
@@ -111,16 +136,28 @@ const BuySellCard = ({ company }) => {
 	const sellOrder = (e) => {
 		e.preventDefault();
 
-		const data = {
-			socketId: socket.id,
-			stockId: company.shareSymbol,
-			userId: userid,
-			userEmail: useremail,
-			shares: sellstock.stockQuantity,
-			price: sellstock.stockPriceLimit
-		}
+		detail.forEach(ele => {
+			if (ele.shareSymbol === company.shareSymbol) {
+				if (sellstock.stockPriceLimit > ele.sharePrice + 15 || sellstock.stockPriceLimit < ele.sharePrice - 15) {
+					toast.error('Amount Invalid');
+					return;
+				}
+				else {
+					const data = {
+						socketId: socket.id,
+						stockId: company.shareSymbol,
+						userId: userid,
+						userEmail: useremail,
+						shares: sellstock.stockQuantity,
+						price: sellstock.stockPriceLimit
+					}
 
-		socket.emit('sellOrder', data);
+					socket.emit('sellOrder', data);
+				}
+			}
+		})
+
+
 
 	}
 
@@ -166,12 +203,12 @@ const BuySellCard = ({ company }) => {
 
 												{ismarket ?
 													<div className="stock-price-limit price-market">
-														<label onClick={() => { setismarket(false) }} style={{ cursor: "pointer" }} >Price Market <KeyboardArrowDownIcon /></label>
-														<input type="text" name="stockPriceLimit" defaultValue={atmarket} readOnly />
+														<label onClick={() => { setismarket(!ismarket) }} style={{ cursor: "pointer" }} >Price Market <KeyboardArrowDownIcon /></label>
+														<input type="number" name="stockPriceLimit" value={atmarket} readOnly />
 													</div>
 													:
 													<div className="stock-price-limit">
-														<label onClick={() => { setismarket(true) }} style={{ cursor: "pointer" }}>Price Limit <KeyboardArrowDownIcon /></label>
+														<label onClick={() => { setismarket(!ismarket) }} style={{ cursor: "pointer" }}>Price Limit <KeyboardArrowDownIcon /></label>
 														<input type="number" name="stockPriceLimit" value={buystock.stockPriceLimit} onChange={handlebuychange} />
 													</div>
 												}
