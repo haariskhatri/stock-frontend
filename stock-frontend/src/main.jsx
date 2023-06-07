@@ -36,10 +36,6 @@ const router = createBrowserRouter([
     element: <UserRegistration />
   },
   {
-    path: '/home',
-    element: <HomePage />
-  },
-  {
     path: '/getipo',
     element: <Getipodata />
   },
@@ -54,10 +50,6 @@ const router = createBrowserRouter([
   {
     path: '/admincompony',
     element: <AdminCompony />
-  },
-  {
-    path: '/Userlogin',
-    element: <UserRegistration />
   },
   {
     path: '/getinvest',
