@@ -36,6 +36,7 @@ const MarketPage = () => {
     }, [])
 
     useEffect(() => {
+        // nothing
 
         socket.connect();
         socket.on('updatestock', (data) => {
