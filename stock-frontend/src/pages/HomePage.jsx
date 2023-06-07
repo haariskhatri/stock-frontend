@@ -27,7 +27,7 @@ const HomePage = () => {
     const [userbalance, setuserbalance] = useState();
 
 
-    const [loader, setloader] = useState(true);
+    const [aapduloader, setaapduloader] = useState(true);
     const [ipos, setipos] = useState();
     const [topshares, settopshares] = useState();
 
@@ -48,7 +48,8 @@ const HomePage = () => {
 
         axios.get('/api/ipo/getallipos').then((data) => {
             console.log(data.data);
-            setipos(data.data);
+            const set = data.data;
+            setipos(set.slice(0, 4));
 
 
 
@@ -83,13 +84,6 @@ const HomePage = () => {
             socket.emit('investment', data.data.id);
 
 
-        })
-
-
-        socket.on('investment', (data) => {
-            setinvested(data);
-            setloader(false);
-            console.log(data);
         })
 
         socket.on('detail', (data) => {
@@ -160,7 +154,7 @@ const HomePage = () => {
 
                         </div>
                         <div className="col-md-4">
-                           <Getinvestment/>
+                            <Getinvestment setloader={setaapduloader} />
 
                         </div>
                     </div>
@@ -168,7 +162,7 @@ const HomePage = () => {
 
             </div>
             <Footer />
-            {loader && <PreLoader />}
+            {aapduloader && <PreLoader />}
         </>
     )
 }
