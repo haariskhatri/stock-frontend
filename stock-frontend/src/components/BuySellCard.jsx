@@ -122,12 +122,17 @@ const BuySellCard = ({ company }) => {
 			console.log(data);
 		})
 
+		socket.on('invalid', () => {
+			toast.error('Insufficent Share Balance')
+		})
+
 
 		return () => {
 			socket.off('buysuccess');
 			socket.off('sellsuccess');
 			socket.off('circuit');
 			socket.off('detail')
+			socket.off('invalid')
 
 		}
 	}, [socket])
@@ -241,10 +246,7 @@ const BuySellCard = ({ company }) => {
 										<div className="col-lg-12">
 											<div className="buy-menu">
 
-												<div className="stock-quantity">
-													<label htmlFor="stockQuantity">StockID</label>
-													<input type="text" name="stockId" value={sellstock.stockId} onChange={handlesellchange} autoFocus />
-												</div>
+
 
 												<div className="stock-quantity">
 
