@@ -21,7 +21,7 @@ const NavBar = () => {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    navigate('/Userlogin')
+                    navigate('/')
                 } else {
                     toast.error('Error !')
                 }
