@@ -6,6 +6,7 @@ import io from 'socket.io-client'
 import { OtpPage } from '../components/OtpPage';
 import { useNavigate } from 'react-router-dom';
 import { PreLoader } from '../components/PreLoader';
+import axios from 'axios';
 
 
 const circuit = 15;
@@ -15,7 +16,19 @@ export const Login = () => {
   const [loader, setloader] = useState(false);
   const [otppage, setotppage] = useState(false)
   const navigate = useNavigate()
+  const [user, setuser] = useState({
+    'userName': '',
+    'email': '',
+    'password': ''
+  })
 
+  const handlechange = (e) => {
+    const { name, value } = e.target;
+
+    setuser((prev) => {
+      return { ...prev, [name]: value }
+    })
+  }
 
   useEffect(() => {
     setloader(true)
@@ -28,6 +41,7 @@ export const Login = () => {
           navigate('/home')
         }
       })
+    setloader(false)
   }, [])
 
   const login = () => {
@@ -55,30 +69,18 @@ export const Login = () => {
       })
   }
 
-  const signup = async () => {
-    const userName = document.getElementById('userName').value
-    const email = document.getElementById('email-signup').value
-    const password = document.getElementById('pass-signup').value
+  const signup = async (e) => {
+    e.preventDefault();
+    console.log(user);
 
-    const response = await fetch('api/signup/signup', {
-      method: 'post',
-      body: JSON.stringify({
-        userName: userName,
-        email: email,
-        password: password
-      }),
-      headers: {
-        'Content-type': 'application/json'
-      }
-    }).then(res => res.json())
-      .then((data) => {
-        if (data.success) {
-          alert(data.message)
-          setotppage(true)
-        } else {
-          alert(data.message)
-        }
-      })
+    const response = await axios.post('/api/signup/signup', user);
+    console.log(response)
+    if (response.data == true) {
+      setotppage(true);
+    }
+    else if (response.data == false) {
+      toast.error('Invalid')
+    }
 
   }
 
@@ -92,22 +94,22 @@ export const Login = () => {
           <input type="checkbox" id="chk" aria-hidden="true" />
 
           <div className="signup-login">
-
-            <label className='label-login' htmlFor="chk" aria-hidden="true">Sign up</label>
-            <input type="text" className='input-login' id='userName' name="txt" placeholder="User name" required="" />
-            <input type="email" className='input-login' name="email" id="email-signup" placeholder="Email" required="" />
-            <input type="password" className='input-login' name="pswd" id="pass-signup" placeholder="Password" required="" />
-            <button className='button-login' onClick={signup}>Sign up</button>
-
+            <form onSubmit={signup}>
+              <label className='label-login' htmlFor="chk" aria-hidden="true">Sign up</label>
+              <input type="text" className='input-login' id='userName' name="userName" onChange={handlechange} value={user.userName} placeholder="User name" required autoFocus />
+              <input type="email" className='input-login' name="email" onChange={handlechange} value={user.email} id="email-signup" placeholder="Email" required />
+              <input type="password" className='input-login' name="password" onChange={handlechange} value={user.password} id="pass-signup" placeholder="Password" required />
+              <button className='button-login' type='submit'>Sign up</button>
+            </form>
           </div>
 
           <div className="login">
-
-            <label className='label-login' htmlFor="chk" aria-hidden="true">Login</label>
-            <input type="email" className='input-login' name="email" id="email" placeholder="Email" required="" />
-            <input type="password" className='input-login' name="pass" id="pass" placeholder="Password" required="" />
-            <button className='button-login' onClick={login}>Login</button>
-
+            <form onSubmit={login} >
+              <label className='label-login' htmlFor="chk" aria-hidden="true">Login</label>
+              <input type="email" className='input-login' name="email" id="email" placeholder="Email" required />
+              <input type="password" className='input-login' name="pass" id="pass" placeholder="Password" required />
+              <button className='button-login' type='submit'>Login</button>
+            </form>
           </div>
         </div>
         <ToastContainer />
