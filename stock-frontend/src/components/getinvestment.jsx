@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-export const Getinvestment = () => {
+export const Getinvestment = ({ setloader }) => {
     const [data, setData] = useState();
 
     useEffect(() => {
@@ -14,6 +14,7 @@ export const Getinvestment = () => {
             .then(data => {
                 console.log(data)
                 setData(data)
+                setloader(false)
             })
     }
 
@@ -25,34 +26,34 @@ export const Getinvestment = () => {
                     <div className="card-body-inner">
                         <div className="table-responsive">
                             <table className="table card-title mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Stocks</th>
-                                    <th>Quantity</th>
-                                    <th>Current</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                                <thead>
+                                    <tr>
+                                        <th>Stocks</th>
+                                        <th>Quantity</th>
+                                        <th>Current</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                        {data &&
-                            Object.keys(data?.user).map(function (key) {
-                                return (
-                                    <tr className='stock-list-item' key={key}>
-                                    <td className="card-title">{key}</td>
-                                    <td className="card-text">{data.user[key]}</td>
-                                    
-                                    <td className="card-text">{new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR'}).format(data?.price[data?.price.findIndex(x => x.shareSymbol === key)].sharePrice.toFixed(2))}</td>
-                                </tr>
-                                )
-                            })
-                        }
-                        </tbody>
-                        </table>
+                                    {data &&
+                                        Object.keys(data?.user).map(function (key) {
+                                            return (
+                                                <tr className='stock-list-item' key={key}>
+                                                    <td className="card-title">{key}</td>
+                                                    <td className="card-text">{data.user[key]}</td>
+
+                                                    <td className="card-text">{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(data?.price[data?.price.findIndex(x => x.shareSymbol === key)].sharePrice.toFixed(2))}</td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    </div>
-                    <hr/>
+                    <hr />
                     <div className='card-title p-0'>
-                        Total Investment : {new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR'}).format(data?.total.toFixed(2))}
+                        Total Investment : {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(data?.total.toFixed(2))}
                     </div>
                 </div>
             </div>
