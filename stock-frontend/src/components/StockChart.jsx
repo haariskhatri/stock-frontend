@@ -15,7 +15,7 @@ const StockChartApp = () => {
         tooltip: {
             shared: true,
             formatter: function () {
-                return numberFormat.format(this.y, 0) + '</b><br/>' + moment(this.x).format('MMMM Do YYYY, h:mm')
+                return Intl.numberFormat.format(this.y, 0) + '</b><br/>' + moment(this.x).format('MMMM Do YYYY, h:mm')
             }
         },
 

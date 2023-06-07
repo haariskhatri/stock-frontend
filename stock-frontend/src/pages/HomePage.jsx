@@ -1,11 +1,11 @@
 import React from 'react'
 import { Iposubscribe } from '../components/iposubscribe';
-import NavBar from '../components/navbar';
+import NavBar from '../components/Navbar';
 
 import tata from '../assets/tata.png';
 
 import '../assets/css/homepage.css'
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../components/Footer';
 import { useState } from 'react';
@@ -59,13 +59,11 @@ const HomePage = () => {
 
         axios.get('/api/share/gettopshares').then((data) => {
             const set = data.data;
-            settopshares(set);
+            settopshares(set.slice(0, 10));
             console.log(set);
 
 
         })
-
-
 
 
     }, []);
@@ -76,14 +74,18 @@ const HomePage = () => {
         axios.get('/api/login/usernow').then((data) => {
             setuserid(data.data.id)
 
-            axios.get(`/api/user/getuserbalance`).then((data) => {
-                setuserbalance(data.data)
-                console.log(data.data);
-            })
+
 
             socket.emit('investment', data.data.id);
 
 
+        })
+
+        socket.on('userbalance', () => {
+            axios.get(`/api/user/getuserbalance`).then((data) => {
+                setuserbalance(data.data)
+                console.log('socket ', data.data)
+            })
         })
 
         socket.on('detail', (data) => {
@@ -94,6 +96,7 @@ const HomePage = () => {
         return () => {
             socket.off('investment');
             socket.off('detail');
+            socket.off('userbalance');
         }
 
     }, [socket])
@@ -105,7 +108,7 @@ const HomePage = () => {
 
     return (
         <>
-            <NavBar />
+            <NavBar userbalance={userbalance} />
             <div className="home">
                 <div className="container">
                     <div className="row">
@@ -113,7 +116,7 @@ const HomePage = () => {
                             <div className="stock-title">
                                 Stocks
                                 <div className="view-more">
-                                    <Link to='/'>View More</Link>
+                                    <Link to='/sharelist'>View More</Link>
                                 </div>
                             </div>
                             <ul className="stock-tiles list-unstyled">

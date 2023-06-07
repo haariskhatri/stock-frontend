@@ -143,22 +143,18 @@ const BuySellCard = ({ company }) => {
 
 		detail.forEach(ele => {
 			if (ele.shareSymbol === company.shareSymbol) {
-				if (sellstock.stockPriceLimit > ele.sharePrice + 15 || sellstock.stockPriceLimit < ele.sharePrice - 15) {
-					toast.error('Amount Invalid');
-					return;
-				}
-				else {
-					const data = {
-						socketId: socket.id,
-						stockId: company.shareSymbol,
-						userId: userid,
-						userEmail: useremail,
-						shares: sellstock.stockQuantity,
-						price: sellstock.stockPriceLimit
-					}
 
-					socket.emit('sellOrder', data);
+				const data = {
+					socketId: socket.id,
+					stockId: company.shareSymbol,
+					userId: userid,
+					userEmail: useremail,
+					shares: sellstock.stockQuantity,
+					price: sellstock.stockPriceLimit
 				}
+
+				socket.emit('sellOrder', data);
+
 			}
 		})
 

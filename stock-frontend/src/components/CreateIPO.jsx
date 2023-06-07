@@ -7,32 +7,43 @@ import { useRef } from 'react';
 import io from 'socket.io-client'
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { Navigate } from 'react-router-dom';
 
 const CreateIPO = () => {
 
     const addIpo = async (e) => {
         e.preventDefault();
 
-        const saved = await axios.post('/api/ipo/addipo', company)
-        if (saved.data == true) {
+        const exists = await axios.post('/api/ipo/checkipo', { name: company.companyName, stock: company.companySymbol });
 
-            toast.success('IPO Added')
+        if (exists.data === true) {
+            toast.error('Exists');
+        }
 
-            setCompany({
-                companyId: '',
-                companyName: '',
-                companyLogo: '',
-                companySymbol: '',
-                companyShares: '',
-                companyValuepershare: '',
-                companyMinimumSlotSize: '',
-                companyMaximumSlotSize: '',
-                companyMaximumSlotsAllowed: '',
-                companyValuation: '',
-                companyStartdate: '',
-                companyEnddate: '',
-                companyDescription: ''
-            })
+        else {
+
+
+            const saved = await axios.post('/api/ipo/addipo', company)
+            if (saved.data == true) {
+
+                toast.success('IPO Added')
+
+                setCompany({
+                    companyId: '',
+                    companyName: '',
+                    companyLogo: '',
+                    companySymbol: '',
+                    companyShares: '',
+                    companyValuepershare: '',
+                    companyMinimumSlotSize: '',
+                    companyMaximumSlotSize: '',
+                    companyMaximumSlotsAllowed: '',
+                    companyValuation: '',
+                    companyStartdate: '',
+                    companyEnddate: '',
+                    companyDescription: ''
+                })
+            }
         }
 
     }
@@ -81,6 +92,10 @@ const CreateIPO = () => {
         const func = async () => {
 
             const id = await axios.get('/api/ipo/getid');
+
+            if (id.data.success == false) {
+                <Navigate to='/' />
+            }
 
 
 

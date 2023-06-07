@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 
-import NavBar from '../components/navbar';
+import NavBar from '../components/Navbar';
 import CreateIPO from '../components/CreateIPO';
 import SideMenu from '../components/sidemenu';
 import Footer from '../components/Footer';

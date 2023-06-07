@@ -42,7 +42,7 @@ export const Getinvestment = ({ setloader }) => {
                                                     <td className="card-title">{key}</td>
                                                     <td className="card-text">{data.user[key]}</td>
 
-                                                    <td className="card-text">{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(data?.price[data?.price.findIndex(x => x.shareSymbol === key)].sharePrice.toFixed(2))}</td>
+                                                    <td className="card-text investment">{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(data?.price[data?.price.findIndex(x => x.shareSymbol === key)].sharePrice.toFixed(2))}</td>
                                                 </tr>
                                             )
                                         })
@@ -52,7 +52,7 @@ export const Getinvestment = ({ setloader }) => {
                         </div>
                     </div>
                     <hr />
-                    <div className='card-title p-0'>
+                    <div className='card-title p-0 total-investment'>
                         Total Investment : {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(data?.total.toFixed(2))}
                     </div>
                 </div>

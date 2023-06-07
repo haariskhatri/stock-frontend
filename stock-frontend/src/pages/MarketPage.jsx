@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import MarketOrder from "../components/BuySellCard";
-import NavBar from "../components/navbar";
+import NavBar from "../components/Navbar";
 import Footer from "../components/Footer";
 import RelianceLogo from '../assets/reliance-logo.png'
 import StockChart from "../components/StockChart";
@@ -13,6 +13,7 @@ import { useState } from "react";
 import { PreLoader } from "../components/PreLoader";
 
 import io from 'socket.io-client'
+import Marketdepth from "../components/Marketdepth";
 const socket = io("http://localhost:8000", {
     autoConnect: false
 });
@@ -24,28 +25,75 @@ const MarketPage = () => {
     console.log(companyId)
     const [company, setcompany] = useState()
     const [showloader, setloader] = useState(true);
+    const [depth, setdepth] = useState([[
+        {
+            price: '',
+            shares: '',
+            socketId: '',
+            stockId: '',
+            userEmail: '',
+            userId: ''
+        }
+    ], [
+        {
+            price: '',
+            shares: '',
+            socketId: '',
+            stockId: '',
+            userEmail: '',
+            userId: ''
+        }
+    ]]);
 
-    useEffect(() => {
+    const addComa = (data) => {
+        return new Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(data)
+    }
 
-        axios.post('/api/share/getshare', { 'shareId': companyId }).then((data) => {
-            console.log(data.data);
-            setcompany(data.data);
-            setloader(false);
-            // document.title = `${company.companyName} Share Price Today`
-        })
-    }, [])
+
+
+
+    // useEffect(() => {
+
+    //     axios.post('/api/share/getshare', { 'shareId': companyId }).then((data) => {
+    //         console.log(data.data);
+    //         setcompany(data.data);
+    //         setloader(false);
+    //         // document.title = `${company.companyName} Share Price Today`
+    //     })
+    // }, [])
 
     useEffect(() => {
         // nothing
+        var once = 0;
 
         socket.connect();
-        socket.on('updatestock', (data) => {
-            console.log("Dataa", data)
+        socket.on('updatestock', async (data) => {
+
             setcompany(data);
         })
 
+        socket.emit('getstock', companyId);
+
+
+
+
+
+        socket.on('updateorder', (data) => {
+            setdepth(data);
+        })
+
+        socket.on('takestock', (data) => {
+            setcompany(data);
+            console.log(data);
+            socket.emit('getupdate', data.shareSymbol)
+            setloader(false);
+        })
+
+
         return () => {
             socket.off('updatestock');
+            socket.off('updateorder');
+            socket.off('takestock');
         }
     }, [socket])
 
@@ -77,11 +125,13 @@ const MarketPage = () => {
 
                                 </div>
                                 <StockChart />
+                                <Marketdepth depth={depth} />
                                 <PerformanceComponent />
                                 <FundamentalsComponent />
                                 <div style={{ color: '#b0b2ba' }}>
                                     Understanding Fundamentals <i className="fa-solid fa-circle-info"></i>
                                 </div>
+
 
                                 <CompanyProfile description={company.description} name={company.shareName} />
 

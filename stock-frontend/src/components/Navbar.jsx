@@ -8,10 +8,19 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import { useEffect } from "react";
+import io from 'socket.io-client'
+import { Getinvestment } from '../components/getinvestment';
+const socket = io("http://localhost:8000", {
+    autoConnect: false
+});
 
-const NavBar = () => {
+
+
+const NavBar = (props) => {
     const navigate = useNavigate()
+
     const [active, setactive] = useState(null)
+    const [userbalance, setuserbalance] = useState();
 
 
 
@@ -28,6 +37,28 @@ const NavBar = () => {
             })
     }
 
+    useEffect(() => {
+
+        socket.connect();
+        axios.get(`/api/user/getuserbalance`).then((data) => {
+            setuserbalance(data.data)
+            console.log('initial', data.data);
+        })
+
+        socket.on('userbalance', () => {
+            console.log('update');
+            axios.get(`/api/user/getuserbalance`).then((data) => {
+                setuserbalance(data.data)
+            })
+        })
+
+        return () => {
+            socket.off('userbalance');
+        }
+    }, [socket])
+
+
+
 
     return (
         <>
@@ -41,7 +72,7 @@ const NavBar = () => {
                             <h4>TradeTrek</h4>
                         </div>
                         <ul className="list-unstyled">
-                            <li className={active === 0 ? 'active' : ''} onClick={() => { setactive(0) }}>Explore</li>
+                            <li className={active === 0 ? 'active' : ''} onClick={() => { setactive(0) }}>History</li>
                             <li className={active === 1 ? 'active' : ''} onClick={() => { setactive(1) }} >Investments</li>
                         </ul>
 
@@ -53,11 +84,12 @@ const NavBar = () => {
                             <WalletIcon style={{ color: "white" }} />
 
                             <div className="wallet-balance">
-                                {/* Current Balance : {new Intl('en-IN', { style: 'currency', currency: 'INR' }).format(0)} */}
+                                Current Balance : {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(userbalance)}
+
                             </div>
                         </div>
                         <div className="logout-button">
-                            <button><i class="fa-solid fa-right-from-bracket" onClick={logout}> </i>Log Out</button>
+                            <button onClick={logout}><i className="fa-solid fa-right-from-bracket" > </i>Log Out</button>
                         </div>
                     </nav>
                 </div>

@@ -44,8 +44,8 @@ export const Login = () => {
     setloader(false)
   }, [])
 
-  const login = () => {
-
+  const login = (e) => {
+    e.preventDefault();
     const email = document.getElementById('email').value
     const pass = document.getElementById('pass').value
 

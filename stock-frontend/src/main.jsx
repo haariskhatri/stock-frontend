@@ -16,9 +16,20 @@ import { GetSharesList } from "./pages/GetSharesList";
 import { UserRegistration } from "./pages/UserRegistration";
 import { AdminCompony } from "./pages/AdminCompony";
 import { Getinvestment } from "./components/getinvestment";
+import { SharesList } from "./components/SharesList";
+import Maketdepth from './components/Marketdepth'
 
 
 const router = createBrowserRouter([
+
+  {
+    path: '/sharelist',
+    element: <SharesList />
+  },
+  {
+    path: '/market',
+    element: <Maketdepth />
+  },
   {
     path: "/home",
     element: <HomePage />
