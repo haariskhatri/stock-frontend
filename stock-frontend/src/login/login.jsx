@@ -28,6 +28,7 @@ export const Login = () => {
           navigate('/home')
         }
       })
+      setloader(false)
   },[])
 
   const login = () => {
