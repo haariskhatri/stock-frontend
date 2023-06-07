@@ -4,39 +4,36 @@ import { useState } from 'react';
 import axios from 'axios';
 import fs from 'fs';
 import { useRef } from 'react';
+import io from 'socket.io-client'
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const CreateIPO = () => {
 
     const addIpo = async (e) => {
         e.preventDefault();
 
-        //const saved = await axios.post('/api/ipo/addipo', company)
-        const uploadimage = new FormData()
-        uploadimage.append('image', companyLogo.current.files[0]);
-        uploadimage.append('name', company.companySymbol)
-        // await axios.post('/api/ipo/uploadlogo', uploadimage, {
-        //     headers: {
-        //         'Content-Type': 'multipart/form-data'
-        //     }
-        // })
-        await axios.post('/api/ipo/uploadlogo', { 'haaris': 'awesome' })
-        console.log(saved);
+        const saved = await axios.post('/api/ipo/addipo', company)
+        if (saved.data == true) {
 
-        setCompany({
-            companyId: '',
-            companyName: '',
-            companyLogo: '',
-            companySymbol: '',
-            companyShares: '',
-            companyValuepershare: '',
-            companyMinimumSlotSize: '',
-            companyMaximumSlotSize: '',
-            companyMaximumSlotsAllowed: '',
-            companyValuation: '',
-            companyStartdate: '',
-            companyEnddate: '',
-            companyDescription: ''
-        })
+            toast.success('IPO Added')
+
+            setCompany({
+                companyId: '',
+                companyName: '',
+                companyLogo: '',
+                companySymbol: '',
+                companyShares: '',
+                companyValuepershare: '',
+                companyMinimumSlotSize: '',
+                companyMaximumSlotSize: '',
+                companyMaximumSlotsAllowed: '',
+                companyValuation: '',
+                companyStartdate: '',
+                companyEnddate: '',
+                companyDescription: ''
+            })
+        }
 
     }
 
@@ -289,6 +286,7 @@ const CreateIPO = () => {
                         </div>
                     </div>
                 </form>
+                <ToastContainer />
             </div>
 
 

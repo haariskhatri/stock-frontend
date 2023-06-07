@@ -12,17 +12,17 @@ const circuit = 15;
 // const socket = io("ws://localhost:4000");
 export const Login = () => {
   const [data, setdata] = useState('')
-  const [loader,setloader]=useState(false);
+  const [loader, setloader] = useState(false);
   const [otppage, setotppage] = useState(false)
   const navigate = useNavigate()
 
 
-  useEffect(()=>{
+  useEffect(() => {
     setloader(true)
-    
+
     fetch('/api/login/checksession').
-    then(response => response.json())
-    .then(data => {
+      then(response => response.json())
+      .then(data => {
         if (data.success) {
           setloader(false)
           navigate('/home')
@@ -48,10 +48,10 @@ export const Login = () => {
     }).then(res => res.json())
       .then((data) => {
         if (data.success) {
-          
+
           navigate('/home')
         } else {
-          alert(data.message)
+          toast.error('Invalid Credentials')
         }
       })
   }
@@ -111,15 +111,16 @@ export const Login = () => {
 
           </div>
         </div>
+        <ToastContainer />
       </div>
       {
         otppage && <OtpPage setotppage={setotppage} />
       }
       {
-        loader && <PreLoader/>
+        loader && <PreLoader />
       }
 
     </>
-    
+
   )
 }

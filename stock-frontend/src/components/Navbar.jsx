@@ -7,10 +7,15 @@ import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
+import { useEffect } from "react";
 
 const NavBar = () => {
     const navigate = useNavigate()
     const [active, setactive] = useState(null)
+
+
+
+
     const logout = () => {
         fetch("/api/login/logout")
             .then(response => response.json())
@@ -44,9 +49,15 @@ const NavBar = () => {
                             <input type="text" placeholder="What are you searching for ?" />
                             <SearchIcon />
                         </div>
-                        <WalletIcon style={{ color: "white" }} />
-                        <div className="buy-button">
-                            <button onClick={logout}>LogOut</button>
+                        <div className="wallet">
+                            <WalletIcon style={{ color: "white" }} />
+
+                            <div className="wallet-balance">
+                                {/* Current Balance : {new Intl('en-IN', { style: 'currency', currency: 'INR' }).format(0)} */}
+                            </div>
+                        </div>
+                        <div className="logout-button">
+                            <button><i class="fa-solid fa-right-from-bracket" onClick={logout}> </i>Log Out</button>
                         </div>
                     </nav>
                 </div>
