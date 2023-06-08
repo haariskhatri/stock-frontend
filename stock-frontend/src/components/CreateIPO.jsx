@@ -54,6 +54,7 @@ const CreateIPO = () => {
         companyId: '',
         companyName: '',
         companyLogo: '',
+        companyCategory: '',
         companySymbol: '',
         companyShares: '',
         companyValuepershare: '',
@@ -127,7 +128,7 @@ const CreateIPO = () => {
                         <input type="text" className="form-control" id="floatingInput" placeholder=" " required
                             name='companyName'
                             onChange={handleChange}
-                            value={company.companyName}
+                            value={company.companyName} autoFocus
                         />
                         <label htmlFor="floatingInput">Company Name</label>
                     </div>
@@ -140,6 +141,18 @@ const CreateIPO = () => {
                         />
                         <label htmlFor="floatingInput">Company Symbol</label>
                     </div>
+
+                    <div className="form-floating mb-3">
+                        <input type="text" className="form-control" id="floatingInput" placeholder=" " required
+
+                            name='companyCategory'
+                            onChange={handleChange}
+                            value={company.companyCategory}
+                        />
+                        <label htmlFor="floatingInput">Category</label>
+                    </div>
+
+
 
                     <div className="form-floating mb-3">
                         <label htmlFor="formFile" className="form-label">Logo</label>
