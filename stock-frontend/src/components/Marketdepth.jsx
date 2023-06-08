@@ -1,84 +1,127 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import '../assets/css/marketdepth.css';
+import { LinearProgress } from '@mui/material';
 
-export const Maketdepth = () => {
-    return (
-        <div>
-            <div className='container market-con'>
-                <h3 className='heading'>Market Depth</h3>
-                <div className='heading-marketdepth valign-wrapper'>
 
-                    <div className='heading'>
+const Marketdepth = ({ depth }) => {
 
-                        Buy Order Quantity
-                    </div>
-                    <div className='heading'>
+	var buysum = 0;
+	depth[0].forEach(ele => {
+		buysum += ele.price * ele.shares;
+	});
 
-                        Sell Order Quantity
-                    </div>
+	var sellsum = 0;
+	depth[1].forEach(ele => {
+		sellsum += ele.price * ele.shares;
+	});
 
-                </div>
-                <div className='heading-marketdepth valign-wrapper'>
-                    <div className='left-align '>
-                        <div>
-                            30.28 %
-                        </div>
-                    </div>
-                    <div className='valign-wrapper baar-div'>
+	const buypercent = ((depth[0].length / (depth[0].length + depth[1].length)) * 100).toFixed(2);
+	const sellpercent = ((depth[1].length / (depth[0].length + depth[1].length)) * 100).toFixed(2);
 
-                        <div className='bar'>
-                            
-                        </div>
-                    </div>
-                    <div className='right-align '>
-                        <div>
-                            69.72 %
-                        </div>
-                    </div>
-                </div>
-                <div className='container-fluid'>
-                <div className='heading-marketdepth valign-wrapper '>
-                    <div className='valign-wrapper col-4 heading-marketdepth'>
-                        <div>
-                        <div>Bid Price</div>
-                        <div>1500</div>
-                        <div>1490</div>
-                        <div>1498</div>
-                        <div>1496</div>
-                        <div>1493</div>
-                        </div>
-                        
-                        <div>
-                        <div>Qty</div>
-                        <div>100</div>
-                        <div>400</div>
-                        <div>200</div>
-                        <div>300</div>
-                        <div>100</div>
-                        </div>
-                    </div>
 
-                    <div className='valign-wrapper col-4 heading-marketdepth'>
-                        <div>
-                        <div>Ask Price</div>
-                        <div>1498</div>
-                        <div>1496</div>
-                        <div>1495</div>
-                        <div>1490</div>
-                        <div>1493</div>
-                        </div>
 
-                        <div>
-                        <div className='right-align'>Qty</div>
-                        <div>100</div>
-                        <div>500</div>
-                        <div>300</div>
-                        <div>100</div>
-                        <div>200</div>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-        </div>
-    )
+	return (
+
+		<>
+			<div className="market-depth">
+				<div className="market-depth-title">
+					Market Depth
+				</div>
+
+				<div className="market-depth-progess">
+					<div className="progress-1" style={{ width: `${buypercent}%` }} />
+					<div className="progress-2" style={{ width: `${sellpercent}%` }} />
+				</div>
+
+				<div className="percentage">
+					<div className="buy">
+						Buy : {buypercent} %
+					</div>
+					<div className="sell">
+						Sell : {sellpercent} %
+					</div>
+				</div>
+
+
+				<div className="row">
+					<div className="col-md-6">
+						<div className="table-responsive">
+							<table className='table'>
+
+								<thead>
+									<tr>
+										<th>
+											Bid Price
+										</th>
+										<th className='text-end'>
+											Qty
+										</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									{depth[0].map((ele, index) => {
+										return (
+											<tr key={index}>
+												<td>{ele.price}</td>
+												<td className='text-end' style={{ 'color': '#0abb92' }}>{new Intl.NumberFormat('en-IN').format(ele.shares)}</td>
+											</tr>
+										)
+									})
+									}
+									<tr className='lower-row'>
+										<td className='amount-data'>Total Bid : </td>
+
+										<td className='text-end'>{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(buysum)}</td>
+									</tr>
+								</tbody>
+
+							</table>
+						</div>
+
+
+					</div>
+
+					<div className="col-md-6">
+						<div className="table-responsive">
+							<table className='table'>
+
+								<thead>
+									<tr>
+										<th>
+											Ask Price
+										</th>
+										<th className='text-end'>
+											Qty
+										</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									{depth[1].map((ele, index) => {
+										return (
+											<tr key={index}>
+												<td>{ele.price}</td>
+												<td className='text-end' style={{ color: '#d55438' }}>{new Intl.NumberFormat('en-IN').format(ele.shares)}</td>
+											</tr>
+										)
+									})
+									}
+									<tr className='lower-row'>
+										<td className='amount-data'>Total Bid : </td>
+										<td className='text-end'>{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(sellsum)}</td>
+									</tr>
+								</tbody>
+
+							</table>
+
+						</div>
+
+					</div>
+				</div >
+			</div>
+		</>
+	)
 }
+
+export default Marketdepth;

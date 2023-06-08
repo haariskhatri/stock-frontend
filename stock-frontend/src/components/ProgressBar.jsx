@@ -17,7 +17,7 @@ const ProgressBar = ({ details }) => {
                         <div className="progress-component">
 
                             <div className="progress-bar" />
-                            <i class="fa-solid fa-caret-up" style={{ color: 'white' }}></i>
+                            <i className="fa-solid fa-caret-up" style={{ color: 'white' }}></i>
                         </div>
                     </div>
                     <div className="col-lg-2">

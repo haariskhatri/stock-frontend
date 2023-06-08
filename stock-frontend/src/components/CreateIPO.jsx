@@ -7,32 +7,60 @@ import { useRef } from 'react';
 import io from 'socket.io-client'
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { Navigate } from 'react-router-dom';
 
 const CreateIPO = () => {
 
     const addIpo = async (e) => {
         e.preventDefault();
 
-        const saved = await axios.post('/api/ipo/addipo', company)
-        if (saved.data == true) {
+        const data = {
+            companyId: company.companyId,
+            companyName: company.companyName.trimStart().charAt(0).toUpperCase() + company.companyName.trimStart().slice(1),
+            companyLogo: '',
+            companyCategory: company.companyCategory.trimStart().charAt(0).toUpperCase() + company.companyCategory.trimStart().slice(1),
+            companySymbol: (company.companySymbol.toUpperCase()).trimStart(),
+            companyShares: (company.companyShares).trimStart(),
+            companyValuepershare: (company.companyValuepershare).trimStart(),
+            companySlotSize: (company.companySlotSize).trimStart(),
+            companyMaximumSlotsAllowed: (company.companyMaximumSlotsAllowed).trimStart(),
+            companyValuation: '',
+            companyStartdate: company.companyStartdate,
+            companyEnddate: company.companyEnddate,
+            companyDescription: company.companyDescription.trimStart().charAt(0).toUpperCase() + company.companyDescription.trimStart().slice(1)
+        }
 
-            toast.success('IPO Added')
 
-            setCompany({
-                companyId: '',
-                companyName: '',
-                companyLogo: '',
-                companySymbol: '',
-                companyShares: '',
-                companyValuepershare: '',
-                companyMinimumSlotSize: '',
-                companyMaximumSlotSize: '',
-                companyMaximumSlotsAllowed: '',
-                companyValuation: '',
-                companyStartdate: '',
-                companyEnddate: '',
-                companyDescription: ''
-            })
+        const exists = await axios.post('/api/ipo/checkipo', { name: company.companyName, stock: company.companySymbol });
+
+        if (exists.data === true) {
+            toast.error('Exists');
+        }
+
+        else {
+
+
+            const saved = await axios.post('/api/ipo/addipo', data)
+            if (saved.data == true) {
+
+                toast.success('IPO Added')
+
+                setCompany({
+                    companyId: '',
+                    companyName: '',
+                    companyLogo: '',
+                    companyCategory: '',
+                    companySymbol: '',
+                    companyShares: '',
+                    companyValuepershare: '',
+                    compantSlotSize: '',
+                    companyMaximumSlotsAllowed: '',
+                    companyValuation: '',
+                    companyStartdate: '',
+                    companyEnddate: '',
+                    companyDescription: ''
+                })
+            }
         }
 
     }
@@ -43,11 +71,11 @@ const CreateIPO = () => {
         companyId: '',
         companyName: '',
         companyLogo: '',
+        companyCategory: '',
         companySymbol: '',
         companyShares: '',
         companyValuepershare: '',
-        companyMinimumSlotSize: '',
-        companyMaximumSlotSize: '',
+        companySlotSize: '',
         companyMaximumSlotsAllowed: '',
         companyValuation: '',
         companyStartdate: '',
@@ -82,6 +110,10 @@ const CreateIPO = () => {
 
             const id = await axios.get('/api/ipo/getid');
 
+            if (id.data.success == false) {
+                <Navigate to='/' />
+            }
+
 
 
 
@@ -112,7 +144,7 @@ const CreateIPO = () => {
                         <input type="text" className="form-control" id="floatingInput" placeholder=" " required
                             name='companyName'
                             onChange={handleChange}
-                            value={company.companyName}
+                            value={company.companyName} autoFocus
                         />
                         <label htmlFor="floatingInput">Company Name</label>
                     </div>
@@ -125,6 +157,18 @@ const CreateIPO = () => {
                         />
                         <label htmlFor="floatingInput">Company Symbol</label>
                     </div>
+
+                    <div className="form-floating mb-3">
+                        <input type="text" className="form-control" id="floatingInput" placeholder=" " required
+
+                            name='companyCategory'
+                            onChange={handleChange}
+                            value={company.companyCategory}
+                        />
+                        <label htmlFor="floatingInput">Category</label>
+                    </div>
+
+
 
                     <div className="form-floating mb-3">
                         <label htmlFor="formFile" className="form-label">Logo</label>
@@ -190,47 +234,25 @@ const CreateIPO = () => {
                         <div className="col-lg-6">
                             <div className="form-floating mb-3">
                                 <input type="text" className="form-control" id="floatingInput" placeholder=" " required
-                                    name='companyMinimumSlotSize'
+                                    name='companySlotSize'
                                     onChange={handleChange}
-                                    value={company.companyMinimumSlotSize}
+                                    value={company.companySlotSize}
                                 />
-                                <label htmlFor="floatingInput">Minimum Slot Size</label>
+                                <label htmlFor="floatingInput">Lot Size</label>
                             </div>
                         </div>
                         <div className="col-lg-6">
                             <div className="form-floating mb-3">
-                                <input type="text" className="form-control" id="floatingInput" placeholder=" " required
+                                <input type="text" className="form-control" id="floatingInput" placeholder=" " readOnly
                                     name='companyMaximumSlotSize'
-                                    onChange={handleChange}
-                                    value={company.companyMaximumSlotSize}
+                                    value={new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(company.companySlotSize * company.companyValuepershare)}
                                 />
-                                <label htmlFor="floatingInput">Maximum Slot Size</label>
+                                <label htmlFor="floatingInput">Lot Value</label>
                             </div>
 
                         </div>
 
-                        <div className="col-lg-6">
-                            <div className="form-floating mb-3">
-                                <input type="text" className="form-control" id="floatingInput" placeholder=" "
-                                    name='companyMinimumSlotSize'
-                                    onChange={handleChange}
 
-                                    value={new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(company.companyMinimumSlotSize * company.companyValuepershare)}
-                                />
-                                <label htmlFor="floatingInput">Minimum Slot Size</label>
-                            </div>
-                        </div>
-                        <div className="col-lg-6">
-                            <div className="form-floating mb-3">
-                                <input type="text" className="form-control" id="floatingInput" placeholder=" " readOnly defaultValue='0'
-                                    name='companyMaximumSlotSize'
-                                    onChange={handleChange}
-                                    value={new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(company.companyMaximumSlotSize * company.companyValuepershare)}
-                                />
-                                <label htmlFor="floatingInput">Maximum Slot Size Value</label>
-                            </div>
-
-                        </div>
 
                         <div className="col-lg-12">
                             <div className="form-floating mb-3">

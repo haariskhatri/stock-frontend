@@ -23,6 +23,15 @@ import { Adminlogin } from "./pages/Adminlogin";
 
 
 const router = createBrowserRouter([
+
+  {
+    path: '/sharelist',
+    element: <SharesList />
+  },
+  {
+    path: '/market',
+    element: <Maketdepth />
+  },
   {
     path: "/home",
     element: <HomePage />
@@ -38,10 +47,6 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <UserRegistration />
-  },
-  {
-    path: '/home',
-    element: <HomePage />
   },
   {
     path: '/getipo',

@@ -122,12 +122,17 @@ const BuySellCard = ({ company }) => {
 			console.log(data);
 		})
 
+		socket.on('invalid', () => {
+			toast.error('Insufficent Share Balance')
+		})
+
 
 		return () => {
 			socket.off('buysuccess');
 			socket.off('sellsuccess');
 			socket.off('circuit');
 			socket.off('detail')
+			socket.off('invalid')
 
 		}
 	}, [socket])
@@ -138,22 +143,18 @@ const BuySellCard = ({ company }) => {
 
 		detail.forEach(ele => {
 			if (ele.shareSymbol === company.shareSymbol) {
-				if (sellstock.stockPriceLimit > ele.sharePrice + 15 || sellstock.stockPriceLimit < ele.sharePrice - 15) {
-					toast.error('Amount Invalid');
-					return;
-				}
-				else {
-					const data = {
-						socketId: socket.id,
-						stockId: company.shareSymbol,
-						userId: userid,
-						userEmail: useremail,
-						shares: sellstock.stockQuantity,
-						price: sellstock.stockPriceLimit
-					}
 
-					socket.emit('sellOrder', data);
+				const data = {
+					socketId: socket.id,
+					stockId: company.shareSymbol,
+					userId: userid,
+					userEmail: useremail,
+					shares: sellstock.stockQuantity,
+					price: sellstock.stockPriceLimit
 				}
+
+				socket.emit('sellOrder', data);
+
 			}
 		})
 
@@ -241,10 +242,7 @@ const BuySellCard = ({ company }) => {
 										<div className="col-lg-12">
 											<div className="buy-menu">
 
-												<div className="stock-quantity">
-													<label htmlFor="stockQuantity">StockID</label>
-													<input type="text" name="stockId" value={sellstock.stockId} onChange={handlesellchange} autoFocus />
-												</div>
+
 
 												<div className="stock-quantity">
 

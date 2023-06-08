@@ -8,10 +8,19 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import { useEffect } from "react";
+import io from 'socket.io-client'
+import { Getinvestment } from '../components/getinvestment';
+const socket = io("http://localhost:8000", {
+    autoConnect: false
+});
 
-const NavBar = () => {
+
+
+const NavBar = (props) => {
     const navigate = useNavigate()
+
     const [active, setactive] = useState(null)
+    const [userbalance, setuserbalance] = useState();
 
 
 
@@ -21,12 +30,34 @@ const NavBar = () => {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    navigate('/Userlogin')
+                    navigate('/')
                 } else {
                     toast.error('Error !')
                 }
             })
     }
+
+    useEffect(() => {
+
+        socket.connect();
+        axios.get(`/api/user/getuserbalance`).then((data) => {
+            setuserbalance(data.data)
+            console.log('initial', data.data);
+        })
+
+        socket.on('userbalance', () => {
+            console.log('update');
+            axios.get(`/api/user/getuserbalance`).then((data) => {
+                setuserbalance(data.data)
+            })
+        })
+
+        return () => {
+            socket.off('userbalance');
+        }
+    }, [socket])
+
+
 
 
     return (
@@ -66,7 +97,8 @@ const NavBar = () => {
                             <WalletIcon style={{ color: "white" }} />
 
                             <div className="wallet-balance">
-                                {/* Current Balance : {new Intl('en-IN', { style: 'currency', currency: 'INR' }).format(0)} */}
+                                Current Balance : {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(userbalance)}
+
                             </div>
                         </div>
                         <div className="logout-button">

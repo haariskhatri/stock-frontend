@@ -1,11 +1,11 @@
 import React from 'react'
 import { Iposubscribe } from '../components/iposubscribe';
-import NavBar from '../components/navbar';
+import NavBar from '../components/Navbar';
 
 import tata from '../assets/tata.png';
 
 import '../assets/css/homepage.css'
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../components/Footer';
 import { useState } from 'react';
@@ -27,7 +27,7 @@ const HomePage = () => {
     const [userbalance, setuserbalance] = useState();
 
 
-    const [loader, setloader] = useState(true);
+    const [aapduloader, setaapduloader] = useState(true);
     const [ipos, setipos] = useState();
     const [topshares, settopshares] = useState();
 
@@ -48,7 +48,8 @@ const HomePage = () => {
 
         axios.get('/api/ipo/getallipos').then((data) => {
             console.log(data.data);
-            setipos(data.data);
+            const set = data.data;
+            setipos(set.slice(0, 4));
 
 
 
@@ -58,13 +59,11 @@ const HomePage = () => {
 
         axios.get('/api/share/gettopshares').then((data) => {
             const set = data.data;
-            settopshares(set);
+            settopshares(set.slice(0, 10));
             console.log(set);
 
 
         })
-
-
 
 
     }, []);
@@ -75,21 +74,18 @@ const HomePage = () => {
         axios.get('/api/login/usernow').then((data) => {
             setuserid(data.data.id)
 
-            axios.get(`/api/user/getuserbalance`).then((data) => {
-                setuserbalance(data.data)
-                console.log(data.data);
-            })
+
 
             socket.emit('investment', data.data.id);
 
 
         })
 
-
-        socket.on('investment', (data) => {
-            setinvested(data);
-            setloader(false);
-            console.log(data);
+        socket.on('userbalance', () => {
+            axios.get(`/api/user/getuserbalance`).then((data) => {
+                setuserbalance(data.data)
+                console.log('socket ', data.data)
+            })
         })
 
         socket.on('detail', (data) => {
@@ -100,6 +96,7 @@ const HomePage = () => {
         return () => {
             socket.off('investment');
             socket.off('detail');
+            socket.off('userbalance');
         }
 
     }, [socket])
@@ -111,7 +108,7 @@ const HomePage = () => {
 
     return (
         <>
-            <NavBar />
+            <NavBar userbalance={userbalance} />
             <div className="home">
                 <div className="container">
                     <div className="row">
@@ -119,7 +116,7 @@ const HomePage = () => {
                             <div className="stock-title">
                                 Stocks
                                 <div className="view-more">
-                                    <Link to='/'>View More</Link>
+                                    <Link to='/sharelist'>View More</Link>
                                 </div>
                             </div>
                             <ul className="stock-tiles list-unstyled">
@@ -160,7 +157,7 @@ const HomePage = () => {
 
                         </div>
                         <div className="col-md-4">
-                           <Getinvestment/>
+                            <Getinvestment setloader={setaapduloader} />
 
                         </div>
                     </div>
@@ -168,7 +165,7 @@ const HomePage = () => {
 
             </div>
             <Footer />
-            {loader && <PreLoader />}
+            {aapduloader && <PreLoader />}
         </>
     )
 }
