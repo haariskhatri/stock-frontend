@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import logo from '../assets/Logo.png'
 import WalletIcon from '@mui/icons-material/Wallet';
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -40,9 +40,22 @@ const NavBar = () => {
                         <div className="logo-title">
                             <h4>TradeTrek</h4>
                         </div>
+                        {/* <NavBar>
+                            <Link>Explore</Link>
+                            <Link>Investment</Link>
+                            <Link>Explore</Link>
+
+                        </NavBar> */}
+                        {/* <nav className="list-unstyled">
+                            <NavLink to='/home'>Explore</NavLink>
+                            <NavLink to='/Investment'>Investment</NavLink>
+                            <NavLink to='/History'>History</NavLink>
+                        </nav> */}
                         <ul className="list-unstyled">
-                            <li className={active === 0 ? 'active' : ''} onClick={() => { setactive(0) }}>Explore</li>
-                            <li className={active === 1 ? 'active' : ''} onClick={() => { setactive(1) }} >Investments</li>
+                            <li className={active === 0 ? 'active' : ''} onClick={() => { setactive(0) ;navigate('/home') }}>Explore</li>
+                            <li className={active === 1 ? 'active' : ''} onClick={() => { setactive(1); navigate('/Investment') }} >Investments</li>
+                            <li className={active === 2 ? 'active' : ''} onClick={() => { setactive(2); navigate('/History') }} >History</li>
+                            
                         </ul>
 
                         <div className="search-bar">
@@ -57,7 +70,7 @@ const NavBar = () => {
                             </div>
                         </div>
                         <div className="logout-button">
-                            <button><i class="fa-solid fa-right-from-bracket" onClick={logout}> </i>Log Out</button>
+                            <button><i className="fa-solid fa-right-from-bracket" onClick={logout}> </i>Log Out</button>
                         </div>
                     </nav>
                 </div>

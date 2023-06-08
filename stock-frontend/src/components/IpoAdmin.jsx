@@ -34,12 +34,21 @@ export const IpoAdmin = () => {
             console.log(data)
             if (data.success) {
                 alert(data.message)
+                getipo()
             }
         })
     }
 
     const cancel_ipo = () => {
-        console.log("THis is cancel ipo")
+        fetch("/api/adminlogin/cancelipo/"+componyId)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            if (data.success) {
+                alert(data.message)
+                getipo()
+            }
+        })
     }
 
     return (
