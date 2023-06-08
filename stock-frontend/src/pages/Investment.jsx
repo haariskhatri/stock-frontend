@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react'
 import { IpoAdmin } from '../components/IpoAdmin'
-import NavBar from "../components/navbar";
+import NavBar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Getinvestment } from '../components/getinvestment';
 
