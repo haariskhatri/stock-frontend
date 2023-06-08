@@ -19,7 +19,7 @@ const IpoRegister = () => {
         <>
             <div className="ipo-register">
                 <div className="container">
-                    <NavBar />
+                   
                     <div className="row">
                         <div className="col-md-3">
                             <SideMenu />
