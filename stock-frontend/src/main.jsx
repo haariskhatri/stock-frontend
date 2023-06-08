@@ -16,6 +16,10 @@ import { GetSharesList } from "./pages/GetSharesList";
 import { UserRegistration } from "./pages/UserRegistration";
 import { AdminCompony } from "./pages/AdminCompony";
 import { Getinvestment } from "./components/getinvestment";
+import { UserHistory } from "./components/UserHistory";
+import { History } from "./pages/History";
+import { Investment } from "./pages/Investment";
+import { Adminlogin } from "./pages/Adminlogin";
 
 
 const router = createBrowserRouter([
@@ -56,12 +60,20 @@ const router = createBrowserRouter([
     element: <AdminCompony />
   },
   {
-    path: '/Userlogin',
-    element: <UserRegistration />
+    path: '/user',
+    element: <UserHistory />
   },
   {
-    path: '/getinvest',
-    element: <Getinvestment />
+    path: '/Investment',
+    element: <Investment />
+  },
+  {
+    path: '/History',
+    element: <History />
+  },
+  {
+    path: '/admin',
+    element: <Adminlogin />
   }
 ]);
 
