@@ -14,23 +14,27 @@ import HomePage from "./pages/HomePage";
 import { Getipodata } from "./pages/Getipodata";
 import { GetSharesList } from "./pages/GetSharesList";
 import { UserRegistration } from "./pages/UserRegistration";
-import { AdminCompony } from "./pages/AdminCompony";
 import { Getinvestment } from "./components/getinvestment";
 import { UserHistory } from "./components/UserHistory";
 import { History } from "./pages/History";
 import { Investment } from "./pages/Investment";
 import { Adminlogin } from "./pages/Adminlogin";
+import { SharesList } from "./components/SharesList";
+import Marketdepth from "./components/Marketdepth";
+import { Adminipo } from "./pages/AdminIpo";
+import { AdminDetailsPage } from "./pages/AdminDetailsPage";
+
 
 
 const router = createBrowserRouter([
 
   {
     path: '/sharelist',
-    element: <SharesList />
+    element: <SharesList/>
   },
   {
     path: '/market',
-    element: <Maketdepth />
+    element: <Marketdepth/>
   },
   {
     path: "/home",
@@ -62,7 +66,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/admincompony',
-    element: <AdminCompony />
+    element: <Adminipo />
   },
   {
     path: '/user',
@@ -79,6 +83,10 @@ const router = createBrowserRouter([
   {
     path: '/admin',
     element: <Adminlogin />
+  },
+  {
+    path: '/adminhome',
+    element: <AdminDetailsPage />
   }
 ]);
 

@@ -1,4 +1,5 @@
-import React,{useEffect} from 'react'
+import React,{useEffect, useState} from 'react'
+import { IpoAdmin } from '../components/IpoAdmin'
 import NavBar from "../components/Navbar";
 import Footer from "../components/Footer";
 import SideMenu from '../components/sidemenu';
@@ -7,7 +8,8 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 
-export const AdminDetailsPage = () => {
+
+export const Adminipo = () => {
     const navigate=useNavigate()
     useEffect(()=>{
         checkadmin();
@@ -20,21 +22,22 @@ export const AdminDetailsPage = () => {
 
             } else {
                 navigate('/admin')
-                toast.error('Error !')
+                toast.error('You Are Not Admin')
             }
         })
     }
+
     return (
         <>
              <div className="ipo-register">
                 <div className="container">
-                  
+                 
                     <div className="row">
                         <div className="col-md-3">
                             <SideMenu />
                         </div>
                         <div className="col-md-9">
-                           <h1 className='card-title'>Welcome Back Admin</h1>
+                            <IpoAdmin />
                         </div>
                     </div>
                 </div>

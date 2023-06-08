@@ -19,7 +19,7 @@ export const IpoAdmin = () => {
                 console.log(data)
                 if (!data.success) {
                     alert(data.message)
-                    navigate('/Userlogin')
+                    navigate('/adminlogin')
                 } else {
                     setData(data)
                 }

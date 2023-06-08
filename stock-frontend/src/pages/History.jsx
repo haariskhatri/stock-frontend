@@ -1,5 +1,5 @@
 import React from 'react'
-import NavBar from "../components/navbar";
+import NavBar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { UserHistory } from '../components/UserHistory';
 

@@ -37,6 +37,23 @@ const NavBar = (props) => {
             })
     }
 
+    useEffect(()=>{
+        checklogin()
+    },[])
+
+    const checklogin=()=>{
+        fetch("/api/login/checksession")
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+
+            } else {
+                navigate('/')
+                toast.error('Login First')
+            }
+        })
+    }
+
     useEffect(() => {
 
         socket.connect();
@@ -48,7 +65,7 @@ const NavBar = (props) => {
         socket.on('userbalance', () => {
             console.log('update');
             axios.get(`/api/user/getuserbalance`).then((data) => {
-                setuserbalance(data.data)
+                setuserbalance(data?.data)
             })
         })
 
