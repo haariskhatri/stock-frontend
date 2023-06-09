@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { PreLoader } from './PreLoader';
 
 export const OtpPage = ({ setotppage }) => {
   const navigate = useNavigate()
+  const [loader,setloader]=useState(false);
   const verifyotp = async (e) => {
     e.preventDefault()
+    setloader(true)
     const otp = document.getElementById('otp').value
     const response = await fetch('/api/signup/verifyotp', {
       method: 'post',
@@ -21,11 +24,13 @@ export const OtpPage = ({ setotppage }) => {
         if (data.success) {
           toast.success('Account Added')
           setotppage(false)
+          setloader(false)
           navigate('/home')
 
 
         } else {
           toast.error('Error')
+          setloader(false)
           navigate('/')
         }
       })
@@ -48,6 +53,9 @@ export const OtpPage = ({ setotppage }) => {
         </form>
         <ToastContainer />
       </div>
+      {
+        loader && <PreLoader/>
+      }
     </div>
 
   )

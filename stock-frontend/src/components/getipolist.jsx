@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { PreLoader } from './PreLoader';
 
 
 export const Getipolist = ({ setipodata }) => {
@@ -7,11 +8,12 @@ export const Getipolist = ({ setipodata }) => {
     const navigate=useNavigate();
 
     const [data, setData] = useState([]);
+    const [loader,setloader]=useState(true);
    
 
     useEffect(() => {
         getipo()
-
+        setloader(false)
     }, [])
 
     const getipo = () => {
@@ -73,7 +75,10 @@ export const Getipolist = ({ setipodata }) => {
             })
 
             }
+            {loader &&
 
+                <PreLoader/>
+            }
         </div>
 
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import logo from '../assets/Logo.png'
 import WalletIcon from '@mui/icons-material/Wallet';
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,6 +10,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import io from 'socket.io-client'
 import { Getinvestment } from '../components/getinvestment';
+import { PreLoader } from "./PreLoader";
 const socket = io("http://localhost:8000", {
     autoConnect: false
 });
@@ -21,20 +22,43 @@ const NavBar = (props) => {
 
     const [active, setactive] = useState(null)
     const [userbalance, setuserbalance] = useState();
+    const [loader,setloader]=useState(false);
 
 
 
 
     const logout = () => {
+        setloader(true)
         fetch("/api/login/logout")
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
+                    setloader(false)
                     navigate('/')
                 } else {
                     toast.error('Error !')
                 }
+                setloader(false)
             })
+    }
+
+    useEffect(()=>{
+        checklogin()
+    },[])
+
+    const checklogin=()=>{
+        setloader(true)
+        fetch("/api/login/checksession")
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                setloader(false)
+            } else {
+                setloader(false)
+                navigate('/')
+                toast.error('Login First')
+            }
+        })
     }
 
     useEffect(() => {
@@ -48,7 +72,7 @@ const NavBar = (props) => {
         socket.on('userbalance', () => {
             console.log('update');
             axios.get(`/api/user/getuserbalance`).then((data) => {
-                setuserbalance(data.data)
+                setuserbalance(data?.data)
             })
         })
 
@@ -71,9 +95,22 @@ const NavBar = (props) => {
                         <div className="logo-title">
                             <h4>TradeTrek</h4>
                         </div>
+                        {/* <NavBar>
+                            <Link>Explore</Link>
+                            <Link>Investment</Link>
+                            <Link>Explore</Link>
+
+                        </NavBar> */}
+                        {/* <nav className="list-unstyled">
+                            <NavLink to='/home'>Explore</NavLink>
+                            <NavLink to='/Investment'>Investment</NavLink>
+                            <NavLink to='/History'>History</NavLink>
+                        </nav> */}
                         <ul className="list-unstyled">
-                            <li className={active === 0 ? 'active' : ''} onClick={() => { setactive(0) }}>History</li>
-                            <li className={active === 1 ? 'active' : ''} onClick={() => { setactive(1) }} >Investments</li>
+                            <li className={active === 0 ? 'active' : ''} onClick={() => { setactive(0) ;navigate('/home') }}>Explore</li>
+                            <li className={active === 1 ? 'active' : ''} onClick={() => { setactive(1); navigate('/Investment') }} >Investments</li>
+                            <li className={active === 2 ? 'active' : ''} onClick={() => { setactive(2); navigate('/History') }} >History</li>
+                            
                         </ul>
 
                         <div className="search-bar">
@@ -89,11 +126,14 @@ const NavBar = (props) => {
                             </div>
                         </div>
                         <div className="logout-button">
-                            <button onClick={logout}><i className="fa-solid fa-right-from-bracket" > </i>Log Out</button>
+                            <button><i className="fa-solid fa-right-from-bracket" onClick={logout}> </i>Log Out</button>
                         </div>
                     </nav>
                 </div>
                 <ToastContainer />
+                {
+                    loader && <PreLoader/>
+                }
             </div>
         </>
     )

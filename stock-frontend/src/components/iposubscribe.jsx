@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { PreLoader } from "./PreLoader";
 
 
 export const Iposubscribe = ({ ipodata }) => {
     var ipo_id;
+    const [loader,setloader]=useState(false);
     
     const iposubcall = (e) => {
+        setloader(true)
         e.preventDefault()
          fetch('/api/ipo/iposub', {
             method: 'post',
             body: JSON.stringify({
-              ipo_id:ipodata?.singleipo.companyId
+              ipo_id:ipodata?.singleipo.companyId,
+              minimumslot:ipodata?.singleipo?.companyMinimumSlotSize
             }),
             headers: {
               'Content-type': 'application/json'
@@ -18,7 +22,10 @@ export const Iposubscribe = ({ ipodata }) => {
           .then(data => {
               if(data.success) {
                   alert(data.message)
+                  setloader(false)
               }
+              setloader(false)
+
           })
     }
 
@@ -85,6 +92,7 @@ export const Iposubscribe = ({ ipodata }) => {
                         </div>
                     </div>
                 </div>
+                {loader && <PreLoader/>}
             </div>
         </>
     )

@@ -3,9 +3,12 @@ import { Iposubscribe } from '../components/iposubscribe';
 import NavBar from '../components/Navbar';
 
 import tata from '../assets/tata.png';
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 import '../assets/css/homepage.css'
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../components/Footer';
 import { useState } from 'react';
@@ -25,19 +28,20 @@ const HomePage = () => {
     const [userid, setuserid] = useState();
     const [invested, setinvested] = useState();
     const [userbalance, setuserbalance] = useState();
-
+   
 
     const [aapduloader, setaapduloader] = useState(true);
     const [ipos, setipos] = useState();
     const [topshares, settopshares] = useState();
+    const navigate=useNavigate();
 
 
 
 
 
     useEffect(() => {
-
-
+        
+        checklogin()
 
         axios.get('/api/share/getshares').then((data) => {
             console.log(data.data);
@@ -67,6 +71,21 @@ const HomePage = () => {
 
 
     }, []);
+
+    const checklogin=()=>{
+        setaapduloader(true)
+        fetch("/api/login/checksession")
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                setaapduloader(false)
+            } else {
+                setaapduloader(false)
+                navigate('/')
+                toast.error('Login First')
+            }
+        })
+    }
 
     useEffect(() => {
 
@@ -166,6 +185,7 @@ const HomePage = () => {
             </div>
             <Footer />
             {aapduloader && <PreLoader />}
+            <ToastContainer/>
         </>
     )
 }

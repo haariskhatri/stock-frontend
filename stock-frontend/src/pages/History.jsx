@@ -1,9 +1,10 @@
-import React,{useEffect, useState} from 'react'
-import { IpoAdmin } from '../components/IpoAdmin'
-import NavBar from "../components/navbar";
+import React from 'react'
+import NavBar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { UserHistory } from '../components/UserHistory';
 
-export const AdminCompony = () => {
+
+export const History = () => {
     return (
         <>
             <div className="market-page">
@@ -14,7 +15,7 @@ export const AdminCompony = () => {
                     <div className="row">
                         <div className="col-md-12">
 
-                            <IpoAdmin/>
+                            <UserHistory/>
 
                         </div>
                         <div className="col-md-4">

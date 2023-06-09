@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { PreLoader } from './PreLoader';
 
 export const IpoAdmin = () => {
     const [data, setData] = useState([]);
+    const [loader,setloader]=useState(true)
     
     var componyId ;
     const navigate = useNavigate()
@@ -19,27 +21,42 @@ export const IpoAdmin = () => {
                 console.log(data)
                 if (!data.success) {
                     alert(data.message)
-                    navigate('/Userlogin')
+                    setloader(false)
+                    navigate('/adminlogin')
                 } else {
                     setData(data)
+                    setloader(false)
                 }
             })
     }
 
 
     const allocate_slot = () => {
+        setloader(true)
         fetch("/api/adminlogin/allocation_slot/"+componyId)
         .then(response => response.json())
         .then(data => {
             console.log(data)
             if (data.success) {
                 alert(data.message)
+                getipo()
+                setloader(false)
             }
         })
     }
 
     const cancel_ipo = () => {
-        console.log("THis is cancel ipo")
+        setloader(true)
+        fetch("/api/adminlogin/cancelipo/"+componyId)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            if (data.success) {
+                alert(data.message)
+                getipo()
+                setloader(false)
+            }
+        })
     }
 
     return (
@@ -65,6 +82,9 @@ export const IpoAdmin = () => {
                     </div>
                 )
             })}
+            {
+                loader && <PreLoader/>
+            }
         </div>
     )
 }
