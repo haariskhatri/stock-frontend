@@ -3,6 +3,7 @@ import moment from 'moment';
 import axios from 'axios';
 
 import io from 'socket.io-client'
+import { PreLoader } from './PreLoader';
 const socket = io("http://localhost:8000", {
     autoConnect: false
 });
@@ -10,6 +11,7 @@ const socket = io("http://localhost:8000", {
 export const UserHistory = () => {
     const [data, setData] = useState();
     const [id, setid] = useState();
+    const [loader,setloader]=useState(false)
 
     useEffect(() => {
         gethistory();
@@ -25,15 +27,18 @@ export const UserHistory = () => {
     }, [])
 
     const gethistory = () => {
+        setloader(true)
         fetch("/api/trade/history")
             .then(response => response.json())
             .then(data => {
                 console.log(data)
                 if (!data.success) {
                     alert(data.message)
+                    setloader(false)
                     navigate('/Userlogin')
                 } else {
                     console.log(data);
+                    setloader(false)
                     setData(data)
                 }
             })
@@ -91,8 +96,9 @@ export const UserHistory = () => {
 
                     </tbody>
                 </table>
+                
             </div>
-
+            {loader && <PreLoader/>}
         </>
     )
 }

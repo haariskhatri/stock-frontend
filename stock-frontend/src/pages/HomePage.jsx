@@ -28,7 +28,7 @@ const HomePage = () => {
     const [userid, setuserid] = useState();
     const [invested, setinvested] = useState();
     const [userbalance, setuserbalance] = useState();
-
+   
 
     const [aapduloader, setaapduloader] = useState(true);
     const [ipos, setipos] = useState();
@@ -73,12 +73,14 @@ const HomePage = () => {
     }, []);
 
     const checklogin=()=>{
+        setaapduloader(true)
         fetch("/api/login/checksession")
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-
+                setaapduloader(false)
             } else {
+                setaapduloader(false)
                 navigate('/')
                 toast.error('Login First')
             }

@@ -9,7 +9,7 @@ import { PreLoader } from '../components/PreLoader';
 import axios from 'axios';
 
 
-const circuit = 15;
+
 // const socket = io("ws://localhost:4000");
 export const Login = () => {
   const [data, setdata] = useState('')
@@ -46,6 +46,7 @@ export const Login = () => {
 
   const login = (e) => {
     e.preventDefault();
+    setloader(true)
     const email = document.getElementById('email').value
     const pass = document.getElementById('pass').value
 
@@ -61,9 +62,10 @@ export const Login = () => {
     }).then(res => res.json())
       .then((data) => {
         if (data.success) {
-
+          setloader(false)
           navigate('/home')
         } else {
+          setloader(false)
           toast.error('Invalid Credentials')
         }
       })

@@ -10,6 +10,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import io from 'socket.io-client'
 import { Getinvestment } from '../components/getinvestment';
+import { PreLoader } from "./PreLoader";
 const socket = io("http://localhost:8000", {
     autoConnect: false
 });
@@ -21,19 +22,23 @@ const NavBar = (props) => {
 
     const [active, setactive] = useState(null)
     const [userbalance, setuserbalance] = useState();
+    const [loader,setloader]=useState(false);
 
 
 
 
     const logout = () => {
+        setloader(true)
         fetch("/api/login/logout")
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
+                    setloader(false)
                     navigate('/')
                 } else {
                     toast.error('Error !')
                 }
+                setloader(false)
             })
     }
 
@@ -42,12 +47,14 @@ const NavBar = (props) => {
     },[])
 
     const checklogin=()=>{
+        setloader(true)
         fetch("/api/login/checksession")
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-
+                setloader(false)
             } else {
+                setloader(false)
                 navigate('/')
                 toast.error('Login First')
             }
@@ -124,6 +131,9 @@ const NavBar = (props) => {
                     </nav>
                 </div>
                 <ToastContainer />
+                {
+                    loader && <PreLoader/>
+                }
             </div>
         </>
     )

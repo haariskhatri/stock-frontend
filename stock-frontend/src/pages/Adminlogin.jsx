@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { PreLoader } from '../components/PreLoader';
 
 export const Adminlogin = () => {
     const navigate=useNavigate();
+    const [loader,setloader]=useState(false)
     const [user, setuser] = useState({
         'email': '',
         'password': ''
@@ -19,6 +21,7 @@ export const Adminlogin = () => {
       }
       const login=(e)=>{
         e.preventDefault()
+        setloader(true)
         fetch('/api/login/adminlogin', {
             method: 'post',
             body: JSON.stringify({
@@ -32,10 +35,12 @@ export const Adminlogin = () => {
             .then((data) => {
                 console.log(data);
               if (data.success) {
+                setloader(false)
                 toast.success('Login Successfully')
                 navigate('/register')
                 
               } else {
+                setloader(false)
                 toast.error('Invalid Credentials')
               }
             })
@@ -68,6 +73,7 @@ export const Adminlogin = () => {
                     </div>
                 </div>
             </div>
+            {loader && <PreLoader/>}
             <ToastContainer />
         </div>
     )

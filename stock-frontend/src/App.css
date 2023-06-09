@@ -32,7 +32,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Loader */
-.loader-outer {
+/* .loader-outer {
   position: fixed;
   top: 0;
   left: 0;
@@ -380,7 +380,7 @@ input::-webkit-inner-spin-button {
   100% {
     transform: scale(1, 1);
   }
-}
+} */
 
 
 /* Market-Order */

@@ -1,11 +1,13 @@
 import React,{useState,useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
+import { PreLoader } from './PreLoader';
 
 export const GetShares = ({setsharesdata}) => {
 
     var shareId;
     const [data, setData] = useState([]);
    const navigate=useNavigate()
+   const [loader,setloader]=useState(true);
     
     useEffect(() => {
         getshares()
@@ -21,6 +23,7 @@ export const GetShares = ({setsharesdata}) => {
                 navigate('/Userlogin')
             } else{
                 setData(data)
+                loader(false)
             }
         })
     }
@@ -67,7 +70,9 @@ export const GetShares = ({setsharesdata}) => {
         })
     )
     }
-
+{
+    loader && <PreLoader/>
+}
 </div>
   )
 }
