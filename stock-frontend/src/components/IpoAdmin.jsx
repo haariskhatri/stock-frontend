@@ -37,11 +37,9 @@ export const IpoAdmin = () => {
         .then(response => response.json())
         .then(data => {
             console.log(data)
-            if (data.success) {
                 alert(data.message)
                 getipo()
                 setloader(false)
-            }
         })
     }
 
