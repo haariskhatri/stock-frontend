@@ -15,10 +15,10 @@ const Marketdepth = ({ depth }) => {
 		sellsum += ele.price * ele.shares;
 	});
 
-	const buypercent = ((depth[0].length / (depth[0].length + depth[1].length)) * 100).toFixed(2);
-	const sellpercent = ((depth[1].length / (depth[0].length + depth[1].length)) * 100).toFixed(2);
+	const buypercent = depth[0].length === 0 ? 0 : ((depth[0].length / (depth[0].length + depth[1].length)) * 100).toFixed(2);
+	const sellpercent = depth[1].length === 0 ? 0 : ((depth[1].length / (depth[0].length + depth[1].length)) * 100).toFixed(2);
 
-
+	console.log(depth[0].length);
 
 	return (
 
