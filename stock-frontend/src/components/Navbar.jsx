@@ -22,7 +22,7 @@ const NavBar = (props) => {
 
     const [active, setactive] = useState(null)
     const [userbalance, setuserbalance] = useState();
-    const [loader,setloader]=useState(false);
+    const [loader, setloader] = useState(false);
 
 
 
@@ -42,23 +42,23 @@ const NavBar = (props) => {
             })
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         checklogin()
-    },[])
+    }, [])
 
-    const checklogin=()=>{
+    const checklogin = () => {
         setloader(true)
         fetch("/api/login/checksession")
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                setloader(false)
-            } else {
-                setloader(false)
-                navigate('/')
-                toast.error('Login First')
-            }
-        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    setloader(false)
+                } else {
+                    setloader(false)
+                    navigate('/')
+                    toast.error('Login First')
+                }
+            })
     }
 
     useEffect(() => {
@@ -107,10 +107,10 @@ const NavBar = (props) => {
                             <NavLink to='/History'>History</NavLink>
                         </nav> */}
                         <ul className="list-unstyled">
-                            <li className={active === 0 ? 'active' : ''} onClick={() => { setactive(0) ;navigate('/home') }}>Explore</li>
+                            <li className={active === 0 ? 'active' : ''} onClick={() => { setactive(0); navigate('/home') }}>Explore</li>
                             <li className={active === 1 ? 'active' : ''} onClick={() => { setactive(1); navigate('/Investment') }} >Investments</li>
                             <li className={active === 2 ? 'active' : ''} onClick={() => { setactive(2); navigate('/History') }} >History</li>
-                            
+
                         </ul>
 
                         <div className="search-bar">
@@ -126,13 +126,13 @@ const NavBar = (props) => {
                             </div>
                         </div>
                         <div className="logout-button">
-                            <button><i className="fa-solid fa-right-from-bracket" onClick={logout}> </i>Log Out</button>
+                            <button onClick={logout}><i className="fa-solid fa-right-from-bracket" > </i>Log Out</button>
                         </div>
                     </nav>
                 </div>
                 <ToastContainer />
                 {
-                    loader && <PreLoader/>
+                    loader && <PreLoader />
                 }
             </div>
         </>
