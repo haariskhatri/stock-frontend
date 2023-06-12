@@ -9,10 +9,17 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { Navigate } from 'react-router-dom';
 
+
 const CreateIPO = () => {
 
     const addIpo = async (e) => {
         e.preventDefault();
+
+        const formdata = new FormData();
+        formdata.append('companySymbol', company.companySymbol.toUpperCase());
+        formdata.append('companyLogo', e.target.companyLogo.files[0]);
+
+
 
         const data = {
             companyId: company.companyId,
@@ -29,8 +36,6 @@ const CreateIPO = () => {
             companyEnddate: company.companyEnddate,
             companyDescription: company.companyDescription.trimStart().charAt(0).toUpperCase() + company.companyDescription.trimStart().slice(1)
         }
-
-
         const exists = await axios.post('/api/ipo/checkipo', { name: company.companyName, stock: company.companySymbol });
 
         if (exists.data === true) {
@@ -41,7 +46,10 @@ const CreateIPO = () => {
 
 
             const saved = await axios.post('/api/ipo/addipo', data)
-            if (saved.data == true) {
+            const image = await axios.post('api/ipo/uploadlogo', formdata);
+
+            console.log(saved.data, '  ', image.data);
+            if (saved.data && image.data == true) {
 
                 toast.success('IPO Added')
 
@@ -174,6 +182,8 @@ const CreateIPO = () => {
                         <label htmlFor="formFile" className="form-label">Logo</label>
                         <input className="form-control" type="file" id="formFile" ref={companyLogo}
                             name='companyLogo'
+                            value={company.companyLogo}
+                            onChange={handleChange}
                         />
                     </div>
 
