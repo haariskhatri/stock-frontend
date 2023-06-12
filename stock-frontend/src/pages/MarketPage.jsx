@@ -78,13 +78,14 @@ const MarketPage = () => {
 
 
 
+
         socket.on('updateorder', (data) => {
             setdepth(data);
+            console.log(data);
         })
 
         socket.on('takestock', (data) => {
             setcompany(data);
-            console.log(data);
             socket.emit('getupdate', data.shareSymbol)
             setloader(false);
         })
