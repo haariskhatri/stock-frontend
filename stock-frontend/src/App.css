@@ -1082,7 +1082,7 @@ stock-chart {
   justify-content: center;
   display: block;
   color: #fff;
-  background: #573b8a;
+  background: #0abb92;
   font-size: 1em;
   font-weight: bold;
   margin-top: 20px;
@@ -1093,9 +1093,6 @@ stock-chart {
   cursor: pointer;
 }
 
-.button-login:hover {
-  background: #6d44b8;
-}
 
 .login {
   height: 460px;
@@ -1106,7 +1103,7 @@ stock-chart {
 }
 
 .login label {
-  color: #573b8a;
+  color: #0abb92;
   transform: scale(0.6);
 }
 
