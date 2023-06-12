@@ -3,7 +3,7 @@ import { PreLoader } from "./PreLoader";
 
 
 export const Iposubscribe = ({ ipodata }) => {
-    var ipo_id;
+    
     const [loader,setloader]=useState(false);
     
     const iposubcall = (e) => {
@@ -13,17 +13,16 @@ export const Iposubscribe = ({ ipodata }) => {
             method: 'post',
             body: JSON.stringify({
               ipo_id:ipodata?.singleipo.companyId,
-              minimumslot:ipodata?.singleipo?.companyMinimumSlotSize
+              minimumslot:ipodata?.singleipo?.companySlotSize
             }),
             headers: {
               'Content-type': 'application/json'
             }
           }).then(response => response.json())
           .then(data => {
-              if(data.success) {
-                  alert(data.message)
-                  setloader(false)
-              }
+              
+              console.log(data);
+                alert(data.message)
               setloader(false)
 
           })
@@ -55,7 +54,7 @@ export const Iposubscribe = ({ ipodata }) => {
                                                     <div className="stock-quantity">
 
                                                         <label htmlFor="stockQuantity">Shares</label>
-                                                        <input type="number" name="stockQuantity" value={ipodata?.singleipo?.companyMinimumSlotSize} readOnly />
+                                                        <input type="number" name="stockQuantity" value={ipodata?.singleipo?.companySlotSize} readOnly />
                                                     </div>
 
 
@@ -67,12 +66,12 @@ export const Iposubscribe = ({ ipodata }) => {
 
                                                 </div>
                                                 <div className="order-execute-line">
-                                                    <p>Order will be executed for {ipodata?.singleipo?.companyMinimumSlotSize} Shares</p>
+                                                    <p>Order will be executed for {ipodata?.singleipo?.companySlotSize} Shares</p>
                                                 </div>
 
                                                 <div className="buy-footer">
                                                     <p>Balance : {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(0)} </p>
-                                                    <p>Required : {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(ipodata?.singleipo?.companyValuepershare * ipodata?.singleipo?.companyMinimumSlotSize)} </p>
+                                                    <p>Required : {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(ipodata?.singleipo?.companyValuepershare * ipodata?.singleipo?.companySlotSize)} </p>
                                                 </div>
 
                                                 <div className="buy-button">
