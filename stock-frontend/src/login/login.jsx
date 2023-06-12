@@ -81,7 +81,7 @@ export const Login = () => {
       setotppage(true);
     }
     else if (response.data == false) {
-      toast.error('Invalid')
+      toast.error('Email Already in Use')
     }
 
   }
