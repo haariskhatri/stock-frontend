@@ -642,11 +642,17 @@ input::-webkit-inner-spin-button {
   column-gap: 20px;
   font-size: 20px;
   margin: 0;
+  margin-inline: 30px;
   cursor: pointer;
 }
 
-.stock-nav ul li:hover,
-.active {
+.stock-nav ul li a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.stock-nav ul li a:hover,
+.stock-nav ul li a.active {
   color: #0abb92;
 }
 
