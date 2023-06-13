@@ -4,7 +4,7 @@ import HighchartsReact from 'highcharts-react-official';
 import pricedata from '../assets/btc.json'
 import moment from 'moment/moment';
 
-const StockChartApp = () => {
+const StockChartApp = ({ prices }) => {
     const options = {
         title: {
             text: null
@@ -15,14 +15,16 @@ const StockChartApp = () => {
         tooltip: {
             shared: true,
             formatter: function () {
-                return Intl.NumberFormat(this.y, 0) + '</b><br/>' + moment(this.x).format('MMMM Do YYYY, h:mm')
+                return (new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(this.y)) + '</b><br/>' + moment(this.x).format('MMMM Do YYYY, h:mm')
             }
         },
 
         xAxis: {
-            type: 'date',
-            lineColor: '#d3cece4d', // Set x-axis line color to green
-            tickColor: '#fffff' // Set x-axis tick color to green
+            crosshair: false,
+            tickLength: 0,
+            labels: {
+                enabled: false
+            }
         },
         yAxis: {
             lineColor: '#197113', // Set y-axis line color to green
@@ -37,6 +39,10 @@ const StockChartApp = () => {
                 text: ''
             }
 
+        },
+
+        time: {
+            timezoneOffset: ((5 * 60) + 30)
         },
 
         plotOptions: {
@@ -89,7 +95,7 @@ const StockChartApp = () => {
             name: 'Price',
             type: 'spline',
 
-            data: pricedata,
+            data: prices,
             tooltip: {
                 valueDecimals: 2
             },
