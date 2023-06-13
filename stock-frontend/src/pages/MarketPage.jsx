@@ -22,9 +22,9 @@ const socket = io("http://localhost:8000", {
 const MarketPage = () => {
 
     const { companyId } = useParams();
-    console.log(companyId)
     const [company, setcompany] = useState()
     const [showloader, setloader] = useState(true);
+    const [prices, setprices] = useState();
     const [depth, setdepth] = useState([[
         {
             price: '',
@@ -75,7 +75,9 @@ const MarketPage = () => {
         socket.emit('getstock', companyId);
 
 
-
+        socket.on('priceupdate', (data) => {
+            setprices(prev => data);
+        })
 
 
 
@@ -84,9 +86,15 @@ const MarketPage = () => {
             console.log(data);
         })
 
+        socket.on('priceupdate', (data) => {
+            setprices(data);
+        })
+
         socket.on('takestock', (data) => {
             setcompany(data);
-            socket.emit('getupdate', data.shareSymbol)
+            console.log(data)
+            socket.emit('getupdate', data.shareSymbol);
+            socket.emit('getprices', data.shareSymbol);
             setloader(false);
         })
 
@@ -95,6 +103,7 @@ const MarketPage = () => {
             socket.off('updatestock');
             socket.off('updateorder');
             socket.off('takestock');
+            socket.off('priceupdate')
         }
     }, [socket])
 
@@ -125,7 +134,7 @@ const MarketPage = () => {
 
 
                                 </div>
-                                <StockChart />
+                                <StockChart prices={prices} />
                                 <Marketdepth depth={depth} />
                                 <PerformanceComponent />
                                 <FundamentalsComponent />
