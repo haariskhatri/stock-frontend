@@ -25,6 +25,7 @@ export const Getipolist = ({ setipodata }) => {
                     alert(data.message)
                     navigate('/Userlogin')
                 } else{
+                
                     setData(data)
                 }
             })
@@ -59,8 +60,8 @@ export const Getipolist = ({ setipodata }) => {
 
                         <div className="card-body">
                             <h5 className="card-title">Bid Date :{ipo.companyStartdate} -{ipo.companyEnddate}</h5>
-                            <p className="card-text">Price Range :{ipo.companyMinimumSlotSize}-{ipo.companyMaximumSlotSize}</p>
-                            <p className="card-text">Min Shares :{ipo.companyMinimumSlotSize}</p>
+                           
+                            <p className="card-text">Min Shares :{ipo.companySlotSize}</p>
 
                             <div className='buy-button'>
 
