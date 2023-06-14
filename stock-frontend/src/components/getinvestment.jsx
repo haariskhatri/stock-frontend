@@ -13,7 +13,27 @@ export const Getinvestment = ({ setloader }) => {
             .then(response => response.json())
             .then(data => {
                 console.log(data)
-                setData(data)
+                
+              const users = data.user;
+
+              Object.filter = (obj, predicate) => 
+              Object.assign(...Object.keys(obj)
+                              .filter( key => predicate(obj[key]) )
+                              .map( key => ({ [key]: obj[key] }) ) );
+              
+                var filtered = Object.filter(users, user=> user > 0);
+                
+              
+                
+
+                const newdata = {
+                    total : data.total,
+                    price : data.price,
+                    user: filtered
+
+                }
+                setData(newdata)
+                console.log(newdata);
                 setloader(false)
             })
     }
