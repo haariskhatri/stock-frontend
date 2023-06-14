@@ -24,7 +24,7 @@ const BuySellCard = ({ company }) => {
 	const [userid, setuserid] = useState();
 	const [useremail, setuseremail] = useState();
 	const [detail, setdetail] = useState();
-	const [circuit, setcircuit] = useState();
+
 
 	const [buystock, setbuystock] = useState({
 		stockId: '',
@@ -66,22 +66,41 @@ const BuySellCard = ({ company }) => {
 		console.log(company);
 	}, [])
 
-	const buyStock = (e) => {
+	const buyStock = async (e) => {
 		e.preventDefault();
 
+		console.log(company.shareSymbol)
+		if (ismarket === true && company.shareSymbol != null) {
+			const price = await axios.post('/api/share/getsharewithsymbol', { 'share': company.shareSymbol });
+			const data = {
+				socketId: socket.id,
+				stockId: company.shareSymbol,
+				userId: userid,
+				userEmail: useremail,
+				shares: buystock.stockQuantity,
+				price: price.data.sharePrice
+			}
 
+			socket.emit('buyOrder', data);
+		}
+		else {
+			const data = {
+				socketId: socket.id,
+				stockId: company.shareSymbol,
+				userId: userid,
+				userEmail: useremail,
+				shares: buystock.stockQuantity,
+				price: buystock.stockPriceLimit
+			}
 
-		const data = {
-			socketId: socket.id,
-			stockId: company.shareSymbol,
-			userId: userid,
-			userEmail: useremail,
-			shares: buystock.stockQuantity,
-			price: buystock.stockPriceLimit
+			socket.emit('buyOrder', data);
 		}
 
 
-		socket.emit('buyOrder', data);
+
+
+
+
 
 	}
 	useEffect(() => {
@@ -117,10 +136,7 @@ const BuySellCard = ({ company }) => {
 			console.log(data);
 		})
 
-		socket.on('circuit', (data) => {
-			setcircuit(data);
-			console.log(data);
-		})
+
 
 		socket.on('invalid', () => {
 			toast.error('Insufficent Share Balance')
@@ -130,7 +146,6 @@ const BuySellCard = ({ company }) => {
 		return () => {
 			socket.off('buysuccess');
 			socket.off('sellsuccess');
-			socket.off('circuit');
 			socket.off('detail')
 			socket.off('invalid')
 
@@ -138,25 +153,51 @@ const BuySellCard = ({ company }) => {
 	}, [socket])
 
 
-	const sellOrder = (e) => {
+	const sellOrder = async (e) => {
 		e.preventDefault();
 
-		detail.forEach(ele => {
-			if (ele.shareSymbol === company.shareSymbol) {
+		// detail.forEach(ele => {
+		// 	if (ele.shareSymbol === company.shareSymbol) {
 
-				const data = {
-					socketId: socket.id,
-					stockId: company.shareSymbol,
-					userId: userid,
-					userEmail: useremail,
-					shares: sellstock.stockQuantity,
-					price: sellstock.stockPriceLimit
-				}
+		// 		const data = {
+		// 			socketId: socket.id,
+		// 			stockId: company.shareSymbol,
+		// 			userId: userid,
+		// 			userEmail: useremail,
+		// 			shares: sellstock.stockQuantity,
+		// 			price: sellstock.stockPriceLimit
+		// 		}
 
-				socket.emit('sellOrder', data);
+		// 		socket.emit('sellOrder', data);
 
+		// 	}
+		// })
+
+		if (ismarket === true && company.shareSymbol != null) {
+			const price = await axios.post('/api/share/getsharewithsymbol', { 'share': company.shareSymbol });
+			const data = {
+				socketId: socket.id,
+				stockId: company.shareSymbol,
+				userId: userid,
+				userEmail: useremail,
+				shares: sellstock.stockQuantity,
+				price: price.data.sharePrice
 			}
-		})
+
+			socket.emit('sellOrder', data);
+		}
+		else {
+			const data = {
+				socketId: socket.id,
+				stockId: company.shareSymbol,
+				userId: userid,
+				userEmail: useremail,
+				shares: sellstock.stockQuantity,
+				price: sellstock.stockPriceLimit
+			}
+
+			socket.emit('sellOrder', data);
+		}
 
 
 
@@ -199,18 +240,18 @@ const BuySellCard = ({ company }) => {
 												<div className="stock-quantity">
 
 													<label htmlFor="stockQuantity">Quantity NSE</label>
-													<input type="number" name="stockQuantity" value={buystock.stockQuantity} onChange={handlebuychange} autoFocus />
+													<input type="number" name="stockQuantity" value={buystock.stockQuantity} onChange={handlebuychange} autoFocus min='0' />
 												</div>
 
 												{ismarket ?
 													<div className="stock-price-limit price-market">
 														<label onClick={() => { setismarket(!ismarket) }} style={{ cursor: "pointer" }} >Price Market <KeyboardArrowDownIcon /></label>
-														<input type="number" name="stockPriceLimit" value={atmarket} readOnly />
+														<input type="text" name="stockPriceLimit" value='At Market' readOnly />
 													</div>
 													:
 													<div className="stock-price-limit">
 														<label onClick={() => { setismarket(!ismarket) }} style={{ cursor: "pointer" }}>Price Limit <KeyboardArrowDownIcon /></label>
-														<input type="number" name="stockPriceLimit" value={buystock.stockPriceLimit} onChange={handlebuychange} />
+														<input type="number" name="stockPriceLimit" value={buystock.stockPriceLimit} onChange={handlebuychange} min='0' />
 													</div>
 												}
 
@@ -247,18 +288,18 @@ const BuySellCard = ({ company }) => {
 												<div className="stock-quantity">
 
 													<label htmlFor="stockQuantity">Quantity NSE</label>
-													<input type="number" name="stockQuantity" value={sellstock.stockQuantity} onChange={handlesellchange} autoFocus />
+													<input type="number" name="stockQuantity" value={sellstock.stockQuantity} onChange={handlesellchange} autoFocus min='0' />
 												</div>
 
 												{ismarket ?
 													<div className="stock-price-limit price-market">
 														<label onClick={() => { setismarket(false) }} style={{ cursor: "pointer" }} >Price Market <KeyboardArrowDownIcon /></label>
-														<input type="text" name="stockPriceLimit" defaultValue={atmarket} readOnly />
+														<input type="text" name="stockPriceLimit" value='At Market' readOnly />
 													</div>
 													:
 													<div className="stock-price-limit">
 														<label onClick={() => { setismarket(true) }} style={{ cursor: "pointer" }}>Price Limit <KeyboardArrowDownIcon /></label>
-														<input type="number" name="stockPriceLimit" value={sellstock.stockPriceLimit} onChange={handlesellchange} />
+														<input type="number" name="stockPriceLimit" value={sellstock.stockPriceLimit} onChange={handlesellchange} min='0' />
 													</div>
 												}
 

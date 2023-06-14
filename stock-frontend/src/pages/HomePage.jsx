@@ -28,63 +28,85 @@ const HomePage = () => {
     const [userid, setuserid] = useState();
     const [invested, setinvested] = useState();
     const [userbalance, setuserbalance] = useState();
-   
+
 
     const [aapduloader, setaapduloader] = useState(true);
     const [ipos, setipos] = useState();
     const [topshares, settopshares] = useState();
-    const navigate=useNavigate();
+    const navigate = useNavigate();
 
 
 
 
 
     useEffect(() => {
-        
+
         checklogin()
 
-        axios.get('/api/share/getshares').then((data) => {
-            console.log(data.data);
+        const cancelToken = axios.CancelToken.source();
+
+
+        axios.get('/api/share/getshares', { cancelToken: cancelToken.token }).then((data) => {
+
             setcompany((data.data.slice(0, 4)));
 
 
+        }).catch((error) => {
+            if (axios.isCancel(error)) {
+                console.log('cancelled');
+            }
+            else {
+                console.log('error')
+            }
         })
 
-        axios.get('/api/ipo/getallipos').then((data) => {
+        axios.get('/api/ipo/getallipos', { cancelToken: cancelToken.token }).then((data) => {
             console.log(data.data);
             const set = data.data;
             setipos(set.slice(0, 4));
-
-
-
-
+        }).catch((error) => {
+            if (axios.isCancel(error)) {
+                console.log('cancelled');
+            }
+            else {
+                console.log('error')
+            }
         })
 
 
-        axios.get('/api/share/gettopshares').then((data) => {
+        axios.get('/api/share/gettopshares', { cancelToken: cancelToken.token }).then((data) => {
             const set = data.data;
             settopshares(set.slice(0, 10));
-            console.log(set);
 
-
+        }).catch((error) => {
+            if (axios.isCancel(error)) {
+                console.log('cancelled');
+            }
+            else {
+                console.log('error')
+            }
         })
+
+        return () => {
+            cancelToken.cancel();
+        }
 
 
     }, []);
 
-    const checklogin=()=>{
+    const checklogin = () => {
         setaapduloader(true)
         fetch("/api/login/checksession")
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                setaapduloader(false)
-            } else {
-                setaapduloader(false)
-                navigate('/')
-                toast.error('Login First')
-            }
-        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    setaapduloader(false)
+                } else {
+                    setaapduloader(false)
+                    navigate('/')
+                    toast.error('Login First')
+                }
+            })
     }
 
     useEffect(() => {
@@ -185,7 +207,7 @@ const HomePage = () => {
             </div>
             <Footer />
             {aapduloader && <PreLoader />}
-            <ToastContainer/>
+            <ToastContainer />
         </>
     )
 }

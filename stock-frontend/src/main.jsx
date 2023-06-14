@@ -23,6 +23,7 @@ import { SharesList } from "./components/SharesList";
 import Marketdepth from "./components/Marketdepth";
 import { Adminipo } from "./pages/AdminIpo";
 import { AdminDetailsPage } from "./pages/AdminDetailsPage";
+import { IpList } from "./pages/IpList";
 
 
 
@@ -30,11 +31,11 @@ const router = createBrowserRouter([
 
   {
     path: '/sharelist',
-    element: <SharesList/>
+    element: <SharesList />
   },
   {
     path: '/market',
-    element: <Marketdepth/>
+    element: <Marketdepth />
   },
   {
     path: "/home",
@@ -87,6 +88,10 @@ const router = createBrowserRouter([
   {
     path: '/adminhome',
     element: <AdminDetailsPage />
+  },
+  {
+    path: '/list',
+    element: <IpList />
   }
 ]);
 

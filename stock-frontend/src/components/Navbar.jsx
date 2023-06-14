@@ -107,9 +107,11 @@ const NavBar = (props) => {
                             <NavLink to='/History'>History</NavLink>
                         </nav> */}
                         <ul className="list-unstyled">
-                            <li className={active === 0 ? 'active' : ''} onClick={() => { setactive(0); navigate('/home') }}>Explore</li>
-                            <li className={active === 1 ? 'active' : ''} onClick={() => { setactive(1); navigate('/Investment') }} >Investments</li>
-                            <li className={active === 2 ? 'active' : ''} onClick={() => { setactive(2); navigate('/History') }} >History</li>
+                            <li><NavLink to='/home'>Explore</NavLink></li>
+                            <li><NavLink to='/Investment'>Investments</NavLink></li>
+                            <li><NavLink to='/History'>History</NavLink></li>
+
+
 
                         </ul>
 
