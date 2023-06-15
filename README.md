@@ -5,11 +5,11 @@ This project is a full-fledged stock exchange application inspired by Groww.in. 
 ## Backend Repository
 
 The backend code for this project can be found in the following repository:
-[Backend Repository](https://github.com/your-username/backend-repo)
+[Backend Repository](https://github.com/haariskhatri/stock-backend)
 
 ## Live Link
 
-You can access the live version of the application [here](https://www.stockexchangeapp.com).
+You can access the live version of the application [here](https://tradetrek.vercel.app/).
 
 ## Tools Used
 
