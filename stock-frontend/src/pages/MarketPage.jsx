@@ -14,7 +14,7 @@ import { PreLoader } from "../components/PreLoader";
 
 import io from 'socket.io-client'
 import Marketdepth from "../components/Marketdepth";
-const socket = io("http://localhost:8000", {
+const socket = io("https://api-tradetrek.onrender.com", {
     autoConnect: false
 });
 

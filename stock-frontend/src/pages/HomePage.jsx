@@ -18,7 +18,7 @@ import { StockTable } from '../components/StockTable';
 
 import io from 'socket.io-client'
 import { Getinvestment } from '../components/getinvestment';
-const socket = io("http://localhost:8000", {
+const socket = io("https://api-tradetrek.onrender.com", {
     autoConnect: false
 });
 

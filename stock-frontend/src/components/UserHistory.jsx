@@ -4,14 +4,14 @@ import axios from 'axios';
 
 import io from 'socket.io-client'
 import { PreLoader } from './PreLoader';
-const socket = io("http://localhost:8000", {
+const socket = io("https://api-tradetrek.onrender.com", {
     autoConnect: false
 });
 
 export const UserHistory = () => {
     const [data, setData] = useState();
     const [id, setid] = useState();
-    const [loader,setloader]=useState(false)
+    const [loader, setloader] = useState(false)
 
     useEffect(() => {
         gethistory();
@@ -83,12 +83,12 @@ export const UserHistory = () => {
                                         {moment(ele.date).format("HH:mm:ss")}
                                     </td>
                                     {ele.sellerId === id ?
-                                    
-                                        <td style={{color:"#d55438"}}>Sell</td>
+
+                                        <td style={{ color: "#d55438" }}>Sell</td>
                                         :
-                                        <td style={{color:"#0abb92"}}>Buy</td>
+                                        <td style={{ color: "#0abb92" }}>Buy</td>
                                     }
-                                   
+
 
 
                                 </tr>
@@ -96,9 +96,9 @@ export const UserHistory = () => {
 
                     </tbody>
                 </table>
-                
+
             </div>
-            {loader && <PreLoader/>}
+            {loader && <PreLoader />}
         </>
     )
 }

@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import io from 'socket.io-client'
 import { Getinvestment } from '../components/getinvestment';
 import { PreLoader } from "./PreLoader";
-const socket = io("http://localhost:8000", {
+const socket = io("https://api-tradetrek.onrender.com", {
     autoConnect: false
 });
 

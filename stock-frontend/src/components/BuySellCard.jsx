@@ -5,7 +5,7 @@ import io from 'socket.io-client'
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
-const socket = io("http://localhost:8000", {
+const socket = io("https://api-tradetrek.onrender.com", {
 	autoConnect: false
 });
 

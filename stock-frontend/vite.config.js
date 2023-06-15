@@ -6,8 +6,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': 'http://localhost:4000',
-      '/public': 'http://localhost:4000/'
+      '/api': 'https://api-tradetrek.onrender.com',
+      '/public': 'https://api-tradetrek.onrender.com/'
     }
     // hello
   }
