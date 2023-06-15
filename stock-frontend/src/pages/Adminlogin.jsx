@@ -52,12 +52,12 @@ export const Adminlogin = () => {
     <div>
       <div className="admin-logo">
         <img src={Logo} alt="logo" />
-        <div className="name">Trade Trek</div>
+        <div className="name card-title">TradeTrek</div>
       </div>
       <div className="wrapper-admin">
         <div className="container-admin">
           <div className="col-left-admin">
-            <h2>Admin Login</h2>
+            <h2 className="Admin-login-name">Admin Login</h2>
           </div>
           <div className="col-right-admin">
             <div className="login-form-admin">
@@ -84,3 +84,4 @@ export const Adminlogin = () => {
     </div>
   )
 }
+  
