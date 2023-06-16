@@ -10,6 +10,7 @@ The backend code for this project can be found in the following repository:
 ## Live Link
 
 You can access the live version of the application [here](https://tradetrek.vercel.app/).
+Note: Please use the provided dummy credentials (Email: haarishkkhatri@gmail.com, Password: 123) for demonstration purposes. Email notifications can be observed using your own email address.
 
 ## Tools Used
 
@@ -31,6 +32,10 @@ The project was developed using the following tools and technologies:
    - Users can participate in live bidding for stocks.
    - Real-time updates are provided for bids and order matching.
    - Orders are matched based on price, with partial or combined order execution when necessary.
+   - Request for buy and sell made by same user will not be accepted.
+   - Buy request and Sell requests are combined to fullfill orders if quantity is less.
+   - The price of the stock and the market depth is changed in realtime.
+   - The graph also changes dynamically.
 
 3. IPO Registration and Subscription:
    - Admins can register IPOs for companies through the admin panel.
@@ -48,6 +53,6 @@ The project was developed using the following tools and technologies:
 6. Live Graph:
    - A live graph is displayed, showing the performance of stocks.
 
-Note: Please use the provided dummy credentials (Email: haarishkkhatri@gmail.com, Password: 123) for demonstration purposes. Email notifications can be observed using your own email address.
+
 
 Feel free to explore and enjoy the stock exchange app!
